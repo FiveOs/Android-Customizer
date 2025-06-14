@@ -10,6 +10,9 @@ import FeatureToggles from "@/components/feature-toggles";
 import BuildOptions from "@/components/build-options";
 import ConfigurationPreview from "@/components/configuration-preview";
 import BuildProgressModal from "@/components/build-progress-modal";
+import MagiskConfiguration from "@/components/magisk-configuration";
+import TWRPConfiguration from "@/components/twrp-configuration";
+import KernelSUConfiguration from "@/components/kernelsu-configuration";
 import { Button } from "@/components/ui/button";
 import { Save, Play, Download, Upload } from "lucide-react";
 import { KernelConfiguration, InsertKernelConfiguration, BuildJob, devicePresets, DevicePreset } from "@shared/schema";
@@ -331,12 +334,81 @@ export default function KernelBuilder() {
 
             <FeatureToggles
               features={config.features || {
+                // NetHunter Core Features
                 wifiMonitorMode: true,
                 usbGadget: true,
                 hidSupport: true,
                 rtl8812auDriver: false,
+                
+                // Advanced NetHunter Features
+                packetInjection: true,
+                badUSB: true,
+                wirelessKeylogger: false,
+                bluetoothArsenal: true,
+                nfcHacking: false,
+                sdrSupport: false,
+                rfAnalyzer: false,
+                
+                // Wireless Drivers
+                rtl88xxauDriver: false,
+                rt2800usbDriver: false,
+                rt73usbDriver: false,
+                zd1211rwDriver: false,
+                ath9kHtcDriver: false,
+                
+                // Root & Security
+                kernelSU: true,
+                magiskIntegration: true,
+                selinuxPermissive: true,
+                dmVerityDisable: true,
+                
+                // Performance & Debugging
+                kprobeSupport: true,
+                ftracingSupport: false,
+                perfCounters: false,
+                cpuGovernors: true,
+                
+                // Custom Recovery Support
+                twrpSupport: true,
+                recoveryRamdisk: true,
               }}
               onFeaturesChange={(features) => setConfig(prev => ({ ...prev, features }))}
+            />
+
+            <KernelSUConfiguration
+              config={config.kernelSUConfig || {
+                enabled: true,
+                version: "latest",
+                managerApp: true,
+                webUI: false,
+                safeMode: true,
+                logLevel: "info",
+              }}
+              onConfigChange={(kernelSUConfig) => setConfig(prev => ({ ...prev, kernelSUConfig }))}
+            />
+
+            <MagiskConfiguration
+              config={config.magiskConfig || {
+                enabled: true,
+                version: "latest",
+                hideRoot: true,
+                zygiskEnabled: true,
+                denyListEnabled: true,
+                modules: [] as string[],
+              }}
+              onConfigChange={(magiskConfig) => setConfig(prev => ({ ...prev, magiskConfig }))}
+            />
+
+            <TWRPConfiguration
+              config={config.twrpConfig || {
+                enabled: true,
+                version: "latest",
+                theme: "portrait_hdpi",
+                encryption: true,
+                touchSupport: true,
+                customFlags: [] as string[],
+              }}
+              onConfigChange={(twrpConfig) => setConfig(prev => ({ ...prev, twrpConfig }))}
             />
 
             <BuildOptions

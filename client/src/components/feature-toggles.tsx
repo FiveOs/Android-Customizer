@@ -121,6 +121,22 @@ const featureGroups = [
         icon: Radio,
         color: "purple",
       },
+      {
+        key: "wirelessKeylogger" as const,
+        title: "Wireless Keylogger",
+        description: "Remote keystroke capture",
+        details: "Wireless keylogging capabilities for security testing",
+        icon: Keyboard,
+        color: "red",
+      },
+      {
+        key: "rfAnalyzer" as const,
+        title: "RF Analyzer",
+        description: "Radio frequency analysis",
+        details: "RF spectrum analysis and signal processing tools",
+        icon: Activity,
+        color: "purple",
+      },
     ]
   },
   {
