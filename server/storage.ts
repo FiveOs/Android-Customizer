@@ -1,4 +1,6 @@
 import { users, kernelConfigurations, buildJobs, type User, type InsertUser, type KernelConfiguration, type InsertKernelConfiguration, type BuildJob, type InsertBuildJob } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   // Users
@@ -20,6 +22,102 @@ export interface IStorage {
   createBuildJob(job: InsertBuildJob): Promise<BuildJob>;
   updateBuildJob(id: number, job: Partial<InsertBuildJob>): Promise<BuildJob | undefined>;
   deleteBuildJob(id: number): Promise<boolean>;
+}
+
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  async getKernelConfiguration(id: number): Promise<KernelConfiguration | undefined> {
+    const [config] = await db.select().from(kernelConfigurations).where(eq(kernelConfigurations.id, id));
+    return config || undefined;
+  }
+
+  async getKernelConfigurations(): Promise<KernelConfiguration[]> {
+    return await db.select().from(kernelConfigurations);
+  }
+
+  async createKernelConfiguration(config: InsertKernelConfiguration): Promise<KernelConfiguration> {
+    const [kernelConfig] = await db
+      .insert(kernelConfigurations)
+      .values(config)
+      .returning();
+    return kernelConfig;
+  }
+
+  async updateKernelConfiguration(id: number, config: Partial<InsertKernelConfiguration>): Promise<KernelConfiguration | undefined> {
+    const [updated] = await db
+      .update(kernelConfigurations)
+      .set({ ...config, updatedAt: new Date() })
+      .where(eq(kernelConfigurations.id, id))
+      .returning();
+    return updated || undefined;
+  }
+
+  async deleteKernelConfiguration(id: number): Promise<boolean> {
+    const result = await db.delete(kernelConfigurations).where(eq(kernelConfigurations.id, id));
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async getBuildJob(id: number): Promise<BuildJob | undefined> {
+    const [buildJob] = await db.select().from(buildJobs).where(eq(buildJobs.id, id));
+    return buildJob || undefined;
+  }
+
+  async getBuildJobs(): Promise<BuildJob[]> {
+    return await db.select().from(buildJobs);
+  }
+
+  async getBuildJobsByConfiguration(configurationId: number): Promise<BuildJob[]> {
+    return await db.select().from(buildJobs).where(eq(buildJobs.configurationId, configurationId));
+  }
+
+  async createBuildJob(job: InsertBuildJob): Promise<BuildJob> {
+    const [buildJob] = await db
+      .insert(buildJobs)
+      .values(job)
+      .returning();
+    return buildJob;
+  }
+
+  async updateBuildJob(id: number, job: Partial<InsertBuildJob>): Promise<BuildJob | undefined> {
+    const updateData: any = { ...job };
+    
+    // Set timestamps based on status changes
+    if (job.status === "running" && !updateData.startedAt) {
+      updateData.startedAt = new Date();
+    }
+    if ((job.status === "completed" || job.status === "failed" || job.status === "cancelled") && !updateData.completedAt) {
+      updateData.completedAt = new Date();
+    }
+
+    const [updated] = await db
+      .update(buildJobs)
+      .set(updateData)
+      .where(eq(buildJobs.id, id))
+      .returning();
+    return updated || undefined;
+  }
+
+  async deleteBuildJob(id: number): Promise<boolean> {
+    const result = await db.delete(buildJobs).where(eq(buildJobs.id, id));
+    return (result.rowCount ?? 0) > 0;
+  }
 }
 
 export class MemStorage implements IStorage {
@@ -148,4 +246,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
