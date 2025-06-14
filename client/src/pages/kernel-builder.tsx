@@ -12,7 +12,7 @@ import ConfigurationPreview from "@/components/configuration-preview";
 import BuildProgressModal from "@/components/build-progress-modal";
 import { Button } from "@/components/ui/button";
 import { Save, Play, Download, Upload } from "lucide-react";
-import { KernelConfiguration, InsertKernelConfiguration, devicePresets, DevicePreset } from "@shared/schema";
+import { KernelConfiguration, InsertKernelConfiguration, BuildJob, devicePresets, DevicePreset } from "@shared/schema";
 
 export default function KernelBuilder() {
   const { toast } = useToast();
@@ -67,7 +67,7 @@ export default function KernelBuilder() {
     refetchInterval: 30000, // Check every 30 seconds
   });
 
-  const { data: activeBuild } = useQuery({
+  const { data: activeBuild } = useQuery<BuildJob>({
     queryKey: ["/api/builds", activeBuildId],
     enabled: !!activeBuildId,
     refetchInterval: activeBuildId ? 2000 : false,
@@ -298,7 +298,9 @@ export default function KernelBuilder() {
           build={activeBuild}
           onClose={() => setShowBuildModal(false)}
           onCancel={() => {
-            // TODO: Implement cancel build
+            if (activeBuildId) {
+              cancelBuildMutation.mutate(activeBuildId);
+            }
             setShowBuildModal(false);
             setActiveBuildId(null);
           }}
@@ -309,7 +311,7 @@ export default function KernelBuilder() {
       <input
         type="file"
         accept=".json"
-        onChange={handleImportConfig}
+        onChange={handleFileImport}
         style={{ display: 'none' }}
         id="config-import"
       />
