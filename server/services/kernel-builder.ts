@@ -90,24 +90,59 @@ export class KernelBuilderService {
       });
 
       // Handle process completion
-      pythonProcess.on("close", async (code: number) => {
+      pythonProcess.on("close", async (code: number, signal: string) => {
         this.activeBuilds.delete(buildJob.id);
 
-        const status = code === 0 ? "completed" : "failed";
-        const errorMessage = code !== 0 ? "Build process failed with non-zero exit code" : undefined;
+        let status: "pending" | "running" | "completed" | "failed" | "cancelled";
+        let errorMessage: string | undefined;
+        let currentStep: string;
+        let progress: number;
+
+        if (signal === "SIGTERM") {
+          status = "cancelled";
+          currentStep = "Build cancelled by user";
+          progress = buildJob.progress;
+          errorMessage = "Build was cancelled by user request";
+        } else if (code === 0) {
+          status = "completed";
+          currentStep = "Build completed successfully";
+          progress = 100;
+        } else {
+          status = "failed";
+          currentStep = "Build failed";
+          progress = buildJob.progress;
+          errorMessage = `Build process failed with exit code ${code}`;
+        }
+
+        // Check for specific failure/success messages in logs
+        if (logBuffer.includes("BUILD_COMPLETE")) {
+          status = "completed";
+          currentStep = "Build completed successfully";
+          progress = 100;
+          errorMessage = undefined;
+        } else if (logBuffer.includes("BUILD_FAILED")) {
+          status = "failed";
+          const failureMatch = logBuffer.match(/BUILD_FAILED:\s*(.+)/);
+          if (failureMatch) {
+            errorMessage = failureMatch[1].trim();
+          }
+        } else if (logBuffer.includes("BUILD_CANCELLED")) {
+          status = "cancelled";
+          currentStep = "Build cancelled";
+        }
 
         await storage.updateBuildJob(buildJob.id, {
-          status,
-          progress: code === 0 ? 100 : buildJob.progress,
-          currentStep: code === 0 ? "Build completed successfully" : "Build failed",
+          status: status as "pending" | "running" | "completed" | "failed" | "cancelled",
+          progress,
+          currentStep,
           errorMessage,
           logs: logBuffer,
         });
 
         this.broadcastBuildUpdate(buildJob.id, {
           status,
-          progress: code === 0 ? 100 : buildJob.progress,
-          currentStep: code === 0 ? "Build completed successfully" : "Build failed",
+          progress,
+          currentStep,
           errorMessage,
         });
 
@@ -243,28 +278,46 @@ export class KernelBuilderService {
   }
 
   private parseProgress(output: string): number | null {
-    // Look for progress indicators in the output
-    const progressMatch = output.match(/(\d+)%/);
+    // Look for PROGRESS: indicators from Python script
+    const progressMatch = output.match(/PROGRESS:\s*(\d+)%/);
     if (progressMatch) {
       return parseInt(progressMatch[1]);
     }
 
-    // Look for step indicators
-    if (output.includes("Starting kernel compilation")) return 60;
-    if (output.includes("Applying NetHunter patches")) return 40;
-    if (output.includes("Cloning kernel repository")) return 20;
-    if (output.includes("Setting up WSL environment")) return 10;
+    // Fallback: Look for percentage indicators
+    const percentMatch = output.match(/(\d+)%/);
+    if (percentMatch) {
+      return parseInt(percentMatch[1]);
+    }
+
+    // Legacy step indicators for backward compatibility
+    if (output.includes("Starting kernel compilation")) return 65;
+    if (output.includes("Applying NetHunter patches")) return 55;
+    if (output.includes("Cloning kernel repository")) return 25;
+    if (output.includes("Setting up WSL environment")) return 15;
+    if (output.includes("Checking WSL")) return 5;
 
     return null;
   }
 
   private parseCurrentStep(output: string): string | null {
+    // Look for STEP: indicators from Python script
+    const stepMatch = output.match(/STEP:\s*(.+)/);
+    if (stepMatch) {
+      return stepMatch[1].trim();
+    }
+
+    // Fallback: Look for specific keywords
+    if (output.includes("Checking WSL environment")) return "Checking WSL environment";
     if (output.includes("Setting up WSL environment")) return "Setting up WSL environment";
-    if (output.includes("Cloning kernel repository")) return "Cloning repositories";
+    if (output.includes("Cloning repositories")) return "Cloning repositories";
+    if (output.includes("Applying kernel configuration")) return "Configuring kernel";
     if (output.includes("Applying NetHunter patches")) return "Applying NetHunter patches";
-    if (output.includes("Starting kernel compilation")) return "Compiling kernel";
-    if (output.includes("Build process completed")) return "Build completed";
-    if (output.includes("Build failed")) return "Build failed";
+    if (output.includes("Building kernel")) return "Compiling kernel";
+    if (output.includes("Locating kernel images")) return "Finalizing build";
+    if (output.includes("BUILD_COMPLETE")) return "Build completed successfully";
+    if (output.includes("BUILD_FAILED")) return "Build failed";
+    if (output.includes("BUILD_CANCELLED")) return "Build cancelled";
 
     return null;
   }

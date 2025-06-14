@@ -62,7 +62,7 @@ export default function KernelBuilder() {
   });
 
   // Queries
-  const { data: wslStatus } = useQuery({
+  const { data: wslStatus } = useQuery<{ available: boolean; distros: string[]; message: string }>({
     queryKey: ["/api/wsl/status"],
     refetchInterval: 30000, // Check every 30 seconds
   });
@@ -134,6 +134,26 @@ export default function KernelBuilder() {
     },
   });
 
+  const cancelBuildMutation = useMutation({
+    mutationFn: async (buildId: number) => {
+      await apiRequest("POST", `/api/builds/${buildId}/cancel`, {});
+    },
+    onSuccess: () => {
+      toast({
+        title: "Build cancelled",
+        description: "The build process has been cancelled.",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/builds", activeBuildId] });
+    },
+    onError: () => {
+      toast({
+        title: "Cancel failed",
+        description: "Failed to cancel the build process.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleDevicePresetChange = (preset: DevicePreset) => {
     const presetConfig = devicePresets[preset];
     setConfig(prev => ({
@@ -180,7 +200,11 @@ export default function KernelBuilder() {
     linkElement.click();
   };
 
-  const handleImportConfig = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImportConfig = () => {
+    document.getElementById("config-import")?.click();
+  };
+
+  const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
