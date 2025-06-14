@@ -25,10 +25,43 @@ export const kernelConfigurations = pgTable("kernel_configurations", {
   kernelCrossCompile: text("kernel_cross_compile").notNull(),
   kernelImageNamePatterns: text("kernel_image_name_patterns").array().notNull(),
   features: jsonb("features").$type<{
+    // NetHunter Core Features
     wifiMonitorMode: boolean;
     usbGadget: boolean;
     hidSupport: boolean;
     rtl8812auDriver: boolean;
+    
+    // Advanced NetHunter Features
+    packetInjection: boolean;
+    badUSB: boolean;
+    wirelessKeylogger: boolean;
+    bluetoothArsenal: boolean;
+    nfcHacking: boolean;
+    sdrSupport: boolean;
+    rfAnalyzer: boolean;
+    
+    // Wireless Drivers
+    rtl88xxauDriver: boolean;
+    rt2800usbDriver: boolean;
+    rt73usbDriver: boolean;
+    zd1211rwDriver: boolean;
+    ath9kHtcDriver: boolean;
+    
+    // Root & Security
+    kernelSU: boolean;
+    magiskIntegration: boolean;
+    selinuxPermissive: boolean;
+    dmVerityDisable: boolean;
+    
+    // Performance & Debugging
+    kprobeSupport: boolean;
+    ftracingSupport: boolean;
+    perfCounters: boolean;
+    cpuGovernors: boolean;
+    
+    // Custom Recovery Support
+    twrpSupport: boolean;
+    recoveryRamdisk: boolean;
   }>().notNull(),
   customKernelConfigs: text("custom_kernel_configs").array().notNull().default([]),
   wslDistroName: text("wsl_distro_name").notNull().default("kali-linux"),
@@ -40,6 +73,30 @@ export const kernelConfigurations = pgTable("kernel_configurations", {
     skipBuild: boolean;
     cleanOutput: boolean;
   }>().notNull(),
+  magiskConfig: jsonb("magisk_config").$type<{
+    enabled: boolean;
+    version: string;
+    hideRoot: boolean;
+    zygiskEnabled: boolean;
+    denyListEnabled: boolean;
+    modules: string[];
+  }>().notNull().default({ enabled: false, version: "latest", hideRoot: true, zygiskEnabled: true, denyListEnabled: true, modules: [] }),
+  twrpConfig: jsonb("twrp_config").$type<{
+    enabled: boolean;
+    version: string;
+    theme: string;
+    encryption: boolean;
+    touchSupport: boolean;
+    customFlags: string[];
+  }>().notNull().default({ enabled: false, version: "latest", theme: "portrait_hdpi", encryption: true, touchSupport: true, customFlags: [] }),
+  kernelSUConfig: jsonb("kernelsu_config").$type<{
+    enabled: boolean;
+    version: string;
+    managerApp: boolean;
+    webUI: boolean;
+    safeMode: boolean;
+    logLevel: string;
+  }>().notNull().default({ enabled: false, version: "latest", managerApp: true, webUI: false, safeMode: true, logLevel: "info" }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

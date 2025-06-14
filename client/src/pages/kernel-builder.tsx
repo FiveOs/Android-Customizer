@@ -37,10 +37,43 @@ export default function KernelBuilder() {
     kernelCrossCompile: "aarch64-linux-gnu-",
     kernelImageNamePatterns: ["Image.gz-dtb", "Image.gz", "Image"],
     features: {
+      // NetHunter Core Features
       wifiMonitorMode: true,
       usbGadget: true,
       hidSupport: true,
       rtl8812auDriver: false,
+      
+      // Advanced NetHunter Features
+      packetInjection: true,
+      badUSB: true,
+      wirelessKeylogger: false,
+      bluetoothArsenal: true,
+      nfcHacking: false,
+      sdrSupport: false,
+      rfAnalyzer: false,
+      
+      // Wireless Drivers
+      rtl88xxauDriver: false,
+      rt2800usbDriver: false,
+      rt73usbDriver: false,
+      zd1211rwDriver: false,
+      ath9kHtcDriver: false,
+      
+      // Root & Security
+      kernelSU: true,
+      magiskIntegration: true,
+      selinuxPermissive: true,
+      dmVerityDisable: true,
+      
+      // Performance & Debugging
+      kprobeSupport: true,
+      ftracingSupport: false,
+      perfCounters: false,
+      cpuGovernors: true,
+      
+      // Custom Recovery Support
+      twrpSupport: true,
+      recoveryRamdisk: true,
     },
     customKernelConfigs: [],
     wslDistroName: "kali-linux",
@@ -51,6 +84,30 @@ export default function KernelBuilder() {
       skipConfigTweaks: false,
       skipBuild: false,
       cleanOutput: false,
+    },
+    magiskConfig: {
+      enabled: true,
+      version: "latest",
+      hideRoot: true,
+      zygiskEnabled: true,
+      denyListEnabled: true,
+      modules: [],
+    },
+    twrpConfig: {
+      enabled: true,
+      version: "latest",
+      theme: "portrait_hdpi",
+      encryption: true,
+      touchSupport: true,
+      customFlags: [],
+    },
+    kernelSUConfig: {
+      enabled: true,
+      version: "latest",
+      managerApp: true,
+      webUI: false,
+      safeMode: true,
+      logLevel: "info",
     },
   });
 
