@@ -58,9 +58,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  app.get('/api/user', isAuthenticated, async (req: any, res) => {
+  app.get('/api/user', async (req, res) => {
     try {
-      const user = await storage.getUser(req.session.userId);
+      const userId = (req.session as any)?.userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
+      const user = await storage.getUser(userId);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
