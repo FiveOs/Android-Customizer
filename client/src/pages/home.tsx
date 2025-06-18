@@ -19,13 +19,13 @@ export default function Home() {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-3">
                 <Avatar className="w-8 h-8">
-                  <AvatarImage src={user?.profileImageUrl || ''} />
+                  <AvatarImage src={(user as any)?.profileImageUrl || ''} />
                   <AvatarFallback>
-                    {user?.firstName?.[0]}{user?.lastName?.[0]}
+                    {(user as any)?.firstName?.[0]}{(user as any)?.lastName?.[0]}
                   </AvatarFallback>
                 </Avatar>
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {user?.firstName} {user?.lastName}
+                  {(user as any)?.firstName} {(user as any)?.lastName}
                 </span>
               </div>
               <Button 
