@@ -30,7 +30,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const user = await storage.createUser({ username, password });
-      req.session!.userId = user.id;
+      (req.session as any).userId = user.id;
       res.status(201).json({ id: user.id, username: user.username });
     } catch (error) {
       res.status(500).json({ message: "Registration failed" });
@@ -45,7 +45,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ message: "Invalid credentials" });
       }
       
-      req.session!.userId = user.id;
+      (req.session as any).userId = user.id;
       res.json({ id: user.id, username: user.username });
     } catch (error) {
       res.status(500).json({ message: "Login failed" });

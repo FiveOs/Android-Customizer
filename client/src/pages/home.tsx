@@ -19,19 +19,21 @@ export default function Home() {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-3">
                 <Avatar className="w-8 h-8">
-                  <AvatarImage src={(user as any)?.profileImageUrl || ''} />
                   <AvatarFallback>
-                    {(user as any)?.firstName?.[0]}{(user as any)?.lastName?.[0]}
+                    {(user as any)?.username?.[0]?.toUpperCase() || 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {(user as any)?.firstName} {(user as any)?.lastName}
+                  {(user as any)?.username || 'User'}
                 </span>
               </div>
               <Button 
                 variant="outline" 
                 size="sm"
-                onClick={() => window.location.href = '/api/logout'}
+                onClick={async () => {
+                  await fetch('/api/logout', { method: 'POST' });
+                  window.location.reload();
+                }}
               >
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
