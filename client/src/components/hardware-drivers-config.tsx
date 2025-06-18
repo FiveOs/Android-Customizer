@@ -67,34 +67,34 @@ export default function HardwareDriversConfig({ config, onConfigChange }: Hardwa
     });
   };
 
-  const addDriver = (section: "cameraDrivers" | "audioDrivers") => {
+  const addCameraDriver = () => {
     onConfigChange({
       ...config,
-      [section]: {
-        ...config[section],
-        drivers: [...(config[section].drivers || []), ""],
+      cameraDrivers: {
+        ...config.cameraDrivers,
+        drivers: [...config.cameraDrivers.drivers, ""],
       },
     });
   };
 
-  const updateDriver = (section: "cameraDrivers" | "audioDrivers", index: number, value: string) => {
-    const newDrivers = [...(config[section].drivers || [])];
+  const updateCameraDriver = (index: number, value: string) => {
+    const newDrivers = [...config.cameraDrivers.drivers];
     newDrivers[index] = value;
     onConfigChange({
       ...config,
-      [section]: {
-        ...config[section],
+      cameraDrivers: {
+        ...config.cameraDrivers,
         drivers: newDrivers,
       },
     });
   };
 
-  const removeDriver = (section: "cameraDrivers" | "audioDrivers", index: number) => {
-    const newDrivers = (config[section].drivers || []).filter((_, i) => i !== index);
+  const removeCameraDriver = (index: number) => {
+    const newDrivers = config.cameraDrivers.drivers.filter((_, i) => i !== index);
     onConfigChange({
       ...config,
-      [section]: {
-        ...config[section],
+      cameraDrivers: {
+        ...config.cameraDrivers,
         drivers: newDrivers,
       },
     });
@@ -135,7 +135,7 @@ export default function HardwareDriversConfig({ config, onConfigChange }: Hardwa
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => addDriver("cameraDrivers")}
+                    onClick={addCameraDriver}
                     className="bg-blue-500/10 border-blue-500/20 text-blue-400 hover:bg-blue-500/20"
                   >
                     <Plus className="w-4 h-4 mr-1" />
@@ -148,14 +148,14 @@ export default function HardwareDriversConfig({ config, onConfigChange }: Hardwa
                     <div key={index} className="flex items-center space-x-2">
                       <Input
                         value={driver}
-                        onChange={(e) => updateDriver("cameraDrivers", index, e.target.value)}
+                        onChange={(e) => updateCameraDriver(index, e.target.value)}
                         placeholder="camera_module_name"
                         className="flex-1 bg-slate-700 border-slate-600 text-white placeholder-slate-500 font-mono text-sm"
                       />
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => removeDriver("cameraDrivers", index)}
+                        onClick={() => removeCameraDriver(index)}
                         className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
                       >
                         <Trash2 className="w-4 h-4" />

@@ -13,6 +13,12 @@ import BuildProgressModal from "@/components/build-progress-modal";
 import MagiskConfiguration from "@/components/magisk-configuration";
 import TWRPConfiguration from "@/components/twrp-configuration";
 import KernelSUConfiguration from "@/components/kernelsu-configuration";
+import BuildToolchainConfig from "@/components/build-toolchain-config";
+import BuildOutputConfig from "@/components/build-output-config";
+import DeviceTreeConfig from "@/components/device-tree-config";
+import HardwareDriversConfig from "@/components/hardware-drivers-config";
+import PerformanceConfig from "@/components/performance-config";
+import SecurityConfig from "@/components/security-config";
 import { Button } from "@/components/ui/button";
 import { Save, Play, Download, Upload } from "lucide-react";
 import { KernelConfiguration, InsertKernelConfiguration, BuildJob, devicePresets, DevicePreset } from "@shared/schema";
@@ -394,7 +400,7 @@ export default function KernelBuilder() {
                 hideRoot: true,
                 zygiskEnabled: true,
                 denyListEnabled: true,
-                modules: [] as string[],
+                modules: [],
               }}
               onConfigChange={(magiskConfig) => setConfig(prev => ({ ...prev, magiskConfig }))}
             />
@@ -406,10 +412,12 @@ export default function KernelBuilder() {
                 theme: "portrait_hdpi",
                 encryption: true,
                 touchSupport: true,
-                customFlags: [] as string[],
+                customFlags: [],
               }}
               onConfigChange={(twrpConfig) => setConfig(prev => ({ ...prev, twrpConfig }))}
             />
+
+
 
             <BuildOptions
               config={config}
