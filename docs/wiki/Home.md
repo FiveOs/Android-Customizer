@@ -99,4 +99,4 @@ For help and support:
 
 ---
 
-*Last updated: December 2024*
+*Last updated: June 2025*

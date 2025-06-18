@@ -32,7 +32,7 @@ GET /api/kernel-configurations
       "packetInjection": true,
       "kernelSU": true
     },
-    "createdAt": "2024-12-18T21:00:00.000Z"
+    "createdAt": "2025-06-18T21:00:00.000Z"
   }
 ]
 ```
@@ -104,8 +104,8 @@ GET /api/build-jobs
     "status": "completed",
     "currentStep": "Build completed successfully",
     "progress": 100,
-    "startedAt": "2024-12-18T21:30:00.000Z",
-    "completedAt": "2024-12-18T22:15:00.000Z",
+    "startedAt": "2025-06-18T21:30:00.000Z",
+    "completedAt": "2025-06-18T22:15:00.000Z",
     "outputFiles": [
       "boot.img",
       "Image.gz-dtb",
@@ -193,7 +193,7 @@ socket.onmessage = (event) => {
   "status": "running",
   "currentStep": "Applying NetHunter patches...",
   "progress": 45,
-  "timestamp": "2024-12-18T21:45:00.000Z"
+  "timestamp": "2025-06-18T21:45:00.000Z"
 }
 ```
 

@@ -2,7 +2,7 @@
 
 All notable changes to Android Kernel Customizer will be documented in this file.
 
-## [1.0.0] - 2024-12-18
+## [1.0.0] - 2025-06-18
 
 ### 🎉 Initial Release
 
