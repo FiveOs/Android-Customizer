@@ -394,25 +394,25 @@ export default function KernelBuilder() {
             />
 
             <MagiskConfiguration
-              config={config.magiskConfig || {
-                enabled: true,
-                version: "latest",
-                hideRoot: true,
-                zygiskEnabled: true,
-                denyListEnabled: true,
-                modules: [],
+              config={{
+                enabled: config.magiskConfig?.enabled ?? true,
+                version: config.magiskConfig?.version ?? "latest",
+                hideRoot: config.magiskConfig?.hideRoot ?? true,
+                zygiskEnabled: config.magiskConfig?.zygiskEnabled ?? true,
+                denyListEnabled: config.magiskConfig?.denyListEnabled ?? true,
+                modules: config.magiskConfig?.modules ?? [],
               }}
               onConfigChange={(magiskConfig) => setConfig(prev => ({ ...prev, magiskConfig }))}
             />
 
             <TWRPConfiguration
-              config={config.twrpConfig || {
-                enabled: true,
-                version: "latest",
-                theme: "portrait_hdpi",
-                encryption: true,
-                touchSupport: true,
-                customFlags: [],
+              config={{
+                enabled: config.twrpConfig?.enabled ?? true,
+                version: config.twrpConfig?.version ?? "latest",
+                theme: config.twrpConfig?.theme ?? "portrait_hdpi",
+                encryption: config.twrpConfig?.encryption ?? true,
+                touchSupport: config.twrpConfig?.touchSupport ?? true,
+                customFlags: config.twrpConfig?.customFlags ?? [],
               }}
               onConfigChange={(twrpConfig) => setConfig(prev => ({ ...prev, twrpConfig }))}
             />
