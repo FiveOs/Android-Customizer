@@ -65,6 +65,152 @@ export const kernelConfigurations = pgTable("kernel_configurations", {
   }>().notNull(),
   customKernelConfigs: text("custom_kernel_configs").array().notNull().default([]),
   wslDistroName: text("wsl_distro_name").notNull().default("kali-linux"),
+  
+  // Build Process & Toolchain Configuration
+  toolchainConfig: jsonb("toolchain_config").$type<{
+    compiler: "gcc" | "clang";
+    gccVersion: string;
+    clangVersion: string;
+    enableCcache: boolean;
+    ccacheSize: string;
+    enableLto: boolean;
+    optimizationLevel: "O2" | "O3" | "Os" | "Oz";
+    enableDebugInfo: boolean;
+  }>().notNull().default({
+    compiler: "gcc",
+    gccVersion: "12.1.0",
+    clangVersion: "15.0.0",
+    enableCcache: true,
+    ccacheSize: "5G",
+    enableLto: false,
+    optimizationLevel: "O2",
+    enableDebugInfo: false
+  }),
+  
+  // Build Output Configuration
+  buildOutputConfig: jsonb("build_output_config").$type<{
+    outputFormat: "boot_img" | "kernel_only" | "kernel_modules" | "full_package";
+    compressionType: "gzip" | "lz4" | "xz" | "zstd";
+    signKernel: boolean;
+    signatureKey: string;
+    enableVerifiedBoot: boolean;
+    customBootArgs: string[];
+  }>().notNull().default({
+    outputFormat: "boot_img",
+    compressionType: "gzip",
+    signKernel: false,
+    signatureKey: "",
+    enableVerifiedBoot: true,
+    customBootArgs: []
+  }),
+  
+  // Device Tree Configuration
+  deviceTreeConfig: jsonb("device_tree_config").$type<{
+    enableDeviceTree: boolean;
+    dtbPath: string;
+    customDtOverlays: string[];
+    hardwareVariant: string;
+    boardRevision: string;
+  }>().notNull().default({
+    enableDeviceTree: true,
+    dtbPath: "",
+    customDtOverlays: [],
+    hardwareVariant: "",
+    boardRevision: ""
+  }),
+  
+  // Hardware Driver Configuration
+  hardwareConfig: jsonb("hardware_config").$type<{
+    cameraDrivers: {
+      enableCamera: boolean;
+      drivers: string[];
+      customConfigs: string[];
+    };
+    displayDrivers: {
+      enableDisplay: boolean;
+      panelType: string;
+      resolution: string;
+      refreshRate: number;
+    };
+    sensorDrivers: {
+      enableSensors: boolean;
+      accelerometer: boolean;
+      gyroscope: boolean;
+      magnetometer: boolean;
+      proximity: boolean;
+      ambient: boolean;
+    };
+    audioDrivers: {
+      enableAudio: boolean;
+      codecType: string;
+      customConfigs: string[];
+    };
+  }>().notNull().default({
+    cameraDrivers: { enableCamera: true, drivers: [], customConfigs: [] },
+    displayDrivers: { enableDisplay: true, panelType: "", resolution: "", refreshRate: 60 },
+    sensorDrivers: { enableSensors: true, accelerometer: true, gyroscope: true, magnetometer: true, proximity: true, ambient: true },
+    audioDrivers: { enableAudio: true, codecType: "", customConfigs: [] }
+  }),
+  
+  // Performance Optimization
+  performanceConfig: jsonb("performance_config").$type<{
+    cpuGovernors: {
+      defaultGovernor: string;
+      availableGovernors: string[];
+      customTuning: Record<string, any>;
+    };
+    memoryManagement: {
+      enableZram: boolean;
+      zramSize: string;
+      swappiness: number;
+      enableKsm: boolean;
+    };
+    ioScheduler: {
+      defaultScheduler: string;
+      availableSchedulers: string[];
+      customTuning: Record<string, any>;
+    };
+    thermalManagement: {
+      enableThermalControl: boolean;
+      throttleTemps: Record<string, number>;
+      customZones: string[];
+    };
+  }>().notNull().default({
+    cpuGovernors: { defaultGovernor: "schedutil", availableGovernors: ["ondemand", "performance", "powersave", "conservative", "schedutil"], customTuning: {} },
+    memoryManagement: { enableZram: true, zramSize: "1G", swappiness: 60, enableKsm: false },
+    ioScheduler: { defaultScheduler: "mq-deadline", availableSchedulers: ["noop", "deadline", "cfq", "mq-deadline"], customTuning: {} },
+    thermalManagement: { enableThermalControl: true, throttleTemps: {}, customZones: [] }
+  }),
+  
+  // Security Configuration
+  securityConfig: jsonb("security_config").$type<{
+    kernelSigning: {
+      enableSigning: boolean;
+      keyPath: string;
+      certPath: string;
+      algorithm: string;
+    };
+    securityPatches: {
+      enablePatching: boolean;
+      patchLevel: string;
+      customPatches: string[];
+    };
+    vulnerabilityScanning: {
+      enableScanning: boolean;
+      scanTools: string[];
+    };
+    buildReproducibility: {
+      enableReproducible: boolean;
+      timestamp: string;
+      buildId: string;
+    };
+  }>().notNull().default({
+    kernelSigning: { enableSigning: false, keyPath: "", certPath: "", algorithm: "sha256" },
+    securityPatches: { enablePatching: true, patchLevel: "latest", customPatches: [] },
+    vulnerabilityScanning: { enableScanning: false, scanTools: [] },
+    buildReproducibility: { enableReproducible: false, timestamp: "", buildId: "" }
+  }),
+  
   skipOptions: jsonb("skip_options").$type<{
     skipEnvSetup: boolean;
     skipClone: boolean;
