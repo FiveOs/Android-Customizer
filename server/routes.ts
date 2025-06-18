@@ -22,6 +22,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/kernel-configurations", async (req, res) => {
+    try {
+      const configurations = await storage.getKernelConfigurations();
+      res.json(configurations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch configurations" });
+    }
+  });
+
   app.get("/api/configurations/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
@@ -36,6 +45,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/configurations", async (req, res) => {
+    try {
+      const validatedData = insertKernelConfigurationSchema.parse(req.body);
+      const configuration = await storage.createKernelConfiguration(validatedData);
+      res.status(201).json(configuration);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid configuration data" });
+    }
+  });
+
+  app.post("/api/kernel-configurations", async (req, res) => {
     try {
       const validatedData = insertKernelConfigurationSchema.parse(req.body);
       const configuration = await storage.createKernelConfiguration(validatedData);
@@ -82,6 +101,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/build-jobs", async (req, res) => {
+    try {
+      const builds = await storage.getBuildJobs();
+      res.json(builds);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch builds" });
+    }
+  });
+
   app.get("/api/builds/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
@@ -96,6 +124,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/builds", async (req, res) => {
+    try {
+      const validatedData = insertBuildJobSchema.parse(req.body);
+      const build = await storage.createBuildJob(validatedData);
+      res.status(201).json(build);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid build data" });
+    }
+  });
+
+  app.post("/api/build-jobs", async (req, res) => {
     try {
       const validatedData = insertBuildJobSchema.parse(req.body);
       const build = await storage.createBuildJob(validatedData);
