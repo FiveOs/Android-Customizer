@@ -4,6 +4,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { insertKernelConfigurationSchema, insertBuildJobSchema } from "@shared/schema";
 import { KernelBuilderService } from "./services/kernel-builder";
+import { setupAuth, isAuthenticated } from "./replitAuth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
@@ -11,6 +12,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // WebSocket server for real-time build updates
   const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
   const kernelBuilder = new KernelBuilderService(wss);
+
+  // Auth middleware
+  await setupAuth(app);
+
+  // Auth routes
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
 
   // Kernel Configuration routes
   app.get("/api/configurations", async (req, res) => {
