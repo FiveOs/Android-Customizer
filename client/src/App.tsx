@@ -7,6 +7,8 @@ import { useAuth } from "@/hooks/useAuth";
 import KernelBuilder from "@/pages/kernel-builder";
 import AuthPage from "@/pages/auth";
 import Home from "@/pages/home";
+import ConfigurationsPage from "@/pages/configurations";
+import BuildHistoryPage from "@/pages/build-history";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -20,6 +22,8 @@ function Router() {
         <>
           <Route path="/" component={Home} />
           <Route path="/kernel-builder" component={KernelBuilder} />
+          <Route path="/configurations" component={ConfigurationsPage} />
+          <Route path="/build-history" component={BuildHistoryPage} />
         </>
       )}
       <Route component={NotFound} />
