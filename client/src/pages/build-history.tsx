@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Download, Search, Clock, CheckCircle, XCircle, AlertCircle, Play } from "lucide-react";
 import { format } from "date-fns";
+import BackButton from "@/components/back-button";
 
 export default function BuildHistoryPage() {
   const [searchTerm, setSearchTerm] = useState("");

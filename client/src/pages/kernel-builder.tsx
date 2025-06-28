@@ -20,6 +20,7 @@ import HardwareDriversConfig from "@/components/hardware-drivers-config";
 import PerformanceConfig from "@/components/performance-config";
 import SecurityConfig from "@/components/security-config";
 import { Button } from "@/components/ui/button";
+import BackButton from "@/components/back-button";
 import { Save, Play, Download, Upload } from "lucide-react";
 import { KernelConfiguration, InsertKernelConfiguration, BuildJob, devicePresets, DevicePreset } from "@shared/schema";
 
@@ -306,9 +307,12 @@ export default function KernelBuilder() {
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
         <div className="h-16 bg-slate-800 border-b border-slate-700 flex items-center justify-between px-6">
-          <div>
-            <h2 className="text-lg font-medium text-white">Device Configuration</h2>
-            <p className="text-sm text-slate-400">Step 1 of 5 - Configure your target device and features</p>
+          <div className="flex items-center space-x-4">
+            <BackButton to="/" label="Home" className="text-slate-400 hover:text-white" />
+            <div>
+              <h2 className="text-lg font-medium text-white">Device Configuration</h2>
+              <p className="text-sm text-slate-400">Step 1 of 5 - Configure your target device and features</p>
+            </div>
           </div>
           <div className="flex items-center space-x-3">
             <Button

@@ -8,6 +8,7 @@ import { Trash2, Edit, Copy, Plus, Search } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import BackButton from "@/components/back-button";
 
 export default function ConfigurationsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -88,6 +89,7 @@ export default function ConfigurationsPage() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">
+          <BackButton to="/" label="Home" className="mb-4" />
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
