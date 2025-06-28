@@ -1,5 +1,7 @@
 # [TOOL] Android Kernel Customizer v1.0.0 - Professional NetHunter Kernel Builder for Windows
 
+**Developed by FiveO** | [GitHub Repository](https://github.com/FiveOs/android-kernel-customizer)
+
 ## What is this?
 
 A comprehensive web-based tool that transforms Android kernel building from complex command-line operations into an intuitive point-and-click experience. Built specifically for Windows users with WSL2, this tool provides enterprise-grade kernel customization with integrated NetHunter security features.
@@ -66,7 +68,7 @@ wsl --install -d Ubuntu-22.04
 ### 2. Download and Setup
 ```bash
 # Download release
-wget https://github.com/yourusername/android-kernel-customizer/releases/download/v1.0.0/android-kernel-customizer-v1.0.0.zip
+wget https://github.com/FiveOs/android-kernel-customizer/releases/download/v1.0.0/android-kernel-customizer-v1.0.0.zip
 
 # Extract and install
 unzip android-kernel-customizer-v1.0.0.zip
@@ -170,9 +172,9 @@ Open browser to `http://localhost:5000`
 
 ## Download Links
 
-- **GitHub Repository**: [android-kernel-customizer](https://github.com/yourusername/android-kernel-customizer)
-- **Latest Release**: [v1.0.0 Download](https://github.com/yourusername/android-kernel-customizer/releases/tag/v1.0.0)
-- **Documentation**: [Complete Wiki](https://github.com/yourusername/android-kernel-customizer/wiki)
+- **GitHub Repository**: [android-kernel-customizer](https://github.com/FiveOs/android-kernel-customizer)
+- **Latest Release**: [v1.0.0 Download](https://github.com/FiveOs/android-kernel-customizer/releases/tag/v1.0.0)
+- **Documentation**: [Complete Wiki](https://github.com/FiveOs/android-kernel-customizer/wiki)
 
 ## Credits and Acknowledgments
 
@@ -189,4 +191,4 @@ This tool is intended for security research, development, and educational purpos
 
 **Transform your Android kernel building experience from complex to simple. Build professional NetHunter kernels with enterprise-grade tools.**
 
-*Latest update: June 18, 2025*
+*Latest update: June 28, 2025 | Developed by FiveO*
