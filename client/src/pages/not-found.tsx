@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
+import BackButton from "@/components/back-button";
 
 export default function NotFound() {
   return (
@@ -12,8 +13,12 @@ export default function NotFound() {
           </div>
 
           <p className="mt-4 text-sm text-gray-600">
-            Did you forget to add the page to the router?
+            The page you're looking for doesn't exist.
           </p>
+          
+          <div className="mt-6">
+            <BackButton to="/" label="Go Home" />
+          </div>
         </CardContent>
       </Card>
     </div>
