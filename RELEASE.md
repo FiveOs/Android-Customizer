@@ -1,5 +1,7 @@
 # Android Kernel Customizer v1.0.0
 
+**Developed by FiveO (netbriq.com)** | [GitHub Repository](https://github.com/FiveOs/android-kernel-customizer)
+
 ## 📦 Release Package
 
 Professional web-based Android kernel customization tool with comprehensive NetHunter features.
@@ -13,7 +15,7 @@ Professional web-based Android kernel customization tool with comprehensive NetH
 
 #### Option 2: Clone Repository
 ```bash
-git clone https://github.com/yourusername/android-kernel-customizer.git
+git clone https://github.com/FiveOs/android-kernel-customizer.git
 cd android-kernel-customizer
 git checkout v1.0.0
 ```
@@ -28,7 +30,7 @@ git checkout v1.0.0
 
 ### One-Line Setup
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yourusername/android-kernel-customizer/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/FiveOs/android-kernel-customizer/main/install.sh | bash
 ```
 
 ### Manual Installation
@@ -264,4 +266,4 @@ Released under MIT License - see [LICENSE](LICENSE) for details.
 
 **Download, build, and customize your Android kernel with professional-grade tools.**
 
-*For support, visit our [GitHub repository](https://github.com/yourusername/android-kernel-customizer)*
+*For support, visit our [GitHub repository](https://github.com/FiveOs/android-kernel-customizer)*
