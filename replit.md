@@ -124,5 +124,6 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 ## User Preferences
 
 - **Developer**: FiveO (GitHub: https://github.com/FiveOs)
+- **Domains**: netbriq.com, five0s.net (parked at Squarespace)
 - **Communication style**: Simple, everyday language
 - **Repository**: https://github.com/FiveOs/android-kernel-customizer
