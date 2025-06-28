@@ -55,7 +55,7 @@ A comprehensive web-based interface for Android kernel customization on Windows 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/android-kernel-customizer.git
+   git clone https://github.com/FiveOs/android-kernel-customizer.git
    cd android-kernel-customizer
    ```
 
@@ -186,7 +186,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 For issues and questions:
-1. Check the [Issues](https://github.com/yourusername/android-kernel-customizer/issues) page
+1. Check the [Issues](https://github.com/FiveOs/android-kernel-customizer/issues) page
 2. Create a new issue with detailed information
 3. Join our community discussions
 
