@@ -79,6 +79,9 @@ export default function AuthPage() {
                 Android Kernel Customizer
               </h1>
             </div>
+            <p className="text-lg text-gray-500 dark:text-gray-400 mb-2">
+              Developed by FiveO
+            </p>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               Professional-grade Android kernel customization platform with NetHunter integration, 
               designed for security researchers and enthusiasts.

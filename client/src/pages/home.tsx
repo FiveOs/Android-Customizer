@@ -14,7 +14,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Android Kernel Customizer
+              Android Kernel Customizer <span className="text-sm font-normal text-gray-500 dark:text-gray-400">by FiveO</span>
             </h1>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-3">

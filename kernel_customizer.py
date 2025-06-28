@@ -2,6 +2,9 @@
 """
 Android Kernel Customizer for Windows using WSL
 A user-friendly web interface for kernel customization and NetHunter patches
+
+Developed by FiveO
+GitHub: https://github.com/FiveOs/android-kernel-customizer
 """
 
 import os
