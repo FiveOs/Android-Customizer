@@ -24,7 +24,12 @@ import {
   CheckCircle,
   XCircle,
   AlertCircle,
-  Loader2
+  Loader2,
+  Wrench,
+  Cable,
+  AlertTriangle,
+  HardDrive,
+  Power
 } from "lucide-react";
 
 interface DeviceInfo {
@@ -38,12 +43,35 @@ interface DeviceInfo {
   bootloaderUnlocked: boolean;
 }
 
+interface BrickStatus {
+  brickType: "soft" | "hard" | "semi" | "bootloop" | "none";
+  detectedMode: string;
+  recoverable: boolean;
+  recommendedAction: string;
+  supportedMethods: string[];
+}
+
+interface UnbrickParams {
+  deviceMode: "edl" | "download" | "dsu" | "recovery" | "bootloader";
+  firmwarePath?: string;
+  unbrickMethod: "cable" | "button_combo" | "adb_command" | "fastboot_command";
+  cableConfiguration?: {
+    dipSwitches: number[];
+    voltage: "3.3V" | "1.8V";
+    resistance: string;
+  };
+  buttonCombo?: string[];
+  forceMode?: boolean;
+}
+
 export default function AndroidToolPage() {
   const { toast } = useToast();
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfo | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [activeOperations, setActiveOperations] = useState<Set<string>>(new Set());
   const [operationLogs, setOperationLogs] = useState<Record<string, string[]>>({});
+  const [brickStatus, setBrickStatus] = useState<BrickStatus | null>(null);
+  const [showCableInstructions, setShowCableInstructions] = useState(false);
   
   // Kernel tweaking form state
   const [kernelParams, setKernelParams] = useState({
@@ -57,7 +85,21 @@ export default function AndroidToolPage() {
     recoveryImage: "",
     bootImage: "",
     magiskBoot: "",
-    magiskZip: ""
+    magiskZip: "",
+    firmwarePath: ""
+  });
+
+  // Unbrick configuration state
+  const [unbrickConfig, setUnbrickConfig] = useState<UnbrickParams>({
+    deviceMode: "edl",
+    unbrickMethod: "cable",
+    cableConfiguration: {
+      dipSwitches: [1, 2],
+      voltage: "3.3V",
+      resistance: "1K"
+    },
+    buttonCombo: ["volume_down", "power"],
+    forceMode: false
   });
 
   // WebSocket for real-time updates
@@ -81,6 +123,15 @@ export default function AndroidToolPage() {
               newSet.delete(operationId);
               return newSet;
             });
+          }
+
+          // Handle special update types for unbrick operations
+          if (updateType === "cable_instructions") {
+            setShowCableInstructions(true);
+          }
+
+          if (updateType === "analysis_complete") {
+            setBrickStatus(data.brickStatus);
           }
         }
       };
@@ -210,6 +261,67 @@ export default function AndroidToolPage() {
     },
   });
 
+  const analyzeBrickMutation = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("POST", "/api/android/device/analyze-brick", {});
+      return response.json();
+    },
+    onSuccess: (data) => {
+      setActiveOperations(prev => new Set(prev).add(data.operationId));
+      setBrickStatus(data.brickStatus);
+      toast({
+        title: "Device analysis started",
+        description: "Analyzing brick status and recovery options.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Failed to analyze device",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const enterModeMutation = useMutation({
+    mutationFn: async (params: UnbrickParams) => {
+      const response = await apiRequest("POST", "/api/android/device/enter-mode", params);
+      return response.json();
+    },
+    onSuccess: (data) => {
+      setActiveOperations(prev => new Set(prev).add(data.operationId));
+      toast({
+        title: "Entering special mode",
+        description: "Follow the instructions below.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Failed to enter mode",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const unbrickDeviceMutation = useMutation({
+    mutationFn: async (params: UnbrickParams) => {
+      const response = await apiRequest("POST", "/api/android/device/unbrick", params);
+      return response.json();
+    },
+    onSuccess: (data) => {
+      setActiveOperations(prev => new Set(prev).add(data.operationId));
+      toast({
+        title: "Device unbrick started",
+        description: "Recovery procedure in progress.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Failed to start unbrick",
+        variant: "destructive",
+      });
+    },
+  });
+
   const getStatusIcon = (isConnected: boolean) => {
     return isConnected ? (
       <CheckCircle className="w-4 h-4 text-green-500" />
@@ -334,7 +446,7 @@ export default function AndroidToolPage() {
 
             {/* Main Tool Tabs */}
             <Tabs defaultValue="kernel" className="space-y-4">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="kernel" className="flex items-center gap-2">
                   <Settings className="w-4 h-4" />
                   Kernel Tweaks
@@ -346,6 +458,10 @@ export default function AndroidToolPage() {
                 <TabsTrigger value="magisk" className="flex items-center gap-2">
                   <Zap className="w-4 h-4" />
                   Magisk
+                </TabsTrigger>
+                <TabsTrigger value="unbrick" className="flex items-center gap-2">
+                  <Wrench className="w-4 h-4" />
+                  Device Recovery
                 </TabsTrigger>
                 <TabsTrigger value="logs" className="flex items-center gap-2">
                   <Terminal className="w-4 h-4" />
@@ -608,6 +724,386 @@ export default function AndroidToolPage() {
                           </>
                         )}
                       </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="unbrick">
+                <div className="space-y-6">
+                  {/* Brick Status Analysis */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <AlertTriangle className="w-5 h-5" />
+                        Device Brick Status Analysis
+                      </CardTitle>
+                      <CardDescription>
+                        Analyze your device's current state and determine the best recovery method
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <Button
+                        onClick={() => analyzeBrickMutation.mutate()}
+                        disabled={analyzeBrickMutation.isPending}
+                        className="w-full"
+                      >
+                        {analyzeBrickMutation.isPending ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Analyzing Device...
+                          </>
+                        ) : (
+                          <>
+                            <HardDrive className="w-4 h-4 mr-2" />
+                            Analyze Device Status
+                          </>
+                        )}
+                      </Button>
+
+                      {brickStatus && (
+                        <div className="mt-4 p-4 border rounded-lg bg-gray-50 dark:bg-gray-800">
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">Brick Type:</span>
+                              <Badge variant={
+                                brickStatus.brickType === "none" ? "default" :
+                                brickStatus.brickType === "soft" ? "secondary" :
+                                brickStatus.brickType === "semi" ? "outline" : "destructive"
+                              }>
+                                {brickStatus.brickType.toUpperCase()}
+                              </Badge>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">Detected Mode:</span>
+                              <span className="text-sm text-gray-600 dark:text-gray-400">
+                                {brickStatus.detectedMode}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">Recoverable:</span>
+                              <Badge variant={brickStatus.recoverable ? "default" : "destructive"}>
+                                {brickStatus.recoverable ? "Yes" : "No"}
+                              </Badge>
+                            </div>
+                            <div className="space-y-2">
+                              <span className="font-medium">Recommended Action:</span>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">
+                                {brickStatus.recommendedAction}
+                              </p>
+                            </div>
+                            <div className="space-y-2">
+                              <span className="font-medium">Supported Methods:</span>
+                              <div className="flex flex-wrap gap-1">
+                                {brickStatus.supportedMethods.map((method, index) => (
+                                  <Badge key={index} variant="outline" className="text-xs">
+                                    {method}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  {/* Unbrick Configuration */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Cable className="w-5 h-5" />
+                        Device Recovery Configuration
+                      </CardTitle>
+                      <CardDescription>
+                        Configure the recovery method and special mode entry
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      {/* Device Mode Selection */}
+                      <div className="space-y-3">
+                        <Label>Target Recovery Mode</Label>
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+                          {[
+                            { value: "edl", label: "EDL", desc: "Emergency Download" },
+                            { value: "download", label: "Download", desc: "Samsung/LG" },
+                            { value: "dsu", label: "DSU", desc: "Dynamic System" },
+                            { value: "recovery", label: "Recovery", desc: "Custom Recovery" },
+                            { value: "bootloader", label: "Bootloader", desc: "Fastboot Mode" }
+                          ].map((mode) => (
+                            <div
+                              key={mode.value}
+                              className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                                unbrickConfig.deviceMode === mode.value
+                                  ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                  : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                              }`}
+                              onClick={() => setUnbrickConfig(prev => ({ ...prev, deviceMode: mode.value as any }))}
+                            >
+                              <div className="text-sm font-medium">{mode.label}</div>
+                              <div className="text-xs text-gray-500">{mode.desc}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Unbrick Method Selection */}
+                      <div className="space-y-3">
+                        <Label>Recovery Method</Label>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                          {[
+                            { value: "cable", label: "Special Cable", desc: "GSM Sources Cable" },
+                            { value: "button_combo", label: "Button Combo", desc: "Hardware Keys" },
+                            { value: "adb_command", label: "ADB Command", desc: "Software Reboot" },
+                            { value: "fastboot_command", label: "Fastboot", desc: "Bootloader Command" }
+                          ].map((method) => (
+                            <div
+                              key={method.value}
+                              className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                                unbrickConfig.unbrickMethod === method.value
+                                  ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                  : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                              }`}
+                              onClick={() => setUnbrickConfig(prev => ({ ...prev, unbrickMethod: method.value as any }))}
+                            >
+                              <div className="text-sm font-medium">{method.label}</div>
+                              <div className="text-xs text-gray-500">{method.desc}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Cable Configuration (for GSM Sources cable) */}
+                      {unbrickConfig.unbrickMethod === "cable" && (
+                        <div className="space-y-4 p-4 border rounded-lg bg-yellow-50 dark:bg-yellow-900/20">
+                          <div className="flex items-center gap-2">
+                            <Cable className="w-4 h-4 text-yellow-600" />
+                            <span className="font-medium text-yellow-800 dark:text-yellow-200">
+                              GSM Sources Repair Cable Configuration
+                            </span>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="space-y-2">
+                              <Label>DIP Switch Configuration</Label>
+                              <div className="text-sm text-gray-600 dark:text-gray-400">
+                                Active switches: {unbrickConfig.cableConfiguration?.dipSwitches.join(", ")}
+                              </div>
+                              <div className="grid grid-cols-4 gap-1">
+                                {[1, 2, 3, 4].map((switch_num) => (
+                                  <Button
+                                    key={switch_num}
+                                    variant={unbrickConfig.cableConfiguration?.dipSwitches.includes(switch_num) ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => {
+                                      const switches = unbrickConfig.cableConfiguration?.dipSwitches || [];
+                                      const newSwitches = switches.includes(switch_num)
+                                        ? switches.filter(s => s !== switch_num)
+                                        : [...switches, switch_num];
+                                      setUnbrickConfig(prev => ({
+                                        ...prev,
+                                        cableConfiguration: {
+                                          ...prev.cableConfiguration!,
+                                          dipSwitches: newSwitches
+                                        }
+                                      }));
+                                    }}
+                                  >
+                                    SW{switch_num}
+                                  </Button>
+                                ))}
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label>Voltage Level</Label>
+                              <Select 
+                                value={unbrickConfig.cableConfiguration?.voltage} 
+                                onValueChange={(value) => setUnbrickConfig(prev => ({
+                                  ...prev,
+                                  cableConfiguration: {
+                                    ...prev.cableConfiguration!,
+                                    voltage: value as "3.3V" | "1.8V"
+                                  }
+                                }))}
+                              >
+                                <SelectTrigger>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="3.3V">3.3V (Standard)</SelectItem>
+                                  <SelectItem value="1.8V">1.8V (Low Power)</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label>Resistance Value</Label>
+                              <Input
+                                placeholder="e.g., 1K, 10K"
+                                value={unbrickConfig.cableConfiguration?.resistance}
+                                onChange={(e) => setUnbrickConfig(prev => ({
+                                  ...prev,
+                                  cableConfiguration: {
+                                    ...prev.cableConfiguration!,
+                                    resistance: e.target.value
+                                  }
+                                }))}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="text-xs text-yellow-700 dark:text-yellow-300">
+                            <p><strong>Note:</strong> GSM Sources repair cable is a specialized hardware tool for entering recovery modes.</p>
+                            <p>Configure DIP switches according to your device's requirements for {unbrickConfig.deviceMode.toUpperCase()} mode.</p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Button Combo Configuration */}
+                      {unbrickConfig.unbrickMethod === "button_combo" && (
+                        <div className="space-y-4 p-4 border rounded-lg bg-blue-50 dark:bg-blue-900/20">
+                          <div className="flex items-center gap-2">
+                            <Power className="w-4 h-4 text-blue-600" />
+                            <span className="font-medium text-blue-800 dark:text-blue-200">
+                              Hardware Button Combination
+                            </span>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <Label>Button Combination for {unbrickConfig.deviceMode.toUpperCase()} Mode</Label>
+                            <div className="grid grid-cols-3 gap-2">
+                              {["volume_up", "volume_down", "power", "home", "back", "menu"].map((button) => (
+                                <Button
+                                  key={button}
+                                  variant={unbrickConfig.buttonCombo?.includes(button) ? "default" : "outline"}
+                                  size="sm"
+                                  onClick={() => {
+                                    const buttons = unbrickConfig.buttonCombo || [];
+                                    const newButtons = buttons.includes(button)
+                                      ? buttons.filter(b => b !== button)
+                                      : [...buttons, button];
+                                    setUnbrickConfig(prev => ({ ...prev, buttonCombo: newButtons }));
+                                  }}
+                                >
+                                  {button.replace("_", " ")}
+                                </Button>
+                              ))}
+                            </div>
+                            <div className="text-sm text-blue-700 dark:text-blue-300">
+                              Selected: {unbrickConfig.buttonCombo?.join(" + ") || "None"}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Firmware Path (for full unbrick) */}
+                      <div className="space-y-2">
+                        <Label htmlFor="firmwarePath">Firmware/Recovery File Path (Optional)</Label>
+                        <Input
+                          id="firmwarePath"
+                          placeholder="/path/to/firmware.img or recovery.img"
+                          value={filePaths.firmwarePath}
+                          onChange={(e) => setFilePaths(prev => ({ ...prev, firmwarePath: e.target.value }))}
+                        />
+                        <p className="text-xs text-gray-500">
+                          Required for complete unbrick procedure. Leave empty for mode entry only.
+                        </p>
+                      </div>
+
+                      {/* Advanced Options */}
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id="forceMode"
+                            checked={unbrickConfig.forceMode}
+                            onChange={(e) => setUnbrickConfig(prev => ({ ...prev, forceMode: e.target.checked }))}
+                            className="rounded"
+                          />
+                          <Label htmlFor="forceMode" className="text-sm">
+                            Force mode (ignore safety checks)
+                          </Label>
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          ⚠️ Only use force mode if you understand the risks
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Recovery Actions */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Recovery Actions</CardTitle>
+                      <CardDescription>
+                        Execute recovery procedures based on your configuration
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <Button
+                          onClick={() => enterModeMutation.mutate({
+                            ...unbrickConfig,
+                            firmwarePath: filePaths.firmwarePath || undefined
+                          })}
+                          disabled={enterModeMutation.isPending}
+                          variant="outline"
+                          className="w-full"
+                        >
+                          {enterModeMutation.isPending ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Entering Mode...
+                            </>
+                          ) : (
+                            <>
+                              <Power className="w-4 h-4 mr-2" />
+                              Enter {unbrickConfig.deviceMode.toUpperCase()} Mode
+                            </>
+                          )}
+                        </Button>
+
+                        <Button
+                          onClick={() => unbrickDeviceMutation.mutate({
+                            ...unbrickConfig,
+                            firmwarePath: filePaths.firmwarePath || undefined
+                          })}
+                          disabled={unbrickDeviceMutation.isPending || !filePaths.firmwarePath}
+                          className="w-full"
+                        >
+                          {unbrickDeviceMutation.isPending ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Unbricking Device...
+                            </>
+                          ) : (
+                            <>
+                              <Wrench className="w-4 h-4 mr-2" />
+                              Complete Unbrick Procedure
+                            </>
+                          )}
+                        </Button>
+                      </div>
+
+                      {showCableInstructions && (
+                        <div className="mt-4 p-4 border rounded-lg bg-amber-50 dark:bg-amber-900/20">
+                          <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-2">
+                            Cable Instructions Active
+                          </h4>
+                          <p className="text-sm text-amber-700 dark:text-amber-300">
+                            Please follow the cable configuration instructions shown in the operation logs below.
+                            The system will detect when your device enters the target mode.
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                        <p>• <strong>Enter Mode:</strong> Only switches to the selected mode without flashing</p>
+                        <p>• <strong>Complete Unbrick:</strong> Performs full recovery including firmware flash</p>
+                        <p>• <strong>GSM Cable:</strong> Supports hardware-level mode entry for hard bricks</p>
+                        <p>• <strong>Safety:</strong> All operations include automatic device detection and verification</p>
+                      </div>
                     </CardContent>
                   </Card>
                 </div>

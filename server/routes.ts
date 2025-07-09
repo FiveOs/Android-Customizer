@@ -411,6 +411,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Device unbrick and recovery endpoints
+  
+  // Analyze device brick status
+  app.post("/api/android/device/analyze-brick", async (req, res) => {
+    try {
+      const operationId = `analyze_brick_${Date.now()}`;
+      const brickStatus = await androidTool.detectBrickStatus(operationId);
+      res.json({ success: true, brickStatus, operationId });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to analyze brick status" });
+    }
+  });
+
+  // Enter special mode (EDL, Download, DSU, etc.)
+  app.post("/api/android/device/enter-mode", async (req, res) => {
+    try {
+      const { deviceMode, unbrickMethod, cableConfiguration, buttonCombo, forceMode } = req.body;
+      const operationId = `enter_mode_${Date.now()}`;
+      
+      const success = await androidTool.enterSpecialMode({
+        deviceMode,
+        unbrickMethod,
+        cableConfiguration,
+        buttonCombo,
+        forceMode
+      }, operationId);
+      
+      res.json({ success, operationId });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to enter special mode" });
+    }
+  });
+
+  // Complete device unbrick procedure
+  app.post("/api/android/device/unbrick", async (req, res) => {
+    try {
+      const { deviceMode, firmwarePath, unbrickMethod, cableConfiguration, buttonCombo, forceMode } = req.body;
+      const operationId = `unbrick_${Date.now()}`;
+      
+      const success = await androidTool.unbrickDevice({
+        deviceMode,
+        firmwarePath,
+        unbrickMethod,
+        cableConfiguration,
+        buttonCombo,
+        forceMode
+      }, operationId);
+      
+      res.json({ success, operationId });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to start unbrick procedure" });
+    }
+  });
+
   // WebSocket connection handling
   wss.on('connection', (ws: WebSocket) => {
     console.log('Client connected to WebSocket');
