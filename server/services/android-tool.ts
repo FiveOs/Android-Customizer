@@ -12,6 +12,8 @@ export interface DeviceInfo {
   bootloader: string;
   isRooted: boolean;
   bootloaderUnlocked: boolean;
+  developerModeEnabled?: boolean;
+  deviceState?: "normal" | "recovery" | "fastboot" | "locked" | "unauthorized";
 }
 
 export interface KernelTweakParams {
@@ -155,8 +157,55 @@ export class AndroidToolService {
   }
 
   async getDeviceInfo(): Promise<DeviceInfo | null> {
-    if (!await this.checkDeviceConnectivity("adb")) {
+    // First check device connectivity and state
+    const { success, output } = await this.runCommand([this.config.adbPath, "devices", "-l"]);
+    
+    let deviceState: DeviceInfo["deviceState"] = "normal";
+    
+    if (!success) {
       return null;
+    }
+    
+    if (output.includes("unauthorized")) {
+      deviceState = "unauthorized";
+      return {
+        model: "Device Locked",
+        androidVersion: "N/A",
+        buildId: "N/A",
+        securityPatch: "N/A",
+        kernelVersion: "N/A",
+        bootloader: "N/A",
+        isRooted: false,
+        bootloaderUnlocked: false,
+        developerModeEnabled: false,
+        deviceState
+      };
+    } else if (output.includes("recovery")) {
+      deviceState = "recovery";
+    } else if (!output.includes("device")) {
+      // Check if in fastboot mode
+      const { success: fastbootSuccess, output: fastbootOutput } = await this.runCommand([this.config.fastbootPath, "devices"]);
+      if (fastbootSuccess && fastbootOutput.trim()) {
+        deviceState = "fastboot";
+      } else {
+        return null;
+      }
+    }
+
+    // If in fastboot mode, return limited info
+    if (deviceState === "fastboot") {
+      return {
+        model: "Fastboot Mode",
+        androidVersion: "N/A",
+        buildId: "N/A",
+        securityPatch: "N/A",
+        kernelVersion: "N/A",
+        bootloader: "Fastboot",
+        isRooted: false,
+        bootloaderUnlocked: false,
+        developerModeEnabled: false,
+        deviceState
+      };
     }
 
     const props = {
@@ -167,7 +216,7 @@ export class AndroidToolService {
       bootloader: "ro.bootloader"
     };
 
-    const info: any = {};
+    const info: any = { deviceState };
     
     for (const [key, prop] of Object.entries(props)) {
       const result = await this.runCommand([this.config.adbPath, "shell", "getprop", prop]);
@@ -182,8 +231,13 @@ export class AndroidToolService {
     const rootResult = await this.runCommand([this.config.adbPath, "shell", "su", "-c", "whoami"]);
     info.isRooted = rootResult.success && rootResult.output.includes("root");
 
-    // Check bootloader status (requires fastboot mode)
-    info.bootloaderUnlocked = false; // Default to false, would need fastboot check
+    // Check bootloader status
+    const bootloaderStateResult = await this.runCommand([this.config.adbPath, "shell", "getprop", "ro.boot.verifiedbootstate"]);
+    info.bootloaderUnlocked = bootloaderStateResult.output.includes("orange");
+
+    // Check developer mode status
+    const adbEnabledResult = await this.runCommand([this.config.adbPath, "shell", "settings", "get", "global", "adb_enabled"]);
+    info.developerModeEnabled = adbEnabledResult.output.trim() === "1";
 
     return info as DeviceInfo;
   }
@@ -1008,5 +1062,194 @@ export class AndroidToolService {
       return true;
     }
     return false;
+  }
+
+  // Developer Mode Helper Methods
+  async getDeveloperModeInstructions(deviceState?: DeviceInfo["deviceState"]): Promise<{
+    state: string;
+    instructions: string[];
+    recoveryMethods?: string[];
+  }> {
+    const baseInstructions = {
+      normal: [
+        "Go to Settings app",
+        "Scroll down to 'About Phone' or 'System'",
+        "Find 'Build Number' or 'Software Information' > 'Build Number'",
+        "Tap 'Build Number' 7 times rapidly",
+        "Enter your PIN/password when prompted",
+        "Go back to Settings main menu",
+        "Find 'Developer Options' or 'System' > 'Developer Options'",
+        "Enable 'Developer Options' toggle",
+        "Enable 'USB Debugging'",
+        "Enable 'Install via USB' (if available)",
+        "Connect device to PC and approve USB debugging prompt"
+      ],
+      unauthorized: [
+        "Your device is connected but locked. To enable developer mode:",
+        "Unlock your device with PIN/password/pattern",
+        "When prompted 'Allow USB debugging?', tap 'Allow'",
+        "Check 'Always allow from this computer' for convenience",
+        "If no prompt appears, disconnect and reconnect the USB cable",
+        "If still no prompt, try these steps:",
+        "- Revoke USB debugging authorizations in Developer Options",
+        "- Disable and re-enable USB debugging",
+        "- Change USB connection mode to 'File Transfer/MTP'",
+        "- Try a different USB cable or port"
+      ],
+      recovery: [
+        "Device is in recovery mode. Options to enable developer mode:",
+        "Option 1 - Exit Recovery:",
+        "- Select 'Reboot system now' from recovery menu",
+        "- Once booted, follow normal developer mode instructions",
+        "",
+        "Option 2 - Recovery Commands:",
+        "- In TWRP: Mount > System, then use Terminal",
+        "- Enable ADB in recovery if available",
+        "- Use volume keys to navigate, power to select",
+        "",
+        "Option 3 - Recovery ADB (if enabled):",
+        "- Some recoveries have ADB enabled by default",
+        "- Try 'adb devices' to check connectivity",
+        "- If connected, can modify system settings directly"
+      ],
+      fastboot: [
+        "Device is in fastboot/bootloader mode.",
+        "Developer mode must be enabled from Android OS.",
+        "To exit fastboot and enable developer mode:",
+        "- Run: fastboot reboot",
+        "- Or use device buttons:",
+        "  - Hold Power button for 10+ seconds",
+        "  - Or select 'Start' or 'Reboot' with volume keys",
+        "- Once in Android, follow normal developer mode steps"
+      ],
+      locked: [
+        "Device appears to be locked or encrypted.",
+        "To enable developer mode on a locked device:",
+        "1. Boot into recovery mode:",
+        "   - Power off device completely",
+        "   - Hold Power + Volume Up (varies by device)",
+        "   - Release when logo appears",
+        "2. If stock recovery, try:",
+        "   - 'Apply update from ADB'",
+        "   - This may enable temporary ADB access",
+        "3. If custom recovery (TWRP):",
+        "   - Can often enable ADB without unlocking",
+        "   - Mount system partition first",
+        "4. Last resort - Factory Reset:",
+        "   - Will erase all data",
+        "   - Allows fresh setup with developer mode"
+      ]
+    };
+
+    const recoveryMethods = {
+      recovery: [
+        "For Samsung devices: Hold Power + Volume Up + Home",
+        "For OnePlus: Hold Power + Volume Down",
+        "For Google Pixel: Hold Power + Volume Down",
+        "For Nothing Phone: Hold Power + Volume Up",
+        "For Fairphone: Hold Volume Up while connecting USB"
+      ],
+      fastboot: [
+        "Already in fastboot mode",
+        "To return to fastboot from Android:",
+        "- adb reboot bootloader",
+        "- Or hold Power + Volume Down during boot"
+      ]
+    };
+
+    const state = deviceState || "normal";
+    return {
+      state,
+      instructions: baseInstructions[state] || baseInstructions.normal,
+      recoveryMethods: recoveryMethods[state as keyof typeof recoveryMethods]
+    };
+  }
+
+  async enableDeveloperModeViaRecovery(operationId: string): Promise<boolean> {
+    this.broadcastUpdate(operationId, {
+      type: "status",
+      message: "Attempting to enable developer mode via recovery..."
+    });
+
+    // Check if device is in recovery
+    const { success, output } = await this.runCommand([this.config.adbPath, "devices"]);
+    
+    if (!success || !output.includes("recovery")) {
+      this.broadcastUpdate(operationId, {
+        type: "error",
+        message: "Device not in recovery mode"
+      });
+      return false;
+    }
+
+    // Try to mount system partition (TWRP)
+    await this.runCommand([this.config.adbPath, "shell", "mount", "/system"], operationId);
+
+    // Attempt to modify settings database directly
+    const commands = [
+      // Enable ADB
+      "settings put global adb_enabled 1",
+      // Enable developer options
+      "settings put global development_settings_enabled 1",
+      // Set as provisioned
+      "settings put global device_provisioned 1",
+      // Alternative method using properties
+      "setprop persist.sys.usb.config adb",
+      "setprop sys.usb.config adb"
+    ];
+
+    let anySuccess = false;
+    for (const cmd of commands) {
+      const result = await this.runCommand([this.config.adbPath, "shell", cmd], operationId);
+      if (result.success) {
+        anySuccess = true;
+        this.broadcastUpdate(operationId, {
+          type: "success",
+          message: `✅ Executed: ${cmd}`
+        });
+      }
+    }
+
+    if (anySuccess) {
+      this.broadcastUpdate(operationId, {
+        type: "success",
+        message: "Developer mode settings applied. Reboot device to take effect."
+      });
+      return true;
+    }
+
+    this.broadcastUpdate(operationId, {
+      type: "error",
+      message: "Failed to enable developer mode via recovery. Manual intervention required."
+    });
+    return false;
+  }
+
+  async checkAndSuggestDeveloperMode(operationId: string): Promise<{
+    enabled: boolean;
+    deviceState: DeviceInfo["deviceState"];
+    suggestions: string[];
+  }> {
+    const deviceInfo = await this.getDeviceInfo();
+    
+    if (!deviceInfo) {
+      return {
+        enabled: false,
+        deviceState: "locked",
+        suggestions: [
+          "No device detected. Please connect your device.",
+          "Make sure USB drivers are installed.",
+          "Try different USB cable or port."
+        ]
+      };
+    }
+
+    const instructions = await this.getDeveloperModeInstructions(deviceInfo.deviceState);
+    
+    return {
+      enabled: deviceInfo.developerModeEnabled || false,
+      deviceState: deviceInfo.deviceState || "normal",
+      suggestions: instructions.instructions
+    };
   }
 }

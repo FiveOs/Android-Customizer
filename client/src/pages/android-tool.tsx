@@ -41,6 +41,8 @@ interface DeviceInfo {
   bootloader: string;
   isRooted: boolean;
   bootloaderUnlocked: boolean;
+  developerModeEnabled?: boolean;
+  deviceState?: "normal" | "recovery" | "fastboot" | "locked" | "unauthorized";
 }
 
 interface BrickStatus {
@@ -72,6 +74,7 @@ export default function AndroidToolPage() {
   const [operationLogs, setOperationLogs] = useState<Record<string, string[]>>({});
   const [brickStatus, setBrickStatus] = useState<BrickStatus | null>(null);
   const [showCableInstructions, setShowCableInstructions] = useState(false);
+  const [developerModeInstructions, setDeveloperModeInstructions] = useState<string[]>([]);
   
   // Kernel tweaking form state
   const [kernelParams, setKernelParams] = useState({
@@ -324,6 +327,38 @@ export default function AndroidToolPage() {
     },
   });
 
+  const developerModeCheck = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("POST", "/api/android/developer-mode/check");
+      return response.json();
+    },
+    onSuccess: (data) => {
+      if (data.suggestions) {
+        setDeveloperModeInstructions(data.suggestions);
+      }
+    },
+  });
+
+  const enableDeveloperMode = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("POST", "/api/android/developer-mode/enable-recovery");
+      return response.json();
+    },
+    onSuccess: (data) => {
+      setActiveOperations(prev => new Set(prev).add(data.operationId));
+      toast({
+        title: "Enabling developer mode",
+        description: "Attempting to enable via recovery...",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Failed to enable developer mode",
+        variant: "destructive",
+      });
+    },
+  });
+
   const getStatusIcon = (isConnected: boolean) => {
     return isConnected ? (
       <CheckCircle className="w-4 h-4 text-green-500" />
@@ -441,7 +476,79 @@ export default function AndroidToolPage() {
                     <Badge variant={deviceInfo.bootloaderUnlocked ? "default" : "secondary"}>
                       {deviceInfo.bootloaderUnlocked ? "Bootloader Unlocked" : "Bootloader Status Unknown"}
                     </Badge>
+                    <Badge variant={deviceInfo.developerModeEnabled ? "default" : "secondary"}>
+                      {deviceInfo.developerModeEnabled ? "Developer Mode Enabled" : "Developer Mode Disabled"}
+                    </Badge>
                   </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Developer Mode Helper Card */}
+            {deviceInfo && !deviceInfo.developerModeEnabled && (
+              <Card className="border-orange-200 dark:border-orange-800 bg-orange-50 dark:bg-orange-950/20">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-orange-800 dark:text-orange-200">
+                    <AlertCircle className="w-5 h-5" />
+                    Developer Mode Required
+                  </CardTitle>
+                  <CardDescription>
+                    Developer mode is required for most Android Tool features. Let me help you enable it.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Button
+                    onClick={() => developerModeCheck.mutate()}
+                    disabled={developerModeCheck.isPending}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    {developerModeCheck.isPending ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Checking Device State...
+                      </>
+                    ) : (
+                      <>
+                        <HardDrive className="w-4 h-4 mr-2" />
+                        Get Developer Mode Instructions
+                      </>
+                    )}
+                  </Button>
+
+                  {developerModeInstructions.length > 0 && (
+                    <div className="space-y-3">
+                      <h4 className="font-medium text-sm">Instructions for your device:</h4>
+                      <ol className="space-y-2">
+                        {developerModeInstructions.map((instruction, index) => (
+                          <li key={index} className={`text-sm ${instruction.startsWith("Option") || instruction === "" ? "font-medium mt-2" : "ml-4"}`}>
+                            {instruction || <div className="h-2" />}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  )}
+
+                  {deviceInfo.deviceState === "recovery" && (
+                    <Button
+                      onClick={() => enableDeveloperMode.mutate()}
+                      disabled={enableDeveloperMode.isPending}
+                      variant="default"
+                      className="w-full"
+                    >
+                      {enableDeveloperMode.isPending ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Enabling Developer Mode...
+                        </>
+                      ) : (
+                        <>
+                          <Power className="w-4 h-4 mr-2" />
+                          Enable Developer Mode via Recovery
+                        </>
+                      )}
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             )}

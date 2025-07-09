@@ -411,6 +411,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Developer mode helpers
+  app.post("/api/android/developer-mode/check", async (req, res) => {
+    try {
+      const operationId = `dev_check_${Date.now()}`;
+      const result = await androidTool.checkAndSuggestDeveloperMode(operationId);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to check developer mode status" });
+    }
+  });
+
+  app.get("/api/android/developer-mode/instructions", async (req, res) => {
+    try {
+      const deviceState = req.query.state as DeviceInfo["deviceState"];
+      const instructions = await androidTool.getDeveloperModeInstructions(deviceState);
+      res.json(instructions);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get developer mode instructions" });
+    }
+  });
+
+  app.post("/api/android/developer-mode/enable-recovery", async (req, res) => {
+    try {
+      const operationId = `dev_enable_${Date.now()}`;
+      androidTool.enableDeveloperModeViaRecovery(operationId).then(success => {
+        androidTool.broadcastUpdate(operationId, {
+          type: "complete",
+          success,
+          message: success ? "Developer mode enabled via recovery" : "Failed to enable developer mode"
+        });
+      }).catch(error => {
+        androidTool.broadcastUpdate(operationId, {
+          type: "error",
+          message: error.message
+        });
+      });
+      res.json({ operationId });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to enable developer mode via recovery" });
+    }
+  });
+
   // Device unbrick and recovery endpoints
   
   // Analyze device brick status
