@@ -1,138 +1,146 @@
 # Contributing to Android Kernel Customizer
 
-Thank you for your interest in contributing to the Android Kernel Customizer project! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to Android Kernel Customizer! We welcome contributions from the community and are grateful for any help you can provide.
 
-## Getting Started
+## Code of Conduct
 
-1. Fork the repository on GitHub
-2. Clone your fork locally
-3. Set up the development environment
-4. Create a new branch for your feature or bug fix
+By participating in this project, you agree to abide by our code of conduct:
+- Be respectful and inclusive
+- Welcome newcomers and help them get started
+- Focus on what is best for the community
+- Show empathy towards other community members
+
+## How to Contribute
+
+### Reporting Bugs
+
+1. **Check existing issues** - Before creating a new issue, please check if it has already been reported
+2. **Use the issue template** - Fill out all sections of the bug report template
+3. **Provide details** - Include:
+   - Your operating system and version
+   - WSL distribution and version
+   - Steps to reproduce the issue
+   - Expected vs actual behavior
+   - Error messages or logs
+
+### Suggesting Features
+
+1. **Check the roadmap** - See if the feature is already planned
+2. **Open a discussion** - Start with a GitHub Discussion before creating an issue
+3. **Be specific** - Describe the problem your feature would solve
+4. **Consider implementation** - If possible, suggest how it might work
+
+### Pull Requests
+
+1. **Fork the repository** - Create your own fork of the project
+2. **Create a branch** - Use a descriptive branch name: `feature/amazing-feature` or `fix/issue-123`
+3. **Follow the style guide** - Ensure your code matches the project's style
+4. **Write tests** - Add tests for new functionality when applicable
+5. **Update documentation** - Keep README and docs in sync with changes
+6. **Submit the PR** - Fill out the PR template completely
 
 ## Development Setup
 
-```bash
-# Clone your fork
-git clone https://github.com/yourusername/android-kernel-customizer.git
-cd android-kernel-customizer
+1. **Prerequisites**
+   ```bash
+   # Install WSL2 if on Windows
+   wsl --install -d Ubuntu-22.04
+   
+   # Install Node.js
+   curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+   sudo apt-get install -y nodejs
+   ```
 
-# Install dependencies
-npm install
+2. **Clone and setup**
+   ```bash
+   git clone https://github.com/FiveOs/android-kernel-customizer.git
+   cd android-kernel-customizer
+   cp .env.example .env
+   npm install
+   ```
 
-# Set up the database
-npm run db:push
+3. **Start development**
+   ```bash
+   npm run dev
+   ```
 
-# Start development server
-npm run dev
-```
+## Code Style Guidelines
 
-## Project Structure
-
-- `client/` - React frontend with TypeScript
-- `server/` - Express backend API
-- `shared/` - Shared types and schemas
-- `kernel_customizer.py` - Python kernel builder script
-
-## Code Style
-
+### TypeScript/JavaScript
 - Use TypeScript for all new code
-- Follow existing naming conventions
+- Follow ESLint configuration
 - Use meaningful variable and function names
-- Add comments for complex logic
-- Format code with Prettier
+- Add JSDoc comments for public APIs
+- Prefer async/await over callbacks
+
+### React Components
+- Use functional components with hooks
+- Keep components small and focused
+- Use proper TypeScript types for props
+- Follow the existing file structure
+
+### Commits
+- Use conventional commit format:
+  - `feat:` for new features
+  - `fix:` for bug fixes
+  - `docs:` for documentation
+  - `style:` for formatting changes
+  - `refactor:` for code refactoring
+  - `test:` for tests
+  - `chore:` for maintenance
+
+Example: `feat: add device unbrick recovery system`
+
+### Testing
+- Write unit tests for utilities and services
+- Test edge cases and error conditions
+- Ensure all tests pass before submitting PR
 
 ## Adding Device Support
 
-To add a new device to the library:
+To add support for a new device:
 
-1. Add device entry to `shared/schema.ts` in `devicePresets`
-2. Include device specifications (codename, kernel repo, etc.)
-3. Test device configuration with known working settings
-4. Update documentation
+1. **Add device preset** in `shared/schema.ts`:
+   ```typescript
+   "device-codename": {
+     name: "Device Name",
+     codename: "device-codename",
+     manufacturer: "Manufacturer",
+     androidVersions: ["13", "14"],
+     kernelRepo: "https://github.com/...",
+     defconfig: "device_defconfig",
+     architecture: "arm64",
+     nethunterSupported: true
+   }
+   ```
 
-Example device entry:
-```typescript
-new_device: {
-  name: "Device Name",
-  codename: "device_codename",
-  kernelRepo: "https://github.com/manufacturer/kernel.git",
-  kernelBranch: "android-version",
-  kernelArch: "arm64",
-  kernelCrossCompile: "aarch64-linux-gnu-",
-  defconfigPath: "arch/arm64/configs/device_defconfig"
-}
-```
+2. **Test the configuration** - Build a kernel for the device
+3. **Document the addition** - Update device list in README
+4. **Submit PR** - Include test results and device specs
 
-## Adding NetHunter Features
+## Security
 
-1. Add feature toggle to `FeatureToggles` component
-2. Include corresponding kernel config options
-3. Document feature requirements and compatibility
-4. Test with target devices
+- Never commit sensitive data (API keys, passwords)
+- Report security vulnerabilities privately to maintainers
+- Follow secure coding practices
+- Validate all user inputs
 
-## Testing
+## Getting Help
 
-Before submitting:
+- **Discord**: Join our community server (link in README)
+- **GitHub Discussions**: Ask questions and share ideas
+- **XDA Forums**: Check the official thread
+- **Documentation**: Read the full docs in `/docs`
 
-1. Test all affected functionality
-2. Verify database operations work correctly
-3. Check API endpoints respond properly
-4. Ensure WebSocket connections function
-5. Test build configuration generation
+## Recognition
 
-## Submitting Changes
+Contributors will be:
+- Listed in CONTRIBUTORS.md
+- Mentioned in release notes
+- Given credit in relevant documentation
 
-1. Create a descriptive commit message
-2. Push changes to your fork
-3. Open a pull request with:
-   - Clear description of changes
-   - List of tested devices/features
-   - Screenshots if UI changes
-   - Breaking changes noted
+Thank you for contributing to Android Kernel Customizer! Your efforts help make Android customization accessible to everyone.
 
-## Pull Request Guidelines
+---
 
-- Keep changes focused and atomic
-- Include tests for new functionality
-- Update documentation as needed
-- Respond to review feedback promptly
-- Ensure CI checks pass
-
-## Reporting Issues
-
-When reporting bugs:
-
-1. Use GitHub issue templates
-2. Include system information
-3. Provide reproduction steps
-4. Attach relevant logs or screenshots
-5. Specify affected devices
-
-## Feature Requests
-
-For new features:
-
-1. Check existing issues first
-2. Describe the use case clearly
-3. Explain expected behavior
-4. Consider implementation complexity
-5. Discuss with maintainers first for major changes
-
-## Code Review Process
-
-1. All changes require review
-2. Maintainers will provide feedback
-3. Address comments and suggestions
-4. Changes merged after approval
-5. Follow up on any issues
-
-## Community
-
-- Be respectful and inclusive
-- Help others learn and contribute
-- Share knowledge and experiences
-- Participate in discussions constructively
-
-## License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
+**Questions?** Feel free to open a discussion or reach out to the maintainers.

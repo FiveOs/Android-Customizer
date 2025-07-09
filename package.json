@@ -1,6 +1,6 @@
 {
   "name": "android-kernel-customizer",
-  "version": "1.0.0", 
+  "version": "1.0.0",
   "description": "Comprehensive Android kernel customization platform for Windows users with NetHunter integration",
   "type": "module",
   "license": "MIT",
@@ -14,12 +14,12 @@
     "url": "https://github.com/FiveOs/android-kernel-customizer/issues"
   },
   "keywords": [
-    "android", 
-    "kernel", 
-    "nethunter", 
-    "security", 
-    "customization", 
-    "windows", 
+    "android",
+    "kernel",
+    "nethunter",
+    "security",
+    "customization",
+    "windows",
     "wsl",
     "kernelsu",
     "magisk"
@@ -30,5 +30,13 @@
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.19",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^8.1.0"
   }
 }

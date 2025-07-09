@@ -31,14 +31,17 @@ export function getSession() {
     ttl: sessionTtl,
     tableName: "sessions",
   });
+  const isProduction = process.env.NODE_ENV === 'production';
   return session({
     secret: process.env.SESSION_SECRET!,
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
+    name: 'sessionId', // Change default session name
     cookie: {
       httpOnly: true,
-      secure: true,
+      secure: isProduction, // Require HTTPS in production
+      sameSite: 'strict', // CSRF protection
       maxAge: sessionTtl,
     },
   });

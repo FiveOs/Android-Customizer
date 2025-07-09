@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
+import bcrypt from "bcrypt";
 import { storage } from "./storage";
 import { insertKernelConfigurationSchema, insertBuildJobSchema } from "@shared/schema";
 import { KernelBuilderService } from "./services/kernel-builder";
@@ -26,12 +27,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/register', async (req, res) => {
     try {
       const { username, password } = req.body;
+      
+      // Validate input
+      if (!username || !password) {
+        return res.status(400).json({ message: "Username and password are required" });
+      }
+      
+      if (password.length < 8) {
+        return res.status(400).json({ message: "Password must be at least 8 characters long" });
+      }
+      
       const existingUser = await storage.getUserByUsername(username);
       if (existingUser) {
         return res.status(400).json({ message: "Username already exists" });
       }
       
-      const user = await storage.createUser({ username, password });
+      // Hash password with bcrypt
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      
+      const user = await storage.createUser({ username, password: hashedPassword });
       (req.session as any).userId = user.id;
       res.status(201).json({ id: user.id, username: user.username });
     } catch (error) {
@@ -42,8 +57,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/login', async (req, res) => {
     try {
       const { username, password } = req.body;
+      
+      // Validate input
+      if (!username || !password) {
+        return res.status(400).json({ message: "Username and password are required" });
+      }
+      
       const user = await storage.getUserByUsername(username);
-      if (!user || user.password !== password) {
+      if (!user) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+      
+      // Compare password with bcrypt
+      const isValidPassword = await bcrypt.compare(password, user.password);
+      if (!isValidPassword) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
       
