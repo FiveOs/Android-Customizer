@@ -2,7 +2,48 @@
 
 All notable changes to Android Kernel Customizer will be documented in this file.
 
-## [1.0.0] - 2025-06-18
+**Developed by FiveO** | [GitHub Repository](https://github.com/FiveOs/android-kernel-customizer)
+
+## [2.0.0] - 2025-07-09
+
+### 🚀 HISTORIC INTEGRATION - Complete Android Customization Platform
+
+This release represents a revolutionary transformation of the platform, unifying kernel compilation with comprehensive device management into a single, powerful web interface.
+
+#### 🔥 New Android Device Tool Integration
+- **Real-time Device Operations**: Live ADB/Fastboot operations through web interface
+- **Device Connectivity Monitoring**: Automatic detection and status updates for connected devices
+- **Hardware Diagnostics**: Complete device information extraction (model, Android version, kernel, bootloader status)
+- **Root Detection**: Automatic detection of root status and bootloader unlock state
+
+#### 🛠️ Complete Device Management Pipeline
+- **Recovery Management**: Direct TWRP flashing and custom recovery operations
+- **Magisk Integration**: Boot image patching, ZIP sideloading, and root management
+- **Boot Image Operations**: Extract, patch, and flash boot images with real-time progress
+- **Live Kernel Tweaking**: Runtime CPU governor, I/O scheduler, and TCP congestion control modifications
+
+#### 🌐 Enhanced Web Interface
+- **Android Tool Page**: New comprehensive device management interface
+- **Live Status Indicators**: Real-time connectivity and operation status
+- **Unified Navigation**: Seamless integration between kernel building and device management
+- **WebSocket Enhancements**: Extended real-time updates for device operations
+
+#### 🔧 Technical Architecture Improvements
+- **TypeScript Device Service**: Complete ADB/Fastboot integration with proper error handling
+- **Enhanced API Endpoints**: New device management endpoints with comprehensive operation support
+- **Improved WebSocket Management**: Extended functionality for device operation updates
+- **Operation Management**: Cancellable long-running operations with proper process lifecycle
+
+#### 📱 Workflow Revolution
+**Before**: Kernel Build → Manual Flash → Separate Tools
+**After**: Kernel Build → Web-based Device Deployment → Live Management (All in one platform)
+
+#### 🔄 Backwards Compatibility
+- All existing kernel building features remain fully functional
+- Previous configurations and build jobs continue to work
+- No breaking changes to existing API endpoints
+
+## [1.0.0] - 2025-06-28
 
 ### 🎉 Initial Release
 
@@ -162,7 +203,9 @@ All notable changes to Android Kernel Customizer will be documented in this file
 
 ### Contributors
 
-- Lead Developer: Project maintainer
+- **Lead Developer**: FiveO ([GitHub](https://github.com/FiveOs))
+- **Project Repository**: [android-kernel-customizer](https://github.com/FiveOs/android-kernel-customizer)
+- **Website**: netbriq.com
 - Community contributors welcome
 - Special thanks to Kali NetHunter project
 - LineageOS community for device databases
@@ -173,6 +216,10 @@ Released under MIT License - see LICENSE file for details.
 
 ---
 
-For complete installation and usage instructions, see the [documentation](docs/wiki/Home.md).
+For complete installation and usage instructions, see the [documentation](https://github.com/FiveOs/android-kernel-customizer/wiki).
 
-Report issues and request features on [GitHub Issues](https://github.com/yourusername/android-kernel-customizer/issues).
+Report issues and request features on [GitHub Issues](https://github.com/FiveOs/android-kernel-customizer/issues).
+
+---
+
+*Latest Update: July 09, 2025 | Developed by FiveO | [netbriq.com](https://netbriq.com)*

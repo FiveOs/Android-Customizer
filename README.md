@@ -1,15 +1,28 @@
 # Android Kernel Customizer
 
-A comprehensive web-based interface for Android kernel customization on Windows using WSL. This tool provides an intuitive GUI wrapper around kernel compilation with advanced NetHunter features, device tree configuration, and professional build toolchain management.
+**Developed by FiveO** | [GitHub Repository](https://github.com/FiveOs/android-kernel-customizer)
+
+A revolutionary web-based platform that unifies Android kernel compilation with complete device management. This comprehensive tool transforms the entire Android customization workflow from kernel building to live device deployment, featuring real-time ADB/Fastboot operations, recovery management, and Magisk integration - all through an intuitive web interface designed for Windows platforms with WSL support.
+
+*Latest Update: July 09, 2025 - Historic Integration of Android CLI Tool with Web Platform*
 
 ## Features
 
-### 🔧 Build Process & Toolchain
+### 🚀 Complete Android Customization Pipeline (NEW - July 2025)
+- **Unified Workflow**: Kernel compilation → Device deployment → Live management
+- **Real-time Device Operations**: Live ADB/Fastboot operations via web interface
+- **Recovery Management**: TWRP flashing, custom recovery operations
+- **Magisk Integration**: Boot image patching, ZIP sideloading, root management
+- **Live Kernel Tweaking**: Runtime CPU governor, I/O scheduler, TCP congestion control
+- **Device Diagnostics**: Hardware information, root detection, bootloader status
+
+### 🔧 Advanced Build System & Toolchain
 - GCC/Clang compiler selection with version control
 - Advanced optimization levels (O2, O3, Os, Oz)
 - ccache integration for faster builds
 - Link Time Optimization (LTO) support
 - Debug information control
+- WSL2 integration with automatic environment setup
 
 ### 📱 Device Library (40+ Devices)
 - **OnePlus Series**: OnePlus One through OnePlus 12 Pro
@@ -77,30 +90,31 @@ A comprehensive web-based interface for Android kernel customization on Windows 
 5. **Open your browser**
    Navigate to `http://localhost:5000`
 
-## Usage
+## Complete Workflow (Updated July 2025)
 
-### Device Configuration
-1. Select your device from the comprehensive library
-2. Choose between official firmware or LineageOS builds
-3. Configure device-specific settings automatically
+### Phase 1: Kernel Building
+1. **Device Configuration**: Select from 40+ supported devices
+2. **NetHunter Features**: Enable security research tools and wireless drivers
+3. **Build Configuration**: Choose toolchain, optimization, and output options
+4. **Real-time Build**: Monitor progress with WebSocket updates
+5. **Download Results**: Get compiled kernel, boot image, and modules
 
-### Feature Selection
-1. Enable NetHunter core features (WiFi monitor, USB gadget, HID)
-2. Add wireless drivers for your hardware
-3. Configure advanced security tools
-4. Enable root solutions (KernelSU/Magisk)
+### Phase 2: Device Deployment (NEW)
+6. **Device Connection**: Live ADB/Fastboot connectivity monitoring
+7. **Boot Image Operations**: Flash custom kernels and recovery images
+8. **Magisk Integration**: Patch boot images, sideload ZIP files
+9. **Recovery Management**: Flash TWRP, manage custom recoveries
 
-### Build Configuration
-1. Select compiler toolchain (GCC/Clang)
-2. Set optimization levels and debug options
-3. Configure output format and compression
-4. Enable kernel signing for security
+### Phase 3: Live Device Management (NEW)
+10. **Kernel Tweaking**: Real-time CPU governor and I/O scheduler changes
+11. **Performance Monitoring**: Live hardware diagnostics and status
+12. **Root Management**: KernelSU and Magisk operations
+13. **Device Optimization**: TCP congestion control and thermal management
 
-### Performance Tuning
-1. Choose CPU governors for power management
-2. Configure memory optimization settings
-3. Set up thermal management
-4. Optimize I/O schedulers
+### Traditional Usage (Still Supported)
+- **Standalone Kernel Building**: Use just the kernel compilation features
+- **Configuration Management**: Save and load build templates
+- **Batch Operations**: Build multiple configurations sequentially
 
 ## Project Structure
 
@@ -118,7 +132,7 @@ A comprehensive web-based interface for Android kernel customization on Windows 
 └── package.json
 ```
 
-## API Endpoints
+## API Endpoints (Updated July 2025)
 
 ### Kernel Configurations
 - `GET /api/kernel-configurations` - List all configurations
@@ -132,9 +146,19 @@ A comprehensive web-based interface for Android kernel customization on Windows 
 - `POST /api/builds/:id/start` - Start kernel build
 - `POST /api/builds/:id/cancel` - Cancel running build
 
+### Android Device Tool (NEW)
+- `GET /api/android-tool/device-info` - Get connected device information
+- `POST /api/android-tool/check-connectivity` - Check ADB/Fastboot status
+- `POST /api/android-tool/tweak-kernel` - Apply real-time kernel parameters
+- `POST /api/android-tool/flash-recovery` - Flash custom recovery image
+- `POST /api/android-tool/patch-boot` - Patch boot image with Magisk
+- `POST /api/android-tool/sideload-magisk` - Sideload Magisk ZIP
+- `POST /api/android-tool/dump-boot` - Extract boot image from device
+- `POST /api/android-tool/cancel-operation` - Cancel running operation
+
 ### WSL Integration
 - `GET /api/wsl/status` - Check WSL availability
-- WebSocket `/ws` - Real-time build updates
+- WebSocket `/ws` - Real-time build and device operation updates
 
 ## Configuration Example
 
@@ -192,4 +216,13 @@ For issues and questions:
 
 ---
 
+## 📋 Release Information
+
+- **Current Version**: v2.0.0 (July 09, 2025)
+- **Historic Integration**: Android CLI Tool unified with web platform
+- **Latest Features**: Real-time device management and live kernel tweaking
+- **Documentation**: [Complete Wiki](WIKI.md) | [Release Notes](RELEASE.md) | [Changelog](CHANGELOG.md)
+
 **⚠️ Disclaimer**: This tool is for educational and research purposes. Users are responsible for compliance with local laws and device warranties.
+
+*Developed by FiveO | [GitHub](https://github.com/FiveOs) | [netbriq.com](https://netbriq.com)*

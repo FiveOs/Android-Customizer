@@ -1,12 +1,46 @@
-# [TOOL] Android Kernel Customizer v1.0.0 - Professional NetHunter Kernel Builder for Windows
+# [TOOL] Android Kernel Customizer v2.0.0 - Complete Android Customization Platform
 
-**Developed by FiveO** | [GitHub Repository](https://github.com/FiveOs/android-kernel-customizer)
+**🚀 HISTORIC UPDATE - July 09, 2025: Revolutionary Platform Integration**
 
-## What is this?
+**Developed by FiveO** | [GitHub Repository](https://github.com/FiveOs/android-kernel-customizer) | [Website: netbriq.com](https://netbriq.com)
 
-A comprehensive web-based tool that transforms Android kernel building from complex command-line operations into an intuitive point-and-click experience. Built specifically for Windows users with WSL2, this tool provides enterprise-grade kernel customization with integrated NetHunter security features.
+## Revolutionary Platform Evolution
 
-## Key Features
+**What started as a kernel builder has become a complete Android customization ecosystem.** This isn't just an update—it's a fundamental transformation that unifies kernel compilation with comprehensive device management into a single, powerful web platform.
+
+### The Complete Pipeline
+**Kernel Compilation → Real-time Device Deployment → Live Management** - All in one intuitive web interface.
+
+### What's Game-Changing (July 2025)
+- **Live Device Operations**: Real-time ADB/Fastboot through web browser
+- **Complete Recovery Management**: Flash TWRP, manage custom recoveries
+- **Magisk Integration**: Patch boot images, sideload ZIP files
+- **Live Kernel Tweaking**: Runtime CPU governor, I/O scheduler modifications
+- **Device Diagnostics**: Hardware info, root detection, bootloader status
+- **Unified Workflow**: From kernel compilation to device deployment without leaving the browser
+
+## Revolutionary Features (v2.0.0 - July 2025)
+
+### 🚀 Complete Android Customization Pipeline (NEW)
+**The industry's first unified web platform for end-to-end Android customization**
+
+#### Real-time Device Management
+- **Live ADB/Fastboot Operations**: Execute device commands through web interface
+- **Device Connectivity Monitoring**: Automatic detection and status updates
+- **Hardware Diagnostics**: Complete device information (model, Android version, kernel, bootloader)
+- **Root Status Detection**: Automatic detection of root and bootloader unlock status
+
+#### Recovery and Boot Management
+- **TWRP Operations**: Direct custom recovery flashing with progress monitoring
+- **Boot Image Management**: Extract, patch, and flash boot images seamlessly
+- **Magisk Integration**: Boot image patching, ZIP sideloading, root management
+- **Recovery Operations**: Complete custom recovery management suite
+
+#### Live Kernel Tweaking (Revolutionary Feature)
+- **Runtime CPU Governor**: Change performance profiles without rebooting
+- **I/O Scheduler Optimization**: Real-time storage performance tuning
+- **TCP Congestion Control**: Network performance optimization
+- **Thermal Management**: Live temperature and throttling control
 
 ### 🎯 Massive Device Support (40+ Devices)
 - **OnePlus Series**: Complete lineup from OnePlus One to OnePlus 12 Pro
@@ -81,15 +115,43 @@ npm run dev
 ### 3. Access Interface
 Open browser to `http://localhost:5000`
 
-## Usage Example: OnePlus Nord NetHunter Build
+## Complete Workflow Example: OnePlus Nord (Updated July 2025)
 
+### Phase 1: Kernel Building
 1. **Select Device**: Choose OnePlus Nord from device library
 2. **Enable Features**: WiFi monitor mode, packet injection, KernelSU
 3. **Configure Build**: GCC compiler, O2 optimization, enable ccache
 4. **Start Build**: Monitor real-time progress (typical time: 45-60 minutes)
-5. **Flash Kernel**: Use generated boot.img with fastboot
+5. **Download Results**: Get boot.img, kernel, and modules
 
-## What Makes This Different?
+### Phase 2: Device Deployment (NEW)
+6. **Connect Device**: Automatic ADB/Fastboot detection and connectivity status
+7. **Device Diagnostics**: View hardware info, root status, bootloader state
+8. **Flash Kernel**: Direct boot.img flashing through web interface
+9. **Recovery Setup**: Flash TWRP or custom recovery if needed
+
+### Phase 3: Live Management (NEW)
+10. **Performance Tuning**: Real-time CPU governor changes (schedutil, performance, powersave)
+11. **I/O Optimization**: Live scheduler changes (mq-deadline, kyber, bfq)
+12. **Root Management**: Magisk operations, hide root, deny list management
+13. **Monitoring**: Live hardware status, thermal monitoring, bootloader status
+
+### Traditional Workflow (Still Supported)
+- Build kernel → Manual download → Separate flashing tools
+
+## What Makes This Revolutionary?
+
+### Complete Platform Integration (NEW)
+- **Unified Workflow**: Kernel building to device deployment in one platform
+- **Real-time Device Control**: Live ADB/Fastboot operations through web browser
+- **No Context Switching**: From compilation to deployment without leaving the interface
+- **Live System Tweaking**: Runtime kernel parameter changes without rebooting
+
+### Industry-First Features
+- **Web-based Device Management**: First platform to unify compilation and device operations
+- **Live Kernel Tuning**: Real-time performance optimization through web interface
+- **Integrated Recovery Management**: TWRP and custom recovery operations
+- **Seamless Magisk Integration**: Boot patching and root management
 
 ### No Command Line Required
 - Complete web interface eliminates terminal complexity
@@ -166,15 +228,16 @@ Open browser to `http://localhost:5000`
 - Welcome community contributions for device support
 
 ### Roadmap
-- **v1.1**: Linux native support, additional device families
-- **v1.2**: Cloud build integration, advanced security analysis
-- **v2.0**: Machine learning build optimization, collaborative features
+- **v2.1**: Enhanced device auto-detection, batch operations
+- **v2.2**: Cloud build integration, advanced security analysis
+- **v3.0**: Machine learning build optimization, collaborative features
 
-## Download Links
+## Download Links (Updated July 2025)
 
 - **GitHub Repository**: [android-kernel-customizer](https://github.com/FiveOs/android-kernel-customizer)
-- **Latest Release**: [v1.0.0 Download](https://github.com/FiveOs/android-kernel-customizer/releases/tag/v1.0.0)
+- **Latest Release**: [v2.0.0 Download](https://github.com/FiveOs/android-kernel-customizer/releases/tag/v2.0.0)
 - **Documentation**: [Complete Wiki](https://github.com/FiveOs/android-kernel-customizer/wiki)
+- **Developer Website**: [netbriq.com](https://netbriq.com)
 
 ## Credits and Acknowledgments
 
@@ -189,6 +252,13 @@ This tool is intended for security research, development, and educational purpos
 
 ---
 
-**Transform your Android kernel building experience from complex to simple. Build professional NetHunter kernels with enterprise-grade tools.**
+**Transform your entire Android customization workflow. From kernel compilation to live device management - all in one revolutionary platform.**
 
-*Latest update: June 28, 2025 | Developed by FiveO*
+### 🎯 The Complete Solution
+- ✅ Build custom kernels with NetHunter features
+- ✅ Flash directly to device through web interface  
+- ✅ Manage recovery and root solutions
+- ✅ Live performance tuning and monitoring
+- ✅ All without leaving your browser
+
+*Latest update: July 09, 2025 - Historic Integration Release | Developed by FiveO | [netbriq.com](https://netbriq.com)*
