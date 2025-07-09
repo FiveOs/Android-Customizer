@@ -21,6 +21,12 @@ This release represents a revolutionary transformation of the platform, unifying
 - **Magisk Integration**: Boot image patching, ZIP sideloading, and root management
 - **Boot Image Operations**: Extract, patch, and flash boot images with real-time progress
 - **Live Kernel Tweaking**: Runtime CPU governor, I/O scheduler, and TCP congestion control modifications
+- **Device Unbrick System**: Comprehensive recovery solution for bricked devices
+  - Automatic brick type detection (soft, hard, semi, bootloop)
+  - GSM Sources repair cable support with 6 DIP switches
+  - Multiple recovery modes: EDL, Download, DSU, Recovery, Bootloader
+  - Multiple recovery methods: special cable, button combos, ADB/Fastboot commands
+  - Real-time progress monitoring with cable configuration instructions
 
 #### 🌐 Enhanced Web Interface
 - **Android Tool Page**: New comprehensive device management interface

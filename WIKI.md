@@ -48,6 +48,13 @@ Android Kernel Customizer has evolved from a simple kernel builder into a revolu
 - **TCP Congestion Control**: Network performance optimization
 - **Thermal Management**: Live temperature and throttling control
 
+#### Device Unbrick System (Revolutionary)
+- **Automatic Brick Detection**: Identifies soft, hard, semi, and bootloop bricks
+- **GSM Sources Cable Support**: Hardware-level recovery with 6 DIP switches
+- **Multiple Recovery Modes**: EDL, Download, DSU, Recovery, Bootloader
+- **Intelligent Recovery**: Automatic detection of best recovery method
+- **Real-time Progress**: Live updates via WebSocket for all operations
+
 ### 🎯 Massive Device Support (40+ Devices)
 
 #### OnePlus Series (15 devices)

@@ -42,6 +42,13 @@
 - **TCP Congestion Control**: Network performance optimization
 - **Thermal Management**: Live temperature and throttling control
 
+#### Device Unbrick System (Industry First)
+- **Automatic Brick Detection**: Identifies soft, hard, semi, and bootloop bricks
+- **GSM Sources Cable Support**: Hardware-level recovery with 6 DIP switches
+- **Multiple Recovery Modes**: EDL, Download, DSU, Recovery, Bootloader
+- **Intelligent Recovery Methods**: Special cable, button combos, ADB/Fastboot commands
+- **Real-time Progress**: Live updates via WebSocket for all operations
+
 ### 🎯 Massive Device Support (40+ Devices)
 - **OnePlus Series**: Complete lineup from OnePlus One to OnePlus 12 Pro
 - **Nothing Phone**: Phone (1), Phone (2), Phone (2a) 
@@ -135,6 +142,12 @@ Open browser to `http://localhost:5000`
 11. **I/O Optimization**: Live scheduler changes (mq-deadline, kyber, bfq)
 12. **Root Management**: Magisk operations, hide root, deny list management
 13. **Monitoring**: Live hardware status, thermal monitoring, bootloader status
+
+### Phase 4: Device Recovery (NEW)
+14. **Brick Analysis**: Automatic detection of device brick type and recovery options
+15. **GSM Sources Cable**: Configure 6 DIP switches for hardware-level recovery
+16. **Recovery Mode Entry**: Enter EDL/Download/DSU modes with guided instructions
+17. **Complete Unbrick**: Flash firmware and restore device to working state
 
 ### Traditional Workflow (Still Supported)
 - Build kernel → Manual download → Separate flashing tools

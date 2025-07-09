@@ -38,6 +38,12 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - **Recovery Management**: TWRP flashing and custom recovery operations
 - **Magisk Integration**: Boot image patching, ZIP sideloading, and root management
 - **Device Diagnostics**: Hardware information, root detection, bootloader status
+- **Device Unbrick System**: Complete recovery solution for bricked devices
+  - Automatic brick type detection (soft, hard, semi, bootloop)
+  - GSM Sources repair cable support with 6 DIP switches
+  - Multiple recovery modes: EDL, Download, DSU, Recovery, Bootloader
+  - Hardware and software recovery methods
+  - Real-time progress monitoring via WebSocket
 
 ## Key Components
 
@@ -131,6 +137,10 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - July 09, 2025: Added comprehensive post-build device management system with live ADB/Fastboot operations
 - July 09, 2025: Implemented complete Android customization pipeline from kernel compilation to device deployment
 - July 09, 2025: **DOCUMENTATION UPDATE** - Comprehensive revision of all guides, wiki, and XDA post with latest features
+- July 09, 2025: **DEVICE UNBRICK SYSTEM** - Revolutionary recovery solution with GSM Sources cable support
+- July 09, 2025: Implemented comprehensive unbrick functionality with automatic brick detection
+- July 09, 2025: Added GSM Sources repair cable integration with 6 DIP switches configuration
+- July 09, 2025: Created 5-tab Android Tool interface including Device Recovery tab
 
 ## User Preferences
 

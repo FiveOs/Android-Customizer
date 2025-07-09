@@ -111,6 +111,12 @@ A revolutionary web-based platform that unifies Android kernel compilation with 
 12. **Root Management**: KernelSU and Magisk operations
 13. **Device Optimization**: TCP congestion control and thermal management
 
+### Phase 4: Device Recovery (NEW)
+14. **Brick Detection**: Automatic analysis of device brick status
+15. **Recovery Mode Entry**: Enter EDL/Download/DSU modes via cable or buttons
+16. **GSM Sources Cable**: Configure DIP switches for hardware-level recovery
+17. **Complete Unbrick**: Flash firmware and restore device functionality
+
 ### Traditional Usage (Still Supported)
 - **Standalone Kernel Building**: Use just the kernel compilation features
 - **Configuration Management**: Save and load build templates
@@ -147,14 +153,19 @@ A revolutionary web-based platform that unifies Android kernel compilation with 
 - `POST /api/builds/:id/cancel` - Cancel running build
 
 ### Android Device Tool (NEW)
-- `GET /api/android-tool/device-info` - Get connected device information
-- `POST /api/android-tool/check-connectivity` - Check ADB/Fastboot status
-- `POST /api/android-tool/tweak-kernel` - Apply real-time kernel parameters
-- `POST /api/android-tool/flash-recovery` - Flash custom recovery image
-- `POST /api/android-tool/patch-boot` - Patch boot image with Magisk
-- `POST /api/android-tool/sideload-magisk` - Sideload Magisk ZIP
-- `POST /api/android-tool/dump-boot` - Extract boot image from device
-- `POST /api/android-tool/cancel-operation` - Cancel running operation
+- `GET /api/android/device/connectivity` - Check ADB/Fastboot connectivity
+- `GET /api/android/device/info` - Get connected device information
+- `POST /api/android/kernel/tweak` - Apply real-time kernel parameters
+- `POST /api/android/recovery/flash` - Flash custom recovery image
+- `POST /api/android/boot/patch` - Patch boot image with Magisk
+- `POST /api/android/magisk/sideload` - Sideload Magisk ZIP
+- `POST /api/android/boot/dump` - Extract boot image from device
+- `POST /api/android/operations/:operationId/cancel` - Cancel running operation
+
+### Device Unbrick API (NEW)
+- `POST /api/android/device/analyze-brick` - Analyze device brick status
+- `POST /api/android/unbrick/enter-mode` - Enter special recovery mode (EDL/Download/DSU)
+- `POST /api/android/unbrick/recover` - Complete unbrick procedure with firmware flash
 
 ### WSL Integration
 - `GET /api/wsl/status` - Check WSL availability
