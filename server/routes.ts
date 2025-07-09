@@ -425,7 +425,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Enter special mode (EDL, Download, DSU, etc.)
-  app.post("/api/android/device/enter-mode", async (req, res) => {
+  app.post("/api/android/unbrick/enter-mode", async (req, res) => {
     try {
       const { deviceMode, unbrickMethod, cableConfiguration, buttonCombo, forceMode } = req.body;
       const operationId = `enter_mode_${Date.now()}`;
@@ -445,7 +445,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Complete device unbrick procedure
-  app.post("/api/android/device/unbrick", async (req, res) => {
+  app.post("/api/android/unbrick/recover", async (req, res) => {
     try {
       const { deviceMode, firmwarePath, unbrickMethod, cableConfiguration, buttonCombo, forceMode } = req.body;
       const operationId = `unbrick_${Date.now()}`;

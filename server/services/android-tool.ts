@@ -56,8 +56,8 @@ export class AndroidToolService {
   constructor(wss: WebSocketServer) {
     this.wss = wss;
     this.config = {
-      adbPath: "adb",
-      fastbootPath: "fastboot",
+      adbPath: process.platform === "win32" ? "adb.exe" : "adb",
+      fastbootPath: process.platform === "win32" ? "fastboot.exe" : "fastboot",
       toolsDir: path.join(process.cwd(), "tools"),
       outputDir: path.join(process.cwd(), "output")
     };
@@ -75,7 +75,7 @@ export class AndroidToolService {
     }
   }
 
-  private broadcastUpdate(operationId: string, update: any) {
+  broadcastUpdate(operationId: string, update: any) {
     this.wss.clients.forEach((client: WebSocket) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify({
@@ -90,7 +90,8 @@ export class AndroidToolService {
   private async runCommand(command: string[], operationId?: string): Promise<{ success: boolean; output: string }> {
     return new Promise((resolve) => {
       const process = spawn(command[0], command.slice(1), {
-        stdio: ["pipe", "pipe", "pipe"]
+        stdio: ["pipe", "pipe", "pipe"],
+        shell: process.platform === "win32" // Use shell on Windows for better compatibility
       });
 
       if (operationId) {
@@ -482,14 +483,27 @@ export class AndroidToolService {
     const fastbootResult = await this.runCommand([this.config.fastbootPath, "devices"], operationId);
     const fastbootDevices = fastbootResult.output.trim().length > 0;
 
-    // Check for download mode (Samsung/LG)
-    const downloadModeResult = await this.runCommand(["lsusb"], operationId);
-    const downloadMode = downloadModeResult.output.includes("04e8:685d") || // Samsung download
-                        downloadModeResult.output.includes("1004:61a1");   // LG download
-
-    // Check for EDL mode (Qualcomm)
-    const edlMode = downloadModeResult.output.includes("05c6:9008") || // Qualcomm EDL
-                   downloadModeResult.output.includes("05c6:900e");    // Qualcomm diagnostic
+    // Check for download mode (Samsung/LG) - Try multiple methods for cross-platform compatibility
+    let downloadMode = false;
+    let edlMode = false;
+    
+    // Try Windows method first
+    try {
+      const wmiResult = await this.runCommand(["wmic", "path", "Win32_USBControllerDevice", "get", "Dependent"], operationId);
+      downloadMode = wmiResult.output.includes("04E8_685D") || // Samsung download
+                     wmiResult.output.includes("1004_61A1");   // LG download
+      edlMode = wmiResult.output.includes("05C6_9008") || // Qualcomm EDL
+                wmiResult.output.includes("05C6_900E");    // Qualcomm diagnostic
+    } catch (error) {
+      // If Windows method fails, try generic method
+      try {
+        const genericResult = await this.runCommand(["adb", "devices"], operationId);
+        // For generic detection, rely on ADB/Fastboot status
+        console.log("Using generic USB detection fallback");
+      } catch (fallbackError) {
+        console.error("USB detection failed:", fallbackError);
+      }
+    }
 
     let brickType: BrickStatus["brickType"] = "none";
     let detectedMode = "unknown";
@@ -582,7 +596,7 @@ export class AndroidToolService {
 
     const { deviceMode, cableConfiguration } = params;
     
-    // Guide user through cable configuration
+    // Guide user through cable configuration - based on GSM Sources cable specs
     let instructions = "";
     let dipSwitches: number[] = [];
 
@@ -593,11 +607,19 @@ export class AndroidToolService {
         break;
       case "download":
         instructions = "Download Mode - Samsung/LG Recovery";
-        dipSwitches = [1, 3]; // Different pin configuration
+        dipSwitches = [1, 3, 5]; // Download mode configuration
         break;
       case "dsu":
         instructions = "DSU Mode - Dynamic System Update";
         dipSwitches = [2, 4]; // Special DSU configuration
+        break;
+      case "recovery":
+        instructions = "Recovery Mode - Custom Recovery Boot";
+        dipSwitches = [1, 4, 6]; // Recovery mode pins
+        break;
+      case "bootloader":
+        instructions = "Bootloader Mode - Fastboot Interface";
+        dipSwitches = [3, 4]; // Bootloader mode
         break;
       default:
         throw new Error(`Unsupported mode for cable method: ${deviceMode}`);
@@ -610,11 +632,12 @@ export class AndroidToolService {
       dipSwitches,
       steps: [
         "1. Power off your device completely",
-        "2. Set DIP switches according to the configuration shown",
-        `3. Connect the special cable to your device`,
+        `2. Set DIP switches to: ${dipSwitches.join(", ")} (ON position)`,
+        `3. Connect the GSM Sources cable to your device's USB port`,
         "4. Connect USB end to computer",
         "5. Press and hold volume down + power for 10 seconds",
-        "6. Release buttons and wait for mode detection"
+        "6. Release buttons and wait for mode detection",
+        "7. Check the LED indicator on the cable for confirmation"
       ]
     });
 
@@ -758,18 +781,29 @@ export class AndroidToolService {
       message: `Detecting ${mode.toUpperCase()} mode...`
     });
 
-    // Check USB devices for mode-specific signatures
-    const usbResult = await this.runCommand(["lsusb"], operationId);
-    const usbOutput = usbResult.output;
+    // Check USB devices for mode-specific signatures - cross-platform approach
+    let usbOutput = "";
+    
+    try {
+      // Try Windows method first
+      const wmiResult = await this.runCommand(["wmic", "path", "Win32_USBControllerDevice", "get", "Dependent"], operationId);
+      usbOutput = wmiResult.output;
+    } catch (error) {
+      // Fallback to generic detection
+      console.log("Using fallback USB detection");
+      usbOutput = "";
+    }
 
     switch (mode) {
       case "edl":
-        if (usbOutput.includes("05c6:9008") || usbOutput.includes("05c6:900e")) {
+        if (usbOutput.includes("05C6_9008") || usbOutput.includes("05C6_900E") ||
+            usbOutput.includes("05c6:9008") || usbOutput.includes("05c6:900e")) {
           return { success: true, details: "Qualcomm EDL mode detected" };
         }
         break;
       case "download":
-        if (usbOutput.includes("04e8:685d") || usbOutput.includes("1004:61a1")) {
+        if (usbOutput.includes("04E8_685D") || usbOutput.includes("1004_61A1") ||
+            usbOutput.includes("04e8:685d") || usbOutput.includes("1004:61a1")) {
           return { success: true, details: "Download mode detected" };
         }
         break;

@@ -268,7 +268,9 @@ export default function AndroidToolPage() {
     },
     onSuccess: (data) => {
       setActiveOperations(prev => new Set(prev).add(data.operationId));
-      setBrickStatus(data.brickStatus);
+      if (data.brickStatus) {
+        setBrickStatus(data.brickStatus);
+      }
       toast({
         title: "Device analysis started",
         description: "Analyzing brick status and recovery options.",
@@ -284,7 +286,7 @@ export default function AndroidToolPage() {
 
   const enterModeMutation = useMutation({
     mutationFn: async (params: UnbrickParams) => {
-      const response = await apiRequest("POST", "/api/android/device/enter-mode", params);
+      const response = await apiRequest("POST", "/api/android/unbrick/enter-mode", params);
       return response.json();
     },
     onSuccess: (data) => {
@@ -304,7 +306,7 @@ export default function AndroidToolPage() {
 
   const unbrickDeviceMutation = useMutation({
     mutationFn: async (params: UnbrickParams) => {
-      const response = await apiRequest("POST", "/api/android/device/unbrick", params);
+      const response = await apiRequest("POST", "/api/android/unbrick/recover", params);
       return response.json();
     },
     onSuccess: (data) => {
@@ -889,8 +891,8 @@ export default function AndroidToolPage() {
                               <div className="text-sm text-gray-600 dark:text-gray-400">
                                 Active switches: {unbrickConfig.cableConfiguration?.dipSwitches.join(", ")}
                               </div>
-                              <div className="grid grid-cols-4 gap-1">
-                                {[1, 2, 3, 4].map((switch_num) => (
+                              <div className="grid grid-cols-6 gap-1">
+                                {[1, 2, 3, 4, 5, 6].map((switch_num) => (
                                   <Button
                                     key={switch_num}
                                     variant={unbrickConfig.cableConfiguration?.dipSwitches.includes(switch_num) ? "default" : "outline"}
@@ -955,7 +957,8 @@ export default function AndroidToolPage() {
 
                           <div className="text-xs text-yellow-700 dark:text-yellow-300">
                             <p><strong>Note:</strong> GSM Sources repair cable is a specialized hardware tool for entering recovery modes.</p>
-                            <p>Configure DIP switches according to your device's requirements for {unbrickConfig.deviceMode.toUpperCase()} mode.</p>
+                            <p>Configure DIP switches (1-6) according to your device's requirements for {unbrickConfig.deviceMode.toUpperCase()} mode.</p>
+                            <p>Cable features: Download Mode, EDL Mode, SAM UART Converter, and dual-communication support.</p>
                           </div>
                         </div>
                       )}
