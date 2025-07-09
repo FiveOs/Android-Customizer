@@ -9,6 +9,7 @@ import AuthPage from "@/pages/auth";
 import Home from "@/pages/home";
 import ConfigurationsPage from "@/pages/configurations";
 import BuildHistoryPage from "@/pages/build-history";
+import AndroidToolPage from "@/pages/android-tool";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -24,6 +25,7 @@ function Router() {
           <Route path="/kernel-builder" component={KernelBuilder} />
           <Route path="/configurations" component={ConfigurationsPage} />
           <Route path="/build-history" component={BuildHistoryPage} />
+          <Route path="/android-tool" component={AndroidToolPage} />
         </>
       )}
       <Route component={NotFound} />

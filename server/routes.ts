@@ -4,12 +4,14 @@ import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { insertKernelConfigurationSchema, insertBuildJobSchema } from "@shared/schema";
 import { KernelBuilderService } from "./services/kernel-builder";
+import { AndroidToolService } from "./services/android-tool";
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
   
   // WebSocket server for real-time build updates
   const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
   const kernelBuilder = new KernelBuilderService(wss);
+  const androidTool = new AndroidToolService(wss);
 
   // Basic auth middleware
   const isAuthenticated = (req: any, res: any, next: any) => {
@@ -287,6 +289,125 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(status);
     } catch (error) {
       res.status(500).json({ message: "Failed to check WSL status" });
+    }
+  });
+
+  // Android Tool API routes
+  
+  // Check device connectivity
+  app.get("/api/android/device/connectivity", async (req, res) => {
+    try {
+      const mode = req.query.mode as "adb" | "fastboot" || "adb";
+      const connected = await androidTool.checkDeviceConnectivity(mode);
+      res.json({ connected, mode });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to check device connectivity" });
+    }
+  });
+
+  // Get device information
+  app.get("/api/android/device/info", async (req, res) => {
+    try {
+      const deviceInfo = await androidTool.getDeviceInfo();
+      if (!deviceInfo) {
+        return res.status(404).json({ message: "No device found" });
+      }
+      res.json(deviceInfo);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get device info" });
+    }
+  });
+
+  // Tweak kernel parameters
+  app.post("/api/android/kernel/tweak", async (req, res) => {
+    try {
+      const { cpuGovernor, ioScheduler, tcpCongestion } = req.body;
+      const operationId = `tweak_${Date.now()}`;
+      
+      const success = await androidTool.tweakKernel({
+        cpuGovernor,
+        ioScheduler,
+        tcpCongestion
+      }, operationId);
+      
+      res.json({ success, operationId });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to tweak kernel" });
+    }
+  });
+
+  // Flash recovery image
+  app.post("/api/android/recovery/flash", async (req, res) => {
+    try {
+      const { recoveryImagePath } = req.body;
+      const operationId = `flash_recovery_${Date.now()}`;
+      
+      const success = await androidTool.flashRecovery(recoveryImagePath, operationId);
+      res.json({ success, operationId });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to flash recovery" });
+    }
+  });
+
+  // Patch boot image with Magisk
+  app.post("/api/android/boot/patch", async (req, res) => {
+    try {
+      const { bootImagePath, magiskBootPath } = req.body;
+      const operationId = `patch_boot_${Date.now()}`;
+      
+      const patchedImagePath = await androidTool.patchBootImage(
+        bootImagePath, 
+        magiskBootPath, 
+        operationId
+      );
+      
+      res.json({ 
+        success: !!patchedImagePath, 
+        patchedImagePath,
+        operationId 
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to patch boot image" });
+    }
+  });
+
+  // Sideload Magisk ZIP
+  app.post("/api/android/magisk/sideload", async (req, res) => {
+    try {
+      const { magiskZipPath } = req.body;
+      const operationId = `sideload_magisk_${Date.now()}`;
+      
+      const success = await androidTool.sideloadMagisk(magiskZipPath, operationId);
+      res.json({ success, operationId });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to sideload Magisk" });
+    }
+  });
+
+  // Dump boot image from device
+  app.post("/api/android/boot/dump", async (req, res) => {
+    try {
+      const operationId = `dump_boot_${Date.now()}`;
+      const bootImagePath = await androidTool.dumpBootImage(operationId);
+      
+      res.json({ 
+        success: !!bootImagePath, 
+        bootImagePath,
+        operationId 
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to dump boot image" });
+    }
+  });
+
+  // Cancel Android Tool operation
+  app.post("/api/android/operations/:operationId/cancel", async (req, res) => {
+    try {
+      const operationId = req.params.operationId;
+      const success = androidTool.cancelOperation(operationId);
+      res.json({ success, message: success ? "Operation cancelled" : "Operation not found" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to cancel operation" });
     }
   });
 

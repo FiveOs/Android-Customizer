@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "wouter";
-import { Settings, Plus, History, LogOut } from "lucide-react";
+import { Settings, Plus, History, LogOut, Smartphone } from "lucide-react";
 
 export default function Home() {
   const { user } = useAuth();
@@ -44,7 +44,7 @@ export default function Home() {
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer">
             <Link href="/kernel-builder">
               <CardHeader className="pb-3">
@@ -88,6 +88,22 @@ export default function Home() {
               <CardContent>
                 <CardDescription>
                   Review past kernel builds, download outputs, and check build logs
+                </CardDescription>
+              </CardContent>
+            </Link>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+            <Link href="/android-tool">
+              <CardHeader className="pb-3">
+                <div className="flex items-center space-x-2">
+                  <Smartphone className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+                  <CardTitle>Android Device Tool</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>
+                  Direct device management, kernel tweaking, recovery flashing, and Magisk operations
                 </CardDescription>
               </CardContent>
             </Link>

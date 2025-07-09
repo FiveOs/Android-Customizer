@@ -32,6 +32,13 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - **Compiler Support**: GCC and Clang with multiple versions
 - **Optimization**: ccache integration and Link Time Optimization (LTO)
 
+### Android Device Tool Integration
+- **Direct Device Control**: Real-time ADB/Fastboot operations via TypeScript service
+- **Live Kernel Tweaking**: Runtime CPU governor, I/O scheduler, and TCP congestion control
+- **Recovery Management**: TWRP flashing and custom recovery operations
+- **Magisk Integration**: Boot image patching, ZIP sideloading, and root management
+- **Device Diagnostics**: Hardware information, root detection, bootloader status
+
 ## Key Components
 
 ### Device Support System
@@ -120,6 +127,9 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - June 28, 2025: Initial setup with comprehensive kernel customization platform
 - June 28, 2025: GitHub integration completed - connected to FiveO's account (https://github.com/FiveOs)
 - June 28, 2025: Project rebranded to reflect developer identity and repository location
+- July 09, 2025: **HISTORIC INTEGRATION** - Unified FiveO's Android CLI tool with web platform
+- July 09, 2025: Added comprehensive post-build device management system with live ADB/Fastboot operations
+- July 09, 2025: Implemented complete Android customization pipeline from kernel compilation to device deployment
 
 ## User Preferences
 
