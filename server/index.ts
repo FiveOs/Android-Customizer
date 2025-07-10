@@ -41,13 +41,16 @@ const server = createServer(async (req: IncomingMessage, res: ServerResponse) =>
   const method = req.method || 'GET';
   const pathname = url.pathname;
 
-  // Set security and CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Set CORS headers - allow from Vite dev server
+  const origin = req.headers.origin || 'http://localhost:5173';
+  res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  // Remove restrictive security headers that might block requests
+  // res.setHeader('X-Frame-Options', 'DENY');
+  // res.setHeader('X-XSS-Protection', '1; mode=block');
 
   // Handle preflight requests
   if (method === 'OPTIONS') {
