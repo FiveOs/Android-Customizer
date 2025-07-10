@@ -8,6 +8,7 @@ import { db } from './db';
 import { WebSocketServer, WebSocket } from 'ws';
 import { KernelBuilderService } from './services/kernel-builder';
 import { AndroidToolService } from './services/android-tool';
+import { createServer as createViteServer } from 'vite';
 
 function log(message: string, source = "http") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -325,8 +326,21 @@ wss.on('connection', (ws: WebSocket) => {
 });
 
 const port = 5000;
-server.listen(port, '0.0.0.0', () => {
+server.listen(port, '0.0.0.0', async () => {
   log(`Android Kernel Customizer server running on port ${port}`);
   log('Migrated to native HTTP server - Express dependency issues resolved');
   log('WebSocket server ready for real-time updates', 'ws');
+  
+  // Start Vite dev server in development
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      const vite = await createViteServer({
+        server: { host: '0.0.0.0', port: 5173 },
+      });
+      await vite.listen();
+      log('Vite dev server running on port 5173');
+    } catch (error) {
+      log('Failed to start Vite dev server, continuing without it');
+    }
+  }
 });
