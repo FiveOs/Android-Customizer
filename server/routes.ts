@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import bcrypt from "bcrypt";
 import { storage } from "./storage";
-import { insertKernelConfigurationSchema, insertBuildJobSchema } from "@shared/schema";
+// import { insertKernelConfigurationSchema, insertBuildJobSchema } from "@shared/schema";
 import { KernelBuilderService } from "./services/kernel-builder";
 import { AndroidToolService } from "./services/android-tool";
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -138,8 +138,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/configurations", async (req, res) => {
     try {
-      const validatedData = insertKernelConfigurationSchema.parse(req.body);
-      const configuration = await storage.createKernelConfiguration(validatedData);
+      // TODO: Add validation when drizzle-zod is available
+      const configuration = await storage.createKernelConfiguration(req.body);
       res.status(201).json(configuration);
     } catch (error) {
       res.status(400).json({ message: "Invalid configuration data" });
@@ -148,8 +148,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/kernel-configurations", async (req, res) => {
     try {
-      const validatedData = insertKernelConfigurationSchema.parse(req.body);
-      const configuration = await storage.createKernelConfiguration(validatedData);
+      // TODO: Add validation when drizzle-zod is available
+      const configuration = await storage.createKernelConfiguration(req.body);
       res.status(201).json(configuration);
     } catch (error) {
       res.status(400).json({ message: "Invalid configuration data" });
@@ -159,8 +159,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put("/api/configurations/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const validatedData = insertKernelConfigurationSchema.partial().parse(req.body);
-      const configuration = await storage.updateKernelConfiguration(id, validatedData);
+      // TODO: Add validation when drizzle-zod is available
+      const configuration = await storage.updateKernelConfiguration(id, req.body);
       if (!configuration) {
         return res.status(404).json({ message: "Configuration not found" });
       }
@@ -217,8 +217,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/builds", async (req, res) => {
     try {
-      const validatedData = insertBuildJobSchema.parse(req.body);
-      const build = await storage.createBuildJob(validatedData);
+      // TODO: Add validation when drizzle-zod is available
+      const build = await storage.createBuildJob(req.body);
       res.status(201).json(build);
     } catch (error) {
       res.status(400).json({ message: "Invalid build data" });

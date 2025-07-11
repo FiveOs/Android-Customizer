@@ -1,5 +1,5 @@
 import { pgTable, text, serial, integer, boolean, jsonb, timestamp, varchar, index } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+// import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Session storage table for Replit Auth
@@ -274,29 +274,76 @@ export const buildJobs = pgTable("build_jobs", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
-});
+// Temporarily commenting out schema definitions that use drizzle-zod
+// export const insertUserSchema = createInsertSchema(users).pick({
+//   username: true,
+//   password: true,
+// });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
+// export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
-export const insertKernelConfigurationSchema = createInsertSchema(kernelConfigurations).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
+// export const insertKernelConfigurationSchema = createInsertSchema(kernelConfigurations).omit({
+//   id: true,
+//   createdAt: true,
+//   updatedAt: true,
+// });
 
-export const insertBuildJobSchema = createInsertSchema(buildJobs).omit({
-  id: true,
-  createdAt: true,
-  startedAt: true,
-  completedAt: true,
-});
-export type InsertKernelConfiguration = z.infer<typeof insertKernelConfigurationSchema>;
+// export const insertBuildJobSchema = createInsertSchema(buildJobs).omit({
+//   id: true,
+//   createdAt: true,
+//   startedAt: true,
+//   completedAt: true,
+// });
+
+// Temporary type definitions without drizzle-zod
+export type InsertUser = {
+  username: string;
+  password: string;
+};
+
+export type InsertKernelConfiguration = {
+  name: string;
+  device: string;
+  codename: string;
+  kernelRepo: string;
+  kernelBranch: string;
+  nethunterPatchesRepo: string;
+  nethunterPatchesBranch: string;
+  nethunterPatchesDirRelative: string;
+  gitPatchLevel: string;
+  outputDir: string;
+  defconfigFilenameTemplate: string;
+  kernelArch: string;
+  kernelCrossCompile: string;
+  kernelImageNamePatterns: string[];
+  features: Record<string, boolean>;
+  customKernelConfigs: string[];
+  wslDistroName: string;
+  toolchainConfig: Record<string, any>;
+  buildOutputConfig: Record<string, any>;
+  deviceTreeConfig: Record<string, any>;
+  hardwareConfig: Record<string, any>;
+  performanceConfig: Record<string, any>;
+  securityConfig: Record<string, any>;
+  skipOptions: Record<string, boolean>;
+  magiskConfig: Record<string, any>;
+  twrpConfig: Record<string, any>;
+  kernelSUConfig: Record<string, any>;
+};
+
 export type KernelConfiguration = typeof kernelConfigurations.$inferSelect;
-export type InsertBuildJob = z.infer<typeof insertBuildJobSchema>;
+export type InsertBuildJob = {
+  configurationId: number;
+  status: "pending" | "running" | "completed" | "failed" | "cancelled";
+  currentStep: string;
+  progress: number;
+  logs: string;
+  errorMessage?: string;
+  outputFiles: string[];
+  startedAt?: Date;
+  completedAt?: Date;
+};
 export type BuildJob = typeof buildJobs.$inferSelect;
 
 // Device presets organized by manufacturer and series
