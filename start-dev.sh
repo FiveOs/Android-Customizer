@@ -1,16 +1,19 @@
 #!/bin/bash
 
-# Start the API server in the background
-echo "Starting API server on port 5000..."
-NODE_ENV=development tsx server/index.ts &
-SERVER_PID=$!
+# Kill any existing Vite processes
+pkill -f vite || true
 
-# Wait for server to start
+# Start Vite in the background
+cd /home/runner/workspace
+echo "Starting Vite development server..."
+npx vite --host 0.0.0.0 --port 5173 &
+
+# Wait a moment for Vite to start
 sleep 2
 
-# Start Vite dev server
-echo "Starting Vite dev server on port 5173..."
-npx vite --host 0.0.0.0 --port 5173
-
-# Cleanup on exit
-trap "kill $SERVER_PID" EXIT
+# Check if Vite is running
+if ps aux | grep -v grep | grep vite > /dev/null; then
+    echo "Vite dev server started successfully on port 5173"
+else
+    echo "Failed to start Vite dev server"
+fi
