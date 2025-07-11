@@ -40,6 +40,7 @@ async function createServer() {
           strict: true,
           deny: ["**/.*"],
         },
+        hmr: false, // Disable HMR due to WebSocket binding issues on Replit
       },
     });
   }
