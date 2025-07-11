@@ -2,159 +2,97 @@
 
 ## Overview
 
-Android Kernel Customizer is a comprehensive web-based tool for building custom Android kernels with NetHunter security features. Developed by FiveO (https://github.com/FiveOs), it provides an intuitive interface for kernel compilation on Windows using WSL, supporting 40+ devices and offering advanced security research capabilities.
+Android Kernel Customizer is a comprehensive web-based tool for building custom Android kernels with NetHunter security patches and device-specific optimizations. The application provides an intuitive interface for kernel compilation, device management, and real-time build monitoring, designed specifically for Windows users with WSL2 integration.
 
-## Project Information
+## User Preferences
 
-- **Developer**: FiveO
-- **GitHub Repository**: https://github.com/FiveOs/android-kernel-customizer
-- **License**: MIT
+Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React with TypeScript
-- **UI Library**: Radix UI components with shadcn/ui styling
-- **Styling**: Tailwind CSS with dark theme support
-- **State Management**: React hooks and TanStack Query for server state
-- **Routing**: Wouter for client-side routing
+- **Framework**: React with TypeScript using Vite for development and bundling
+- **Routing**: Wouter for lightweight client-side routing
+- **State Management**: TanStack Query for server state management and caching
+- **UI Framework**: Custom component library built on Radix UI primitives with Tailwind CSS
+- **Real-time Communication**: WebSocket integration for live build progress updates
 
 ### Backend Architecture
-- **Runtime**: Node.js with Express framework
-- **Language**: TypeScript throughout
-- **Build System**: Vite for frontend bundling, esbuild for backend
-- **Session Management**: Express sessions with PostgreSQL storage
-- **Real-time Communication**: WebSocket for build progress updates
+- **Runtime**: Node.js with TypeScript
+- **Framework**: Express.js with custom routing and middleware
+- **Database ORM**: Drizzle ORM with Neon serverless PostgreSQL
+- **Authentication**: Replit OpenID Connect integration with session management
+- **Real-time**: WebSocket server for build progress and device communication
+- **Process Management**: Child process spawning for kernel builds and Android tools
 
-### Build System Integration
-- **Python Script**: `kernel_customizer.py` handles actual kernel compilation
-- **WSL Integration**: Detects and utilizes Windows Subsystem for Linux
-- **Compiler Support**: GCC and Clang with multiple versions
-- **Optimization**: ccache integration and Link Time Optimization (LTO)
+### Key Components
 
-### Android Device Tool Integration
-- **Direct Device Control**: Real-time ADB/Fastboot operations via TypeScript service
-- **Live Kernel Tweaking**: Runtime CPU governor, I/O scheduler, and TCP congestion control
-- **Recovery Management**: TWRP flashing and custom recovery operations
-- **Magisk Integration**: Boot image patching, ZIP sideloading, and root management
-- **Device Diagnostics**: Hardware information, root detection, bootloader status
-- **Developer Mode Helper**: Smart assistant for enabling developer mode
-  - Automatic device state detection (normal, recovery, fastboot, locked, unauthorized)
-  - Context-aware instructions based on current device state
-  - Recovery-mode developer enabler for locked devices
-  - Device-specific button combinations for recovery mode
-  - Step-by-step guidance for all Android versions
-- **Device Unbrick System**: Complete recovery solution for bricked devices
-  - Automatic brick type detection (soft, hard, semi, bootloop)
-  - GSM Sources repair cable support with 6 DIP switches
-  - Multiple recovery modes: EDL, Download, DSU, Recovery, Bootloader
-  - Hardware and software recovery methods
-  - Real-time progress monitoring via WebSocket
+#### Build System
+- **Kernel Builder Service**: Manages kernel compilation processes with Python script integration
+- **Android Tool Service**: Handles ADB/Fastboot operations and device management
+- **Real-time Progress**: WebSocket-based live updates during compilation
+- **Configuration Management**: Comprehensive device and feature configuration system
 
-## Key Components
+#### Device Support
+- **40+ Device Presets**: Pre-configured support for OnePlus, Nothing Phone, Fairphone, PinePhone
+- **NetHunter Integration**: Full support for Kali NetHunter patches and wireless drivers
+- **Custom Recovery**: TWRP and recovery management integration
+- **Root Solutions**: KernelSU and Magisk integration support
 
-### Device Support System
-- **Device Library**: 40+ preconfigured devices including OnePlus, Nothing Phone, Fairphone, PinePhone
-- **Device Presets**: Stored in shared schema with codename, kernel repo, and specifications
-- **LineageOS Integration**: Full custom ROM compatibility database
-
-### NetHunter Features
-- **Wireless Security**: WiFi monitor mode, packet injection, wireless drivers
-- **Attack Frameworks**: BadUSB, HID support, Bluetooth arsenal
-- **Hardware Support**: NFC hacking, SDR, RF analysis tools
-- **Driver Collection**: RTL8812AU, RT2800USB, ATH9K, and more
-
-### Root Solutions
-- **KernelSU**: Latest kernel-level root with manager app integration
-- **Magisk**: Full support with Zygisk, hide root, and deny list
-- **TWRP**: Custom recovery with themes and encryption support
-
-### Build Configuration
-- **Toolchain Options**: Compiler selection, optimization levels, debug settings
-- **Output Formats**: Boot image, kernel-only, modules, full package
-- **Security Features**: Kernel signing, verified boot, security patches
+#### Security Features
+- **Kernel Signing**: Support for verified boot and custom signing keys
+- **Security Patches**: Automated application of NetHunter security patches
+- **Vulnerability Scanning**: Integration with security scanning tools
 
 ## Data Flow
 
-### Configuration Management
-1. User selects device from preset library or custom configuration
-2. Feature toggles configure NetHunter capabilities
-3. Build options set compiler and optimization parameters
-4. Configuration saved to PostgreSQL database
-
-### Build Process
-1. Configuration validated and Python config generated
-2. Build job created in database with "pending" status
-3. WebSocket connection established for real-time updates
-4. Python script spawned with configuration parameters
-5. Build progress streamed via WebSocket to frontend
-6. Completed builds stored with logs and artifacts
-
-### Real-time Updates
-- WebSocket manager handles connection lifecycle
-- Build progress updates sent to all connected clients
-- Automatic reconnection with exponential backoff
-- Build logs captured and stored for debugging
+1. **User Authentication**: Users authenticate via Replit OpenID Connect
+2. **Configuration Creation**: Users create kernel configurations through the web interface
+3. **Build Process**: Configurations are converted to Python scripts and executed via child processes
+4. **Real-time Updates**: Build progress is streamed via WebSocket to the frontend
+5. **Device Management**: Android tools communicate directly with connected devices
+6. **Result Storage**: Build artifacts and logs are stored and made available for download
 
 ## External Dependencies
 
-### Database
-- **Primary**: PostgreSQL via Neon serverless
-- **ORM**: Drizzle with TypeScript schema definitions
-- **Sessions**: PostgreSQL session store for persistence
+### Core Dependencies
+- **Database**: Neon serverless PostgreSQL for production data storage
+- **Authentication**: Replit OpenID Connect service
+- **Build Tools**: Python kernel build scripts with WSL2 integration
+- **Android SDK**: ADB and Fastboot tools for device communication
 
-### Build Dependencies
-- **WSL2**: Required for Linux kernel compilation environment
-- **Python 3**: Kernel builder script execution
-- **Git**: Repository cloning and patch management
-- **Cross-compilation Tools**: GCC/Clang ARM64 toolchains
+### Development Tools
+- **Package Manager**: npm for dependency management
+- **Build System**: Vite for frontend development and production builds
+- **Code Quality**: TypeScript for type safety and better developer experience
 
-### Package Dependencies
-- **Frontend**: React ecosystem, Radix UI, Tailwind CSS
-- **Backend**: Express, WebSocket, session management
-- **Shared**: Zod for schema validation, TypeScript types
+### Infrastructure
+- **WebSocket**: ws library for real-time communication
+- **Session Storage**: PostgreSQL-backed session store
+- **File System**: Node.js fs module for build artifact management
 
 ## Deployment Strategy
 
 ### Development Environment
-- Vite dev server for frontend with HMR
-- tsx for TypeScript execution in development
-- Database migrations via Drizzle Kit
-- WSL integration for build testing
+- **Local Development**: Vite dev server with hot module replacement
+- **Database**: Uses environment variable `DATABASE_URL` for database connection
+- **Authentication**: Replit authentication integration for development
 
-### Production Build
-- Frontend built to static assets via Vite
-- Backend bundled with esbuild for Node.js deployment
-- PostgreSQL database with connection pooling
-- Session persistence across restarts
+### Production Considerations
+- **Build Process**: Static asset generation via Vite build
+- **Database**: Neon serverless PostgreSQL with connection pooling
+- **Session Management**: Secure session handling with PostgreSQL storage
+- **Process Management**: Child process spawning for kernel builds
+- **File Storage**: Local file system for build artifacts (consider cloud storage for scaling)
 
-### Platform Requirements
-- Windows 10/11 with WSL2 enabled
-- Ubuntu 22.04 or Kali Linux distribution
-- 16GB+ RAM (32GB recommended)
-- 100GB+ disk space for kernel sources and builds
+### Security Measures
+- **Session Security**: HTTP-only cookies with CSRF protection
+- **Database Security**: Parameterized queries via Drizzle ORM
+- **Process Isolation**: Sandboxed execution of build processes
+- **Authentication**: OAuth2/OpenID Connect via Replit
 
-## Changelog
-
-- June 28, 2025: Initial setup with comprehensive kernel customization platform
-- June 28, 2025: GitHub integration completed - connected to FiveO's account (https://github.com/FiveOs)
-- June 28, 2025: Project rebranded to reflect developer identity and repository location
-- July 09, 2025: **HISTORIC INTEGRATION** - Unified FiveO's Android CLI tool with web platform
-- July 09, 2025: Added comprehensive post-build device management system with live ADB/Fastboot operations
-- July 09, 2025: Implemented complete Android customization pipeline from kernel compilation to device deployment
-- July 09, 2025: **DOCUMENTATION UPDATE** - Comprehensive revision of all guides, wiki, and XDA post with latest features
-- July 09, 2025: **DEVICE UNBRICK SYSTEM** - Revolutionary recovery solution with GSM Sources cable support
-- July 09, 2025: Implemented comprehensive unbrick functionality with automatic brick detection
-- July 09, 2025: Added GSM Sources repair cable integration with 6 DIP switches configuration
-- July 09, 2025: Created 5-tab Android Tool interface including Device Recovery tab
-- July 09, 2025: **DEVELOPER MODE HELPER** - Smart assistant for enabling developer mode on any device state
-- July 09, 2025: Implemented device state detection (normal, recovery, fastboot, locked, unauthorized)
-- July 09, 2025: Added context-aware instructions for enabling developer mode based on device state
-- July 09, 2025: Created recovery-mode developer enabler for locked devices
-
-## User Preferences
-
-- **Developer**: FiveO (GitHub: https://github.com/FiveOs)
-- **Domains**: netbriq.com, five0s.net (parked at Squarespace)
-- **Communication style**: Simple, everyday language
-- **Repository**: https://github.com/FiveOs/android-kernel-customizer
+### Scalability Notes
+- **WebSocket Connections**: Consider implementing connection pooling for multiple concurrent builds
+- **Build Queue**: May need build queue management for high concurrency
+- **Storage**: Consider cloud storage solutions for build artifacts in production
+- **Database**: Neon provides automatic scaling for database connections
