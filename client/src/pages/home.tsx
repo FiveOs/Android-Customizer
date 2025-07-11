@@ -15,30 +15,30 @@ import GitHubHeader from "@/components/github-header";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-[#f6f8fa]">
       <GitHubHeader />
 
-      {/* Sub Navigation */}
-      <div className="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
-        <div className="container mx-auto px-4">
-          <nav className="flex space-x-8 h-12 items-center text-sm">
-            <Link href="/" className="flex items-center space-x-2 text-gray-900 dark:text-gray-100 border-b-2 border-orange-500 pb-3">
+      {/* GitHub-style Sub Navigation */}
+      <div className="bg-[#f6f8fa] border-b border-[#d1d5da] sticky top-0">
+        <div className="px-6">
+          <nav className="flex h-12 items-center text-[14px]">
+            <Link href="/" className="flex items-center space-x-2 px-4 py-2 border-b-2 border-[#fd8c73] text-[#24292e] font-semibold">
               <Book className="w-4 h-4" />
               <span>Overview</span>
             </Link>
-            <Link href="/kernel-builder" className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+            <Link href="/kernel-builder" className="flex items-center space-x-2 px-4 py-2 text-[#586069] hover:text-[#24292e] hover:border-b-2 hover:border-gray-300">
               <Package className="w-4 h-4" />
               <span>Kernels</span>
             </Link>
-            <Link href="/android-tool" className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+            <Link href="/android-tool" className="flex items-center space-x-2 px-4 py-2 text-[#586069] hover:text-[#24292e] hover:border-b-2 hover:border-gray-300">
               <Smartphone className="w-4 h-4" />
               <span>Devices</span>
             </Link>
-            <Link href="/build-history" className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+            <Link href="/build-history" className="flex items-center space-x-2 px-4 py-2 text-[#586069] hover:text-[#24292e] hover:border-b-2 hover:border-gray-300">
               <History className="w-4 h-4" />
               <span>Builds</span>
             </Link>
-            <Link href="/configurations" className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+            <Link href="/configurations" className="flex items-center space-x-2 px-4 py-2 text-[#586069] hover:text-[#24292e] hover:border-b-2 hover:border-gray-300">
               <Settings className="w-4 h-4" />
               <span>Settings</span>
             </Link>
@@ -46,176 +46,135 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Main Content */}
-          <div className="lg:col-span-2">
-            {/* Welcome Section */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 p-6 mb-6">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                Android Kernel Customizer
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Build custom Android kernels with NetHunter patches, security features, and performance optimizations.
-              </p>
-              <div className="flex space-x-2">
-                <Link href="/kernel-builder">
-                  <Button className="bg-green-600 hover:bg-green-700 text-white">
-                    <GitBranch className="w-4 h-4 mr-2" />
-                    New Kernel Build
+      {/* GitHub-style Main Content */}
+      <div className="px-6 py-6">
+        <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Main Content Area */}
+          <div className="lg:col-span-3">
+            {/* GitHub-style README Box */}
+            <div className="border border-[#d1d5da] rounded-[6px] bg-white">
+              <div className="px-4 py-2 border-b border-[#d1d5da] bg-[#f6f8fa]">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Book className="w-4 h-4 text-[#586069]" />
+                    <span className="text-[14px] font-semibold text-[#24292e]">README.md</span>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h1 className="text-[32px] font-semibold text-[#24292e] pb-2 mb-4 border-b border-[#eaecef]">
+                  Android Kernel Customizer
+                </h1>
+                <p className="text-[16px] text-[#24292e] mb-6">
+                  Build custom Android kernels with NetHunter patches, security features, and performance optimizations.
+                </p>
+                <div className="flex space-x-2 mb-8">
+                  <Link href="/kernel-builder">
+                    <Button className="bg-[#2ea44f] hover:bg-[#2c974b] text-white border-0 h-8 px-3 text-[14px] font-medium">
+                      <GitBranch className="w-4 h-4 mr-2" />
+                      New Kernel Build
+                    </Button>
+                  </Link>
+                  <Button className="bg-white hover:bg-[#f6f8fa] text-[#24292e] border border-[#d1d5da] h-8 px-3 text-[14px] font-medium">
+                    <Book className="w-4 h-4 mr-2" />
+                    Documentation
                   </Button>
-                </Link>
-                <Button variant="outline">
-                  <Book className="w-4 h-4 mr-2" />
-                  Read Documentation
-                </Button>
-              </div>
-            </div>
-
-            {/* Pinned Features */}
-            <div className="mb-6">
-              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-4">
-                Pinned Features
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400">
-                      NetHunter Integration
-                    </h4>
-                    <Star className="w-4 h-4 text-gray-400" />
-                  </div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
-                    Full Kali NetHunter patches with WiFi injection, HID attacks, and more
-                  </p>
-                  <div className="flex items-center text-xs text-gray-500 dark:text-gray-500">
-                    <span className="inline-block w-3 h-3 bg-purple-400 rounded-full mr-2"></span>
-                    Security
-                  </div>
                 </div>
-
-                <div className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400">
-                      40+ Device Support
-                    </h4>
-                    <Star className="w-4 h-4 text-gray-400" />
+                
+                <h2 className="text-[24px] font-semibold text-[#24292e] mb-4">Features</h2>
+                <div className="space-y-4 text-[16px] text-[#24292e]">
+                  <div>
+                    <h3 className="text-[20px] font-semibold mb-2">🔒 NetHunter Integration</h3>
+                    <p className="text-[#586069]">Full Kali NetHunter patches with WiFi injection, HID attacks, and more</p>
                   </div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
-                    OnePlus, Nothing Phone, Fairphone, PinePhone and many more
-                  </p>
-                  <div className="flex items-center text-xs text-gray-500 dark:text-gray-500">
-                    <span className="inline-block w-3 h-3 bg-green-400 rounded-full mr-2"></span>
-                    Compatibility
+                  <div>
+                    <h3 className="text-[20px] font-semibold mb-2">📱 40+ Device Support</h3>
+                    <p className="text-[#586069]">OnePlus, Nothing Phone, Fairphone, PinePhone and many more</p>
                   </div>
-                </div>
-
-                <div className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400">
-                      Advanced Toolchains
-                    </h4>
-                    <Star className="w-4 h-4 text-gray-400" />
+                  <div>
+                    <h3 className="text-[20px] font-semibold mb-2">⚡ Advanced Toolchains</h3>
+                    <p className="text-[#586069]">GCC/Clang compilers with LTO, ccache, and optimization options</p>
                   </div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
-                    GCC/Clang compilers with LTO, ccache, and optimization options
-                  </p>
-                  <div className="flex items-center text-xs text-gray-500 dark:text-gray-500">
-                    <span className="inline-block w-3 h-3 bg-blue-400 rounded-full mr-2"></span>
-                    Performance
-                  </div>
-                </div>
-
-                <div className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400">
-                      Device Management
-                    </h4>
-                    <Star className="w-4 h-4 text-gray-400" />
-                  </div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
-                    Live kernel tweaking, recovery flashing, and unbrick solutions
-                  </p>
-                  <div className="flex items-center text-xs text-gray-500 dark:text-gray-500">
-                    <span className="inline-block w-3 h-3 bg-orange-400 rounded-full mr-2"></span>
-                    Tools
+                  <div>
+                    <h3 className="text-[20px] font-semibold mb-2">🛠️ Device Management</h3>
+                    <p className="text-[#586069]">Live kernel tweaking, recovery flashing, and unbrick solutions</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Recent Activity */}
-            <div>
-              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-4">
-                Recent Activity
-              </h3>
-              <div className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 p-8">
-                <div className="text-center text-gray-500 dark:text-gray-400">
-                  <History className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                  <p className="text-sm">No recent kernel builds</p>
-                  <p className="text-xs mt-1">Start building to see your activity here</p>
-                </div>
+            {/* Recent Activity - GitHub Style */}
+            <div className="mt-6 border border-[#d1d5da] rounded-[6px] bg-white">
+              <div className="px-4 py-3 border-b border-[#d1d5da] bg-[#f6f8fa]">
+                <h3 className="text-[14px] font-semibold text-[#24292e]">Recent builds</h3>
+              </div>
+              <div className="p-6 text-center">
+                <History className="w-8 h-8 mx-auto mb-2 text-[#586069] opacity-50" />
+                <p className="text-[14px] text-[#586069]">No recent kernel builds</p>
+                <p className="text-[12px] text-[#586069] mt-1">Start building to see your activity here</p>
               </div>
             </div>
           </div>
 
-          {/* Right Sidebar */}
+          {/* GitHub-style Sidebar */}
           <div className="lg:col-span-1">
-            {/* Quick Actions */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 p-4 mb-6">
-              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3">
-                Quick Actions
-              </h3>
+            {/* About Section */}
+            <div className="mb-6">
+              <h3 className="text-[16px] font-semibold text-[#24292e] mb-3">About</h3>
+              <p className="text-[14px] text-[#586069] mb-4">
+                Professional Android kernel customization platform with NetHunter patches and security features
+              </p>
+              <div className="space-y-2 text-[14px]">
+                <div className="flex items-center space-x-2">
+                  <Book className="w-4 h-4 text-[#586069]" />
+                  <span className="text-[#586069]">MIT License</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Star className="w-4 h-4 text-[#586069]" />
+                  <span className="text-[#586069]">0 stars</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <GitFork className="w-4 h-4 text-[#586069]" />
+                  <span className="text-[#586069]">0 forks</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Resources Section */}
+            <div className="mb-6">
+              <h3 className="text-[16px] font-semibold text-[#24292e] mb-3">Resources</h3>
               <div className="space-y-2">
-                <Link href="/kernel-builder">
-                  <Button variant="outline" className="w-full justify-start text-sm">
-                    <Plus className="w-4 h-4 mr-2" />
-                    New Kernel Configuration
-                  </Button>
+                <Link href="/kernel-builder" className="flex items-center space-x-2 text-[14px] text-[#0366d6] hover:underline">
+                  <GitBranch className="w-4 h-4" />
+                  <span>New kernel build</span>
                 </Link>
-                <Link href="/configurations">
-                  <Button variant="outline" className="w-full justify-start text-sm">
-                    <GitFork className="w-4 h-4 mr-2" />
-                    Browse Templates
-                  </Button>
+                <Link href="/configurations" className="flex items-center space-x-2 text-[14px] text-[#0366d6] hover:underline">
+                  <Settings className="w-4 h-4" />
+                  <span>Browse configurations</span>
                 </Link>
-                <Link href="/android-tool">
-                  <Button variant="outline" className="w-full justify-start text-sm">
-                    <Smartphone className="w-4 h-4 mr-2" />
-                    Connect Device
-                  </Button>
+                <Link href="/android-tool" className="flex items-center space-x-2 text-[14px] text-[#0366d6] hover:underline">
+                  <Smartphone className="w-4 h-4" />
+                  <span>Device tools</span>
                 </Link>
               </div>
             </div>
 
-            {/* System Status */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 p-4">
-              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3">
-                System Status
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">WSL Environment</span>
-                  <span className="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded">
-                    Not Detected
-                  </span>
+            {/* Languages Section */}
+            <div className="mb-6">
+              <h3 className="text-[16px] font-semibold text-[#24292e] mb-3">Languages</h3>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <span className="w-3 h-3 bg-[#f1e05a] rounded-full"></span>
+                  <span className="text-[12px] text-[#586069]">TypeScript 65.2%</span>
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Build Queue</span>
-                  <span className="text-xs px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded">
-                    Empty
-                  </span>
+                <div className="flex items-center space-x-2">
+                  <span className="w-3 h-3 bg-[#3572A5] rounded-full"></span>
+                  <span className="text-[12px] text-[#586069]">Python 25.8%</span>
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Storage</span>
-                  <span className="text-gray-900 dark:text-gray-100">75% free</span>
+                <div className="flex items-center space-x-2">
+                  <span className="w-3 h-3 bg-[#e34c26] rounded-full"></span>
+                  <span className="text-[12px] text-[#586069]">HTML 9.0%</span>
                 </div>
-              </div>
-              <div className="mt-4 pt-4 border-t dark:border-gray-700">
-                <p className="text-xs text-gray-500 dark:text-gray-500">
-                  WSL2 with Ubuntu required for kernel builds
-                </p>
               </div>
             </div>
           </div>
