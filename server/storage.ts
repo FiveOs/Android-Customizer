@@ -1,12 +1,11 @@
-import { users, kernelConfigurations, buildJobs, type User, type InsertUser, type KernelConfiguration, type InsertKernelConfiguration, type BuildJob, type InsertBuildJob } from "@shared/schema";
+import { users, kernelConfigurations, buildJobs, type User, type UpsertUser, type KernelConfiguration, type InsertKernelConfiguration, type BuildJob, type InsertBuildJob } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 
 export interface IStorage {
-  // Users
-  getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  // User operations (Replit Auth)
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
 
   // Kernel Configurations
   getKernelConfiguration(id: number): Promise<KernelConfiguration | undefined>;
@@ -25,20 +24,22 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  async getUser(id: number): Promise<User | undefined> {
+  async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
-    return user;
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
+  async upsertUser(userData: UpsertUser): Promise<User> {
     const [user] = await db
       .insert(users)
-      .values(insertUser)
+      .values(userData)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          ...userData,
+          updatedAt: new Date(),
+        },
+      })
       .returning();
     return user;
   }
@@ -121,10 +122,9 @@ export class DatabaseStorage implements IStorage {
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<number, User>;
+  private users: Map<string, User>;
   private kernelConfigurations: Map<number, KernelConfiguration>;
   private buildJobs: Map<number, BuildJob>;
-  private currentUserId: number;
   private currentConfigId: number;
   private currentJobId: number;
 
@@ -132,25 +132,24 @@ export class MemStorage implements IStorage {
     this.users = new Map();
     this.kernelConfigurations = new Map();
     this.buildJobs = new Map();
-    this.currentUserId = 1;
     this.currentConfigId = 1;
     this.currentJobId = 1;
   }
 
-  async getUser(id: number): Promise<User | undefined> {
+  async getUser(id: string): Promise<User | undefined> {
     return this.users.get(id);
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.currentUserId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const now = new Date();
+    const existingUser = this.users.get(userData.id);
+    const user: User = {
+      ...existingUser,
+      ...userData,
+      createdAt: existingUser?.createdAt || now,
+      updatedAt: now,
+    };
+    this.users.set(userData.id, user);
     return user;
   }
 
