@@ -1,13 +1,17 @@
 // Temporarily using native HTTP server instead of Express due to path-to-regexp conflicts
 import { createServer, IncomingMessage, ServerResponse } from 'http';
-import { URL } from 'url';
+import { URL, fileURLToPath } from 'url';
 import { readFile } from 'fs/promises';
-import { join } from 'path';
+import { join, dirname } from 'path';
 import { storage } from './storage';
 import { db } from './db';
 import { WebSocketServer, WebSocket } from 'ws';
 import { KernelBuilderService } from './services/kernel-builder';
 import { AndroidToolService } from './services/android-tool';
+import { spawn } from 'child_process';
+
+// Check if we should start frontend too
+const shouldStartFrontend = process.env.START_FRONTEND === 'true';
 
 function log(message: string, source = "http") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -348,4 +352,29 @@ server.listen(port, '0.0.0.0', async () => {
   log(`Android Kernel Customizer server running on port ${port}`);
   log('Migrated to native HTTP server - Express dependency issues resolved');
   log('WebSocket server ready for real-time updates', 'ws');
+  
+  // Start frontend if requested
+  if (shouldStartFrontend) {
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+    const rootDir = join(__dirname, '..');
+    
+    setTimeout(() => {
+      log('Starting frontend server on port 5173...');
+      
+      const frontend = spawn('npx', ['vite', '--host', '0.0.0.0', '--port', '5173'], {
+        env: { ...process.env, REPL_ID: '', NODE_ENV: 'development' },
+        stdio: 'inherit',
+        cwd: rootDir
+      });
+
+      frontend.on('error', (err) => {
+        log(`Frontend error: ${err.message}`);
+      });
+
+      process.on('SIGINT', () => {
+        frontend.kill();
+        process.exit(0);
+      });
+    }, 2000);
+  }
 });
