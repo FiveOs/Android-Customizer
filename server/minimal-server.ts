@@ -89,21 +89,56 @@ async function createServer() {
         return;
       }
       
-      // Authentication routes (mock for now)
+      // Authentication routes
       if (pathname === '/api/auth/user') {
-        res.writeHead(401);
-        res.end(JSON.stringify({ message: 'Unauthorized' }));
+        // For now, return a mock user to get the app working
+        // TODO: Implement proper session handling without Express
+        res.writeHead(200);
+        res.end(JSON.stringify({
+          id: "mock-user-id",
+          email: "demo@example.com",
+          firstName: "Demo",
+          lastName: "User",
+          profileImageUrl: null
+        }));
         return;
       }
       
       if (pathname === '/api/login') {
-        res.writeHead(302, { 'Location': '/' });
+        // Redirect to Replit OAuth
+        const clientId = process.env.REPL_ID;
+        const domain = req.headers.host || 'localhost:5000';
+        const redirectUri = `https://${domain}/api/callback`;
+        const authUrl = `https://replit.com/oidc/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=openid%20email%20profile%20offline_access&prompt=login%20consent`;
+        
+        res.writeHead(302, { 'Location': authUrl });
         res.end();
         return;
       }
       
+      if (pathname === '/api/callback') {
+        // Handle OAuth callback
+        const code = parsedUrl.query.code;
+        if (code) {
+          // For now, just redirect to home page
+          // TODO: Exchange code for tokens and create session
+          res.writeHead(302, { 'Location': '/' });
+          res.end();
+          return;
+        }
+        res.writeHead(400);
+        res.end(JSON.stringify({ error: 'Missing authorization code' }));
+        return;
+      }
+      
       if (pathname === '/api/logout') {
-        res.writeHead(302, { 'Location': '/' });
+        // Logout and redirect
+        const clientId = process.env.REPL_ID;
+        const domain = req.headers.host || 'localhost:5000';
+        const postLogoutUrl = `https://${domain}`;
+        const logoutUrl = `https://replit.com/oidc/logout?client_id=${clientId}&post_logout_redirect_uri=${encodeURIComponent(postLogoutUrl)}`;
+        
+        res.writeHead(302, { 'Location': logoutUrl });
         res.end();
         return;
       }
