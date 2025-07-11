@@ -2,20 +2,29 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "wouter";
-import { Settings, Plus, History, LogOut, Smartphone } from "lucide-react";
+import { Settings, Plus, History, LogOut, Smartphone, Hammer, Code, Shield, Cpu, Wifi, Package } from "lucide-react";
+import logoPath from "@assets/ChatGPT Image Jul 12, 2025, 06_41_01 AM_1752273692249.png";
 
 export default function Home() {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950">
+      {/* Header */}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Android Kernel Customizer <span className="text-sm font-normal text-gray-500 dark:text-gray-400">by FiveO</span>
-            </h1>
+            <div className="flex items-center space-x-3">
+              <img src={logoPath} alt="Android Kernel Customizer" className="w-10 h-10 object-contain" />
+              <div>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+                  Android Kernel Customizer
+                </h1>
+                <p className="text-xs text-gray-500 dark:text-gray-400">by FiveO</p>
+              </div>
+            </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-3">
                 <Avatar className="w-8 h-8">
@@ -44,97 +53,221 @@ export default function Home() {
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <Link href="/kernel-builder">
-              <CardHeader className="pb-3">
-                <div className="flex items-center space-x-2">
-                  <Plus className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                  <CardTitle>New Kernel Build</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Create a new Android kernel configuration with NetHunter patches and custom features
-                </CardDescription>
-              </CardContent>
-            </Link>
-          </Card>
-
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <Link href="/configurations">
-              <CardHeader className="pb-3">
-                <div className="flex items-center space-x-2">
-                  <Settings className="w-6 h-6 text-green-600 dark:text-green-400" />
-                  <CardTitle>Saved Configurations</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  View and manage your saved kernel configurations and build templates
-                </CardDescription>
-              </CardContent>
-            </Link>
-          </Card>
-
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <Link href="/build-history">
-              <CardHeader className="pb-3">
-                <div className="flex items-center space-x-2">
-                  <History className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                  <CardTitle>Build History</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Review past kernel builds, download outputs, and check build logs
-                </CardDescription>
-              </CardContent>
-            </Link>
-          </Card>
-
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <Link href="/android-tool">
-              <CardHeader className="pb-3">
-                <div className="flex items-center space-x-2">
-                  <Smartphone className="w-6 h-6 text-orange-600 dark:text-orange-400" />
-                  <CardTitle>Android Device Tool</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Direct device management, kernel tweaking, recovery flashing, and Magisk operations
-                </CardDescription>
-              </CardContent>
-            </Link>
-          </Card>
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <img src={logoPath} alt="Android Kernel Customizer" className="w-32 h-32 mx-auto mb-6 object-contain" />
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Welcome to Android Kernel Customizer
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Build custom Android kernels with advanced security features, NetHunter patches, and performance optimizations.
+            Designed for security researchers and Android enthusiasts.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Quick Actions */}
+        <div className="mb-12">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
+            <Hammer className="w-5 h-5 mr-2" />
+            Quick Actions
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Link href="/kernel-builder">
+              <Button className="w-full h-24 flex flex-col items-center justify-center space-y-2" variant="default">
+                <Plus className="w-8 h-8" />
+                <span className="text-sm font-medium">New Kernel Build</span>
+              </Button>
+            </Link>
+            <Link href="/configurations">
+              <Button className="w-full h-24 flex flex-col items-center justify-center space-y-2" variant="outline">
+                <Settings className="w-8 h-8" />
+                <span className="text-sm font-medium">Saved Configs</span>
+              </Button>
+            </Link>
+            <Link href="/build-history">
+              <Button className="w-full h-24 flex flex-col items-center justify-center space-y-2" variant="outline">
+                <History className="w-8 h-8" />
+                <span className="text-sm font-medium">Build History</span>
+              </Button>
+            </Link>
+            <Link href="/android-tool">
+              <Button className="w-full h-24 flex flex-col items-center justify-center space-y-2" variant="outline">
+                <Smartphone className="w-8 h-8" />
+                <span className="text-sm font-medium">Device Tool</span>
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Feature Categories */}
+        <Tabs defaultValue="kernel" className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="kernel">Kernel Building</TabsTrigger>
+            <TabsTrigger value="security">Security Features</TabsTrigger>
+            <TabsTrigger value="device">Device Management</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="kernel" className="mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                      <Code className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <CardTitle>Custom Kernel Configuration</CardTitle>
+                      <CardDescription>Build kernels for 40+ supported devices</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li>• OnePlus, Nothing Phone, Fairphone, PinePhone</li>
+                    <li>• GCC and Clang compiler support</li>
+                    <li>• Link Time Optimization (LTO)</li>
+                    <li>• ccache integration for faster builds</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                      <Package className="w-6 h-6 text-green-600 dark:text-green-400" />
+                    </div>
+                    <div>
+                      <CardTitle>Build Output Options</CardTitle>
+                      <CardDescription>Multiple output formats available</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li>• Boot image generation</li>
+                    <li>• Kernel-only builds</li>
+                    <li>• Module packages</li>
+                    <li>• Full installation packages</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="security" className="mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                      <Shield className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div>
+                      <CardTitle>NetHunter Security Features</CardTitle>
+                      <CardDescription>Advanced security research capabilities</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li>• WiFi monitor mode & packet injection</li>
+                    <li>• BadUSB & HID attack support</li>
+                    <li>• NFC hacking capabilities</li>
+                    <li>• SDR & RF analysis tools</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-red-100 dark:bg-red-900 rounded-lg">
+                      <Wifi className="w-6 h-6 text-red-600 dark:text-red-400" />
+                    </div>
+                    <div>
+                      <CardTitle>Wireless Driver Support</CardTitle>
+                      <CardDescription>Extensive hardware compatibility</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li>• RTL8812AU, RT2800USB</li>
+                    <li>• ATH9K, MT7601U</li>
+                    <li>• Bluetooth arsenal</li>
+                    <li>• Custom driver injection</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="device" className="mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-orange-100 dark:bg-orange-900 rounded-lg">
+                      <Smartphone className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <div>
+                      <CardTitle>Direct Device Control</CardTitle>
+                      <CardDescription>Real-time ADB/Fastboot operations</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li>• Live kernel parameter tweaking</li>
+                    <li>• TWRP & custom recovery flashing</li>
+                    <li>• Magisk installation & management</li>
+                    <li>• Device unbrick solutions</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-teal-100 dark:bg-teal-900 rounded-lg">
+                      <Cpu className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+                    </div>
+                    <div>
+                      <CardTitle>Root Solutions</CardTitle>
+                      <CardDescription>Multiple root method support</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li>• KernelSU with manager app</li>
+                    <li>• Magisk with Zygisk support</li>
+                    <li>• Root hiding & deny lists</li>
+                    <li>• Boot image patching</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        {/* Recent Activity & Status */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
           <Card>
             <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
+              <CardTitle className="flex items-center">
+                <History className="w-5 h-5 mr-2" />
+                Recent Activity
+              </CardTitle>
               <CardDescription>Your latest kernel builds and configurations</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                  <div>
-                    <p className="font-medium text-gray-900 dark:text-white">OnePlus 7 Pro NetHunter</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Built 2 hours ago</p>
-                  </div>
-                  <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full">
-                    Success
-                  </span>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                  <div>
-                    <p className="font-medium text-gray-900 dark:text-white">Pixel 6 Custom</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Built yesterday</p>
-                  </div>
-                  <span className="px-2 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs rounded-full">
-                    Failed
-                  </span>
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  <History className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                  <p>No recent builds</p>
+                  <p className="text-sm mt-2">Start your first kernel build to see activity here</p>
                 </div>
               </div>
             </CardContent>
@@ -142,26 +275,50 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <CardTitle>System Status</CardTitle>
-              <CardDescription>Current build environment status</CardDescription>
+              <CardTitle className="flex items-center">
+                <Cpu className="w-5 h-5 mr-2" />
+                System Status
+              </CardTitle>
+              <CardDescription>Current build environment and resources</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-700 dark:text-gray-300">WSL Environment</span>
-                  <span className="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs rounded-full">
-                    Not Available
-                  </span>
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">WSL Environment</span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">Checking...</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="bg-yellow-500 h-2 rounded-full" style={{ width: '0%' }}></div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Build Queue</span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">0 jobs</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="bg-green-500 h-2 rounded-full" style={{ width: '0%' }}></div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Disk Space</span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">100GB required</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="bg-blue-500 h-2 rounded-full" style={{ width: '75%' }}></div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-700 dark:text-gray-300">Build Queue</span>
-                  <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full">
-                    Empty
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-700 dark:text-gray-300">Storage Space</span>
-                  <span className="text-gray-700 dark:text-gray-300">24.5 GB available</span>
+                
+                <div className="pt-4 border-t dark:border-gray-700">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                    Ready to build custom Android kernels
+                  </p>
                 </div>
               </div>
             </CardContent>
