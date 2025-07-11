@@ -1,380 +1,146 @@
-// Temporarily using native HTTP server instead of Express due to path-to-regexp conflicts
-import { createServer, IncomingMessage, ServerResponse } from 'http';
-import { URL, fileURLToPath } from 'url';
-import { readFile } from 'fs/promises';
-import { join, dirname } from 'path';
-import { storage } from './storage';
-import { db } from './db';
-import { WebSocketServer, WebSocket } from 'ws';
-import { KernelBuilderService } from './services/kernel-builder';
-import { AndroidToolService } from './services/android-tool';
-import { spawn } from 'child_process';
+import express, { type Request, Response, NextFunction } from "express";
+import session from "express-session";
+import helmet from "helmet";
+import cors from "cors";
+import rateLimit from "express-rate-limit";
+import { registerRoutes } from "./routes";
+import { setupVite, serveStatic, log } from "./vite";
 
-// Check if we should start frontend too
-const shouldStartFrontend = process.env.START_FRONTEND === 'true';
-
-function log(message: string, source = "http") {
-  const formattedTime = new Date().toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
-  });
-  console.log(`${formattedTime} [${source}] ${message}`);
+declare module 'express-session' {
+  interface SessionData {
+    userId: number;
+  }
 }
 
-function parseBody(req: IncomingMessage): Promise<any> {
-  return new Promise((resolve) => {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-    req.on('end', () => {
-      try {
-        resolve(body ? JSON.parse(body) : {});
-      } catch {
-        resolve({});
-      }
-    });
-  });
-}
+const app = express();
 
-const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
-  const url = new URL(req.url || '/', `http://${req.headers.host}`);
-  const method = req.method || 'GET';
-  const pathname = url.pathname;
+// Security middleware
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      imgSrc: ["'self'", "data:", "blob:", "https:"],
+      connectSrc: ["'self'", "ws:", "wss:"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'"],
+      frameSrc: ["'none'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
 
-  // Set CORS headers - allow from Vite dev server
-  const origin = req.headers.origin || 'http://localhost:5173';
-  res.setHeader('Access-Control-Allow-Origin', origin);
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  
-  // Remove restrictive security headers that might block requests
-  // res.setHeader('X-Frame-Options', 'DENY');
-  // res.setHeader('X-XSS-Protection', '1; mode=block');
+// CORS configuration
+const corsOptions = {
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || true,
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
-  // Handle preflight requests
-  if (method === 'OPTIONS') {
-    res.writeHead(200);
-    res.end();
-    return;
-  }
-
-  log(`${method} ${pathname}`);
-
-  try {
-    // API Routes
-    if (pathname === '/api/health') {
-      res.setHeader('Content-Type', 'application/json');
-      res.writeHead(200);
-      res.end(JSON.stringify({ 
-        status: 'ok', 
-        message: 'Android Kernel Customizer is running',
-        timestamp: new Date().toISOString(),
-        version: '1.0.0'
-      }));
-      return;
-    }
-
-    if (pathname === '/api/configurations' && method === 'GET') {
-      try {
-        const configurations = await storage.getKernelConfigurations();
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(200);
-        res.end(JSON.stringify(configurations));
-      } catch (error) {
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(500);
-        res.end(JSON.stringify({ message: 'Failed to fetch configurations' }));
-      }
-      return;
-    }
-
-    if (pathname === '/api/configurations' && method === 'POST') {
-      try {
-        const body = await parseBody(req);
-        const configuration = await storage.createKernelConfiguration(body);
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(201);
-        res.end(JSON.stringify(configuration));
-      } catch (error) {
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(400);
-        res.end(JSON.stringify({ message: 'Invalid configuration data' }));
-      }
-      return;
-    }
-
-    if (pathname.startsWith('/api/configurations/') && method === 'GET') {
-      const id = parseInt(pathname.split('/')[3]);
-      if (isNaN(id)) {
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(400);
-        res.end(JSON.stringify({ message: 'Invalid configuration ID' }));
-        return;
-      }
-      try {
-        const configuration = await storage.getKernelConfiguration(id);
-        if (!configuration) {
-          res.setHeader('Content-Type', 'application/json');
-          res.writeHead(404);
-          res.end(JSON.stringify({ message: 'Configuration not found' }));
-          return;
-        }
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(200);
-        res.end(JSON.stringify(configuration));
-      } catch (error) {
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(500);
-        res.end(JSON.stringify({ message: 'Failed to fetch configuration' }));
-      }
-      return;
-    }
-
-    // Build Jobs API
-    if (pathname === '/api/builds' && method === 'GET') {
-      try {
-        const builds = await storage.getBuildJobs();
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(200);
-        res.end(JSON.stringify(builds));
-      } catch (error) {
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(500);
-        res.end(JSON.stringify({ message: 'Failed to fetch builds' }));
-      }
-      return;
-    }
-
-    if (pathname === '/api/builds' && method === 'POST') {
-      try {
-        const body = await parseBody(req);
-        const buildJob = await storage.createBuildJob(body);
-        
-        // Start the actual build process
-        const configuration = await storage.getKernelConfiguration(buildJob.configurationId);
-        if (configuration) {
-          kernelBuilderService.startBuild(buildJob, configuration);
-        }
-        
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(201);
-        res.end(JSON.stringify(buildJob));
-      } catch (error) {
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(400);
-        res.end(JSON.stringify({ message: 'Invalid build data' }));
-      }
-      return;
-    }
-
-    if (pathname.match(/^\/api\/builds\/\d+$/) && method === 'DELETE') {
-      const id = parseInt(pathname.split('/')[3]);
-      try {
-        await kernelBuilderService.cancelBuild(id);
-        const success = await storage.deleteBuildJob(id);
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(success ? 200 : 404);
-        res.end(JSON.stringify({ success }));
-      } catch (error) {
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(500);
-        res.end(JSON.stringify({ message: 'Failed to cancel build' }));
-      }
-      return;
-    }
-
-    // Device presets API
-    if (pathname === '/api/device-presets' && method === 'GET') {
-      const { devicePresets } = await import('../shared/schema');
-      res.setHeader('Content-Type', 'application/json');
-      res.writeHead(200);
-      res.end(JSON.stringify(devicePresets));
-      return;
-    }
-
-    if (pathname === '/api/user' && method === 'GET') {
-      res.setHeader('Content-Type', 'application/json');
-      res.writeHead(401);
-      res.end(JSON.stringify({ message: 'Authentication system being migrated' }));
-      return;
-    }
-
-    // Frontend fallback - in dev, proxy to Vite
-    if (pathname === '/' || !pathname.startsWith('/api')) {
-      if (process.env.NODE_ENV === 'development') {
-        // Proxy to Vite dev server
-        const http = await import('http');
-        const options = {
-          hostname: 'localhost',
-          port: 5173,
-          path: req.url,
-          method: req.method,
-          headers: req.headers
-        };
-        
-        const proxyReq = http.request(options, (proxyRes) => {
-          res.writeHead(proxyRes.statusCode || 200, proxyRes.headers);
-          proxyRes.pipe(res);
-        });
-        
-        proxyReq.on('error', () => {
-          // If Vite is not running, serve fallback
-          res.setHeader('Content-Type', 'text/html');
-          res.writeHead(200);
-          res.end(`
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <title>Android Kernel Customizer</title>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <style>
-                  body { font-family: sans-serif; text-align: center; padding: 50px; }
-                  .status { color: green; }
-                  .warning { color: orange; background: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px auto; max-width: 600px; }
-                </style>
-              </head>
-              <body>
-                <h1>🔧 Android Kernel Customizer</h1>
-                <p class="status">✅ API Server is running on port 5000</p>
-                <div class="warning">
-                  <h3>⚠️ Frontend Development Server Starting...</h3>
-                  <p>The React frontend is starting up. Please wait a moment and refresh this page.</p>
-                  <p>If the issue persists, the Vite dev server may need to be started.</p>
-                </div>
-                <p>API Status: <a href="/api/health">/api/health</a></p>
-              </body>
-            </html>
-          `);
-        });
-        
-        req.pipe(proxyReq);
-      } else {
-        // In production, serve built files
-        try {
-          const filePath = pathname === '/' ? '/index.html' : pathname;
-          const fullPath = join(process.cwd(), 'dist', filePath);
-          const content = await readFile(fullPath);
-          
-          // Set appropriate content type
-          const ext = filePath.split('.').pop();
-          const contentTypes: Record<string, string> = {
-            'html': 'text/html',
-            'js': 'application/javascript',
-            'css': 'text/css',
-            'json': 'application/json',
-            'png': 'image/png',
-            'jpg': 'image/jpeg',
-            'svg': 'image/svg+xml'
-          };
-          
-          res.setHeader('Content-Type', contentTypes[ext || 'html'] || 'application/octet-stream');
-          res.writeHead(200);
-          res.end(content);
-        } catch {
-          // Serve index.html for client-side routing
-          try {
-            const indexPath = join(process.cwd(), 'dist', 'index.html');
-            const indexContent = await readFile(indexPath);
-            res.setHeader('Content-Type', 'text/html');
-            res.writeHead(200);
-            res.end(indexContent);
-          } catch {
-            res.writeHead(404);
-            res.end('Not Found');
-          }
-        }
-      }
-      return;
-    }
-
-    // 404 for unknown routes
-    res.setHeader('Content-Type', 'application/json');
-    res.writeHead(404);
-    res.end(JSON.stringify({ message: 'Not Found' }));
-
-  } catch (error) {
-    console.error('Server error:', error);
-    res.setHeader('Content-Type', 'application/json');
-    res.writeHead(500);
-    res.end(JSON.stringify({ message: 'Internal Server Error' }));
-  }
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
-// WebSocket server for real-time updates
-const wss = new WebSocketServer({ server });
-const kernelBuilderService = new KernelBuilderService(wss);
-const androidToolService = new AndroidToolService(wss);
+// Apply rate limiting to API routes
+app.use('/api/', limiter);
 
-wss.on('connection', (ws: WebSocket) => {
-  log('WebSocket client connected', 'ws');
-  
-  ws.on('message', async (message: string) => {
-    try {
-      const data = JSON.parse(message.toString());
-      log(`WebSocket message: ${data.type}`, 'ws');
-      
-      if (data.type === 'ping') {
-        ws.send(JSON.stringify({ type: 'pong' }));
-      }
-    } catch (error) {
-      console.error('WebSocket error:', error);
-    }
-  });
-  
-  ws.on('close', () => {
-    log('WebSocket client disconnected', 'ws');
-  });
+// Stricter rate limiting for auth routes
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // limit each IP to 5 requests per windowMs
+  message: 'Too many authentication attempts, please try again later.',
+  skipSuccessfulRequests: true,
 });
 
-const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+app.use('/api/login', authLimiter);
+app.use('/api/register', authLimiter);
 
-// Graceful error handling for port conflicts
-server.on('error', (error: any) => {
-  if (error.code === 'EADDRINUSE') {
-    log(`Port ${port} is already in use. Trying port ${port + 1}...`);
-    server.listen(port + 1, '0.0.0.0', () => {
-      log(`Android Kernel Customizer server running on port ${port + 1}`);
-      log('Migrated to native HTTP server - Express dependency issues resolved');
-      log('WebSocket server ready for real-time updates', 'ws');
-    });
+// Body parsing middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Session middleware with secure configuration
+const isProduction = process.env.NODE_ENV === 'production';
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'kernel-customizer-secret-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { 
+    secure: isProduction, // Require HTTPS in production
+    httpOnly: true, // Prevent XSS attacks
+    sameSite: 'strict', // CSRF protection
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  },
+  name: 'sessionId' // Change default session name
+}));
+
+app.use((req, res, next) => {
+  const start = Date.now();
+  const path = req.path;
+  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+
+  const originalResJson = res.json;
+  res.json = function (bodyJson, ...args) {
+    capturedJsonResponse = bodyJson;
+    return originalResJson.apply(res, [bodyJson, ...args]);
+  };
+
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    if (path.startsWith("/api")) {
+      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
+      if (capturedJsonResponse) {
+        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      }
+
+      if (logLine.length > 80) {
+        logLine = logLine.slice(0, 79) + "…";
+      }
+
+      log(logLine);
+    }
+  });
+
+  next();
+});
+
+(async () => {
+  const server = await registerRoutes(app);
+
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+
+    res.status(status).json({ message });
+    throw err;
+  });
+
+  // importantly only setup vite in development and after
+  // setting up all the other routes so the catch-all route
+  // doesn't interfere with the other routes
+  if (app.get("env") === "development") {
+    await setupVite(app, server);
   } else {
-    log(`Server error: ${error.message}`);
-    process.exit(1);
+    serveStatic(app);
   }
-});
 
-server.listen(port, '0.0.0.0', async () => {
-  log(`Android Kernel Customizer server running on port ${port}`);
-  log('Migrated to native HTTP server - Express dependency issues resolved');
-  log('WebSocket server ready for real-time updates', 'ws');
-  
-  // Start frontend if requested
-  if (shouldStartFrontend) {
-    const __dirname = dirname(fileURLToPath(import.meta.url));
-    const rootDir = join(__dirname, '..');
-    
-    setTimeout(() => {
-      log('Starting frontend server on port 5173...');
-      
-      const frontend = spawn('npx', ['vite', '--host', '0.0.0.0', '--port', '5173'], {
-        env: { ...process.env, REPL_ID: '', NODE_ENV: 'development' },
-        stdio: 'inherit',
-        cwd: rootDir
-      });
-
-      frontend.on('error', (err) => {
-        log(`Frontend error: ${err.message}`);
-      });
-
-      process.on('SIGINT', () => {
-        frontend.kill();
-        process.exit(0);
-      });
-    }, 2000);
-  }
-});
+  // ALWAYS serve the app on port 5000
+  // this serves both the API and the client.
+  // It is the only port that is not firewalled.
+  const port = 5000;
+  server.listen({
+    port,
+    host: "0.0.0.0",
+    reusePort: true,
+  }, () => {
+    log(`serving on port ${port}`);
+  });
+})();

@@ -122,24 +122,6 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - Database migrations via Drizzle Kit
 - WSL integration for build testing
 
-#### Running Both Servers
-Due to Replit plugin conflicts in vite.config.ts, the frontend requires special handling:
-
-**Backend Only (Current Workflow):**
-```bash
-npm run dev
-```
-
-**Frontend (Manual Start Required):**
-```bash
-REPL_ID="" npx vite --host 0.0.0.0 --port 5173
-```
-
-**Both Servers Together:**
-1. Option 1: Run `node dev.js` (uses concurrently)
-2. Option 2: Run backend normally, then start frontend with REPL_ID="" in separate terminal
-3. Option 3: Use `./run-both.sh` script
-
 ### Production Build
 - Frontend built to static assets via Vite
 - Backend bundled with esbuild for Node.js deployment
@@ -169,12 +151,6 @@ REPL_ID="" npx vite --host 0.0.0.0 --port 5173
 - July 09, 2025: Implemented device state detection (normal, recovery, fastboot, locked, unauthorized)
 - July 09, 2025: Added context-aware instructions for enabling developer mode based on device state
 - July 09, 2025: Created recovery-mode developer enabler for locked devices
-- July 10, 2025: **CRITICAL FIX** - Resolved Express/path-to-regexp dependency conflict
-- July 10, 2025: Migrated server to native HTTP implementation temporarily (bypassing Express issues)
-- July 10, 2025: Created modern landing page with live API testing interface
-- July 10, 2025: Server operational but in simplified mode - full feature migration pending
-- July 11, 2025: **VITE CONFIGURATION FIX** - Identified and resolved Replit plugin conflict preventing frontend startup
-- July 11, 2025: Backend server fully operational; frontend requires REPL_ID="" environment variable to bypass Replit plugins
 
 ## User Preferences
 
