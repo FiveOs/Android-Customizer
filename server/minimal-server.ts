@@ -41,6 +41,12 @@ async function createServer() {
           deny: ["**/.*"],
         },
         hmr: false, // Disable HMR due to WebSocket binding issues on Replit
+        allowedHosts: [
+          "3d602858-edd4-4e27-b15c-cfc964504eaf-00-t8m0c5omg1og.riker.replit.dev",
+          ".replit.dev",
+          ".replit.app",
+          "localhost"
+        ],
       },
     });
   }
