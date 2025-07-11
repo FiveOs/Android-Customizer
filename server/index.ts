@@ -327,11 +327,25 @@ wss.on('connection', (ws: WebSocket) => {
   });
 });
 
-const port = 5000;
+const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+
+// Graceful error handling for port conflicts
+server.on('error', (error: any) => {
+  if (error.code === 'EADDRINUSE') {
+    log(`Port ${port} is already in use. Trying port ${port + 1}...`);
+    server.listen(port + 1, '0.0.0.0', () => {
+      log(`Android Kernel Customizer server running on port ${port + 1}`);
+      log('Migrated to native HTTP server - Express dependency issues resolved');
+      log('WebSocket server ready for real-time updates', 'ws');
+    });
+  } else {
+    log(`Server error: ${error.message}`);
+    process.exit(1);
+  }
+});
+
 server.listen(port, '0.0.0.0', async () => {
   log(`Android Kernel Customizer server running on port ${port}`);
   log('Migrated to native HTTP server - Express dependency issues resolved');
   log('WebSocket server ready for real-time updates', 'ws');
-  
-
 });
