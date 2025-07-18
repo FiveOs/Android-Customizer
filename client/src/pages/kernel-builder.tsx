@@ -20,8 +20,11 @@ import HardwareDriversConfig from "@/components/hardware-drivers-config";
 import PerformanceConfig from "@/components/performance-config";
 import SecurityConfig from "@/components/security-config";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import BackButton from "@/components/back-button";
-import { Save, Play, Download, Upload } from "lucide-react";
+import FloatingActionButton from "@/components/floating-action-button";
+import { Save, Play, Download, Upload, Code, Zap } from "lucide-react";
 import { KernelConfiguration, InsertKernelConfiguration, BuildJob, devicePresets, DevicePreset } from "@shared/schema";
 
 export default function KernelBuilder() {
@@ -296,7 +299,7 @@ export default function KernelBuilder() {
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-900 text-slate-50">
+    <div className="min-h-screen flex bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900/20">
       <Sidebar
         currentStep={currentStep}
         wslStatus={wslStatus}
@@ -305,42 +308,183 @@ export default function KernelBuilder() {
       />
 
       <div className="flex-1 flex flex-col">
-        {/* Top Bar */}
-        <div className="h-16 bg-slate-800 border-b border-slate-700 flex items-center justify-between px-6">
-          <div className="flex items-center space-x-4">
-            <BackButton to="/" label="Home" className="text-slate-400 hover:text-white" />
-            <div>
-              <h2 className="text-lg font-medium text-white">Device Configuration</h2>
-              <p className="text-sm text-slate-400">Step 1 of 5 - Configure your target device and features</p>
+        {/* Enhanced Top Bar with Quick Selections */}
+        <div className="bg-slate-800/90 border-b border-emerald-500/20 backdrop-blur-sm">
+          {/* Header */}
+          <div className="flex items-center justify-between px-6 py-4">
+            <div className="flex items-center space-x-4">
+              <BackButton to="/" label="Home" className="text-slate-400 hover:text-emerald-400 transition-colors" />
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center border border-emerald-500/30">
+                  <Code className="text-emerald-400" size={20} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-white">Kernel Customizer</h2>
+                  <p className="text-sm text-emerald-400/80">Build your perfect Android kernel</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="outline"
+                onClick={handleSave}
+                disabled={saveConfigMutation.isPending}
+                className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+              >
+                <Save className="w-4 h-4 mr-2" />
+                Save Draft
+              </Button>
+              <Button
+                onClick={handleStartBuild}
+                disabled={startBuildMutation.isPending}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white border-0"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Start Build
+              </Button>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <Button
-              variant="outline"
-              onClick={handleSave}
-              disabled={saveConfigMutation.isPending}
-            >
-              <Save className="w-4 h-4 mr-2" />
-              Save Draft
-            </Button>
-            <Button
-              onClick={handleStartBuild}
-              disabled={startBuildMutation.isPending}
-            >
-              <Play className="w-4 h-4 mr-2" />
-              Start Build
-            </Button>
+          
+          {/* Quick Selection Bar */}
+          <div className="px-6 pb-4">
+            <div className="bg-slate-900/50 rounded-xl border border-emerald-500/20 p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-semibold text-emerald-400 flex items-center space-x-2">
+                  <Zap className="w-4 h-4" />
+                  <span>Quick Start Configuration</span>
+                </h3>
+                <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 bg-emerald-500/10">
+                  Select & Build
+                </Badge>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-slate-300">📱 Device</label>
+                  <Select onValueChange={(value) => handleDevicePresetChange(value as DevicePreset)}>
+                    <SelectTrigger className="bg-slate-700/50 border-emerald-500/30 text-white hover:border-emerald-400 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10">
+                      <SelectValue placeholder="Choose Device" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-800 border-emerald-500/30">
+                      <SelectItem value="oneplus_nord" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        📱 OnePlus Nord
+                      </SelectItem>
+                      <SelectItem value="oneplus_9_pro" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        📱 OnePlus 9 Pro
+                      </SelectItem>
+                      <SelectItem value="nothing_phone_1" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        📱 Nothing Phone 1
+                      </SelectItem>
+                      <SelectItem value="fairphone_4" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        📱 Fairphone 4
+                      </SelectItem>
+                      <SelectItem value="pinephone_pro" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        📱 PinePhone Pro
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-slate-300">🔓 Root Solution</label>
+                  <Select onValueChange={(value) => {
+                    const newFeatures = {...config.features};
+                    if (value === "kernelsu") {
+                      newFeatures.kernelSU = true;
+                      newFeatures.magiskIntegration = false;
+                    } else if (value === "magisk") {
+                      newFeatures.kernelSU = false;
+                      newFeatures.magiskIntegration = true;
+                    } else {
+                      newFeatures.kernelSU = true;
+                      newFeatures.magiskIntegration = true;
+                    }
+                    setConfig({...config, features: newFeatures});
+                  }}>
+                    <SelectTrigger className="bg-slate-700/50 border-emerald-500/30 text-white hover:border-emerald-400 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10">
+                      <SelectValue placeholder="Root Method" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-800 border-emerald-500/30">
+                      <SelectItem value="kernelsu" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        🔑 KernelSU (Recommended)
+                      </SelectItem>
+                      <SelectItem value="magisk" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        🎭 Magisk
+                      </SelectItem>
+                      <SelectItem value="both" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        ⚡ Both Solutions
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-slate-300">🔍 NetHunter Mode</label>
+                  <Select onValueChange={(value) => {
+                    const newFeatures = {...config.features};
+                    if (value === "full") {
+                      newFeatures.wifiMonitorMode = true;
+                      newFeatures.packetInjection = true;
+                      newFeatures.badUSB = true;
+                      newFeatures.bluetoothArsenal = true;
+                    } else if (value === "lite") {
+                      newFeatures.wifiMonitorMode = true;
+                      newFeatures.packetInjection = false;
+                      newFeatures.badUSB = false;
+                      newFeatures.bluetoothArsenal = false;
+                    }
+                    setConfig({...config, features: newFeatures});
+                  }}>
+                    <SelectTrigger className="bg-slate-700/50 border-emerald-500/30 text-white hover:border-emerald-400 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10">
+                      <SelectValue placeholder="NetHunter" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-800 border-emerald-500/30">
+                      <SelectItem value="full" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        🚀 Full NetHunter
+                      </SelectItem>
+                      <SelectItem value="lite" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        💡 NetHunter Lite
+                      </SelectItem>
+                      <SelectItem value="custom" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        🔧 Custom Build
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-slate-300">⚡ Build Type</label>
+                  <Select onValueChange={(value) => setConfig({...config, outputFormat: value})}>
+                    <SelectTrigger className="bg-slate-700/50 border-emerald-500/30 text-white hover:border-emerald-400 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10">
+                      <SelectValue placeholder="Output" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-800 border-emerald-500/30">
+                      <SelectItem value="boot_img" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        📦 Boot Image
+                      </SelectItem>
+                      <SelectItem value="kernel_only" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        🔧 Kernel Only
+                      </SelectItem>
+                      <SelectItem value="full_package" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                        📱 Flashable ZIP
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Content Area */}
         <div className="flex-1 overflow-y-auto">
-          <div className="max-w-4xl mx-auto p-6 space-y-6">
-            <DeviceConfiguration
-              config={config}
-              onConfigChange={setConfig}
-              onPresetChange={handleDevicePresetChange}
-            />
+          <div className="max-w-4xl mx-auto p-6 space-y-8">
+            <div className="slide-in-effect">
+              <DeviceConfiguration
+                config={config}
+                onConfigChange={setConfig}
+                onPresetChange={handleDevicePresetChange}
+              />
+            </div>
 
             <FeatureToggles
               features={config.features || {
@@ -447,6 +591,15 @@ export default function KernelBuilder() {
           }}
         />
       )}
+
+      {/* Floating Action Button */}
+      <FloatingActionButton
+        onQuickBuild={handleStartBuild}
+        onSave={handleSave}
+        onExport={handleExportConfig}
+        onImport={handleImportConfig}
+        isBuilding={startBuildMutation.isPending || !!activeBuildId}
+      />
 
       {/* Hidden file input for import */}
       <input

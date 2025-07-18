@@ -264,32 +264,61 @@ export default function FeatureToggles({ features, onFeaturesChange }: FeatureTo
   };
 
   return (
-    <div className="space-y-6">
-      {featureGroups.map((group) => (
-        <Card key={group.title} className="bg-slate-800 border-slate-700">
-          <CardHeader className="border-b border-slate-700">
-            <CardTitle className="text-white">{group.title}</CardTitle>
-            <CardDescription>{group.description}</CardDescription>
+    <div className="space-y-6 slide-in-effect">
+      <div className="text-center relative mb-8">
+        <div className="inline-flex items-center space-x-3 p-4 bg-slate-900/50 rounded-xl border border-emerald-500/20 float-effect">
+          <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center border border-emerald-500/30 pulse-glow-effect">
+            <Shield className="text-emerald-400" size={24} />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-1">NetHunter Features</h2>
+            <p className="text-emerald-400/80">Configure security features and capabilities for your custom kernel</p>
+          </div>
+        </div>
+      </div>
+      
+      {featureGroups.map((group, groupIndex) => (
+        <Card key={group.title} className="bg-slate-800/90 border-emerald-500/20 backdrop-blur-sm hover:border-emerald-500/40 transition-all duration-300 slide-in-effect" style={{animationDelay: `${groupIndex * 0.1}s`}}>
+          <CardHeader className="border-b border-emerald-500/20 bg-slate-900/50">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center border border-emerald-500/30">
+                <Shield className="text-emerald-400" size={20} />
+              </div>
+              <div>
+                <CardTitle className="text-white text-xl">{group.title}</CardTitle>
+                <CardDescription className="text-emerald-400/70">{group.description}</CardDescription>
+              </div>
+            </div>
           </CardHeader>
           <CardContent className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {group.features.map((feature) => {
+              {group.features.map((feature, featureIndex) => {
                 const Icon = feature.icon;
                 const isEnabled = features[feature.key];
                 
                 return (
                   <div
                     key={feature.key}
-                    className="p-4 bg-slate-700/50 rounded-lg border border-slate-600"
+                    className={`p-4 rounded-lg border transition-all duration-300 hover:scale-105 cursor-pointer ${
+                      isEnabled 
+                        ? 'bg-emerald-900/30 border-emerald-500/40 glow-effect' 
+                        : 'bg-slate-700/50 border-slate-600 hover:border-emerald-500/30'
+                    }`}
+                    style={{animationDelay: `${(groupIndex * 0.1) + (featureIndex * 0.05)}s`}}
+                    onClick={() => handleFeatureChange(feature.key)(!isEnabled)}
                   >
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center space-x-3">
-                        <div className={`w-8 h-8 bg-${feature.color}-500/20 rounded-lg flex items-center justify-center`}>
-                          <Icon className={`text-${feature.color}-400`} size={16} />
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center border transition-all duration-300 ${
+                          isEnabled
+                            ? `bg-emerald-500/30 border-emerald-500/50`
+                            : `bg-slate-600/30 border-slate-500/50`
+                        }`}>
+                          <Icon className={isEnabled ? 'text-emerald-400' : 'text-slate-400'} size={18} />
                         </div>
                         <div>
-                          <h4 className="font-medium text-white">{feature.title}</h4>
-                          <p className="text-xs text-slate-400">{feature.description}</p>
+                          <h4 className="font-semibold text-white">{feature.title}</h4>
+                          <p className="text-sm text-slate-400">{feature.description}</p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
@@ -297,15 +326,23 @@ export default function FeatureToggles({ features, onFeaturesChange }: FeatureTo
                           id={feature.key}
                           checked={isEnabled}
                           onCheckedChange={handleFeatureChange(feature.key)}
+                          className="data-[state=checked]:bg-emerald-600"
                         />
                         <Label htmlFor={feature.key} className="sr-only">
                           {feature.title}
                         </Label>
                       </div>
                     </div>
-                    <div className="text-xs text-slate-500">
+                    <div className={`text-xs transition-colors duration-300 ${
+                      isEnabled ? 'text-emerald-400/80' : 'text-slate-500'
+                    }`}>
                       {feature.details}
                     </div>
+                    {isEnabled && (
+                      <div className="mt-2 text-xs text-emerald-400 font-medium">
+                        ✓ Enabled
+                      </div>
+                    )}
                   </div>
                 );
               })}
