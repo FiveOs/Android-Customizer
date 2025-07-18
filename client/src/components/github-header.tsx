@@ -15,12 +15,12 @@ export default function GitHubHeader() {
   const { user } = useAuth();
 
   return (
-    <header className="bg-background border-b border-border">
+    <header className="bg-slate-800 border-b border-emerald-500/30" style={{backgroundColor: '#1e293b', borderColor: 'rgba(16, 185, 129, 0.3)'}}>
       <div className="px-6">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
             <Link href="/">
-              <h1 className="text-[14px] font-semibold hover:opacity-80 cursor-pointer text-primary">
+              <h1 className="text-[14px] font-semibold hover:opacity-80 cursor-pointer text-emerald-400" style={{color: '#4ade80'}}>
                 Android Kernel Customizer
               </h1>
             </Link>

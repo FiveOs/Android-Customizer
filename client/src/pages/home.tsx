@@ -15,7 +15,7 @@ import GitHubHeader from "@/components/github-header";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-slate-900 text-emerald-100" style={{backgroundColor: '#0f172a', color: '#d1fae5'}}>
       <GitHubHeader />
 
       {/* NetHunter-style Sub Navigation */}

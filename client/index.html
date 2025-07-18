@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark" style="background-color: #0f172a !important;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
@@ -8,11 +8,24 @@
     <meta property="og:title" content="Android Kernel Customizer" />
     <meta property="og:description" content="Build custom Android kernels with NetHunter features using an intuitive web interface" />
     <meta property="og:url" content="https://github.com/FiveOs/android-kernel-customizer" />
+    <meta name="cache-control" content="no-cache, no-store, must-revalidate" />
+    <meta name="pragma" content="no-cache" />
+    <meta name="expires" content="0" />
     <title>Android Kernel Customizer - FiveO</title>
+    <style>
+      /* FORCE NetHunter Theme - Override Browser Cache */
+      html, body, #root { 
+        background-color: #0f172a !important; 
+        color: #d1fae5 !important; 
+        margin: 0 !important; 
+        padding: 0 !important; 
+      }
+      body { font-family: 'Inter', sans-serif !important; }
+    </style>
   </head>
-  <body>
+  <body class="dark" style="background-color: #0f172a !important; color: #d1fae5 !important;">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx?v=1752878500"></script>
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>

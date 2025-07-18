@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* FORCE CACHE BUST - NetHunter Theme v2.1 */
+
 /* NetHunter Theme Enhancements */
 @keyframes glow {
   0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.3); }
@@ -134,12 +136,20 @@
 }
 
 @layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     font-family: "Inter", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  
+  html {
+    background-color: hsl(var(--background));
   }
 
   .font-mono {

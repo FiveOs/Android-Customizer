@@ -299,7 +299,7 @@ export default function KernelBuilder() {
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900/20">
+    <div className="min-h-screen flex bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900/20" style={{background: 'linear-gradient(to bottom right, #0f172a, #1e293b, rgba(16, 185, 129, 0.2))'}}>
       <Sidebar
         currentStep={currentStep}
         wslStatus={wslStatus}

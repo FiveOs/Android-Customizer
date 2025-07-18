@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
 import KernelBuilder from "@/pages/kernel-builder";
 import Landing from "@/pages/landing";
 import Home from "@/pages/home";
@@ -34,13 +35,23 @@ function Router() {
 }
 
 function App() {
+  // Ensure dark theme is applied immediately
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+    document.body.classList.add('dark');
+    document.body.style.backgroundColor = 'hsl(0, 0%, 8%)';
+    document.body.style.color = 'hsl(120, 100%, 85%)';
+  }, []);
+  
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <div className="dark min-h-screen bg-slate-900 text-emerald-100">
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </div>
   );
 }
 
