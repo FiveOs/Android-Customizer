@@ -216,16 +216,16 @@ export default function SecurityConfig({ config, onConfigChange }: SecurityConfi
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <Shield className="text-green-400" size={20} />
-              <h3 className="text-sm font-medium text-slate-300">Security Patches</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">Security Patches</h3>
             </div>
             
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-accent rounded-lg">
                 <div className="flex items-center space-x-3">
-                  <Shield className="text-green-400" size={16} />
+                  <Shield className="text-primary" size={16} />
                   <div>
-                    <span className="text-white text-sm font-medium">Enable Security Patching</span>
-                    <p className="text-xs text-slate-400">Apply latest security patches automatically</p>
+                    <span className="text-accent-foreground text-sm font-medium">Enable Security Patching</span>
+                    <p className="text-xs text-muted-foreground">Apply latest security patches automatically</p>
                   </div>
                 </div>
                 <Switch
@@ -262,7 +262,7 @@ export default function SecurityConfig({ config, onConfigChange }: SecurityConfi
                         variant="outline"
                         size="sm"
                         onClick={addPatch}
-                        className="bg-green-500/10 border-green-500/20 text-green-400 hover:bg-green-500/20"
+                        className="bg-primary/10 border-primary/20 text-primary hover:bg-primary/20"
                       >
                         <Plus className="w-4 h-4 mr-1" />
                         Add Patch
@@ -276,7 +276,7 @@ export default function SecurityConfig({ config, onConfigChange }: SecurityConfi
                             value={patch}
                             onChange={(e) => updatePatch(index, e.target.value)}
                             placeholder="CVE-2024-XXXXX.patch"
-                            className="flex-1 bg-slate-700 border-slate-600 text-white placeholder-slate-500 font-mono text-sm"
+                            className="flex-1 bg-input border-border text-foreground placeholder-muted-foreground font-mono text-sm"
                           />
                           <Button
                             variant="ghost"

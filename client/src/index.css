@@ -3,64 +3,66 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(222, 84%, 4.9%);
-  --foreground: hsl(210, 40%, 98%);
-  --muted: hsl(217, 32.6%, 17.5%);
-  --muted-foreground: hsl(215, 20.2%, 65.1%);
-  --popover: hsl(222, 84%, 4.9%);
-  --popover-foreground: hsl(210, 40%, 98%);
-  --card: hsl(222, 84%, 4.9%);
-  --card-foreground: hsl(210, 40%, 98%);
-  --border: hsl(217, 32.6%, 17.5%);
-  --input: hsl(217, 32.6%, 17.5%);
-  --primary: hsl(217, 91%, 60%);
-  --primary-foreground: hsl(222, 47%, 11%);
-  --secondary: hsl(217, 32.6%, 17.5%);
-  --secondary-foreground: hsl(210, 40%, 98%);
-  --accent: hsl(217, 32.6%, 17.5%);
-  --accent-foreground: hsl(210, 40%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(210, 40%, 98%);
-  --ring: hsl(217, 91%, 60%);
+  /* NetHunter Dark Theme - Primary Colors */
+  --background: hsl(0, 0%, 8%);
+  --foreground: hsl(120, 100%, 85%);
+  --muted: hsl(0, 0%, 12%);
+  --muted-foreground: hsl(120, 30%, 60%);
+  --popover: hsl(0, 0%, 10%);
+  --popover-foreground: hsl(120, 100%, 85%);
+  --card: hsl(0, 0%, 12%);
+  --card-foreground: hsl(120, 100%, 85%);
+  --border: hsl(120, 40%, 25%);
+  --input: hsl(0, 0%, 15%);
+  --primary: hsl(120, 80%, 50%);
+  --primary-foreground: hsl(0, 0%, 8%);
+  --secondary: hsl(0, 0%, 15%);
+  --secondary-foreground: hsl(120, 100%, 85%);
+  --accent: hsl(120, 60%, 20%);
+  --accent-foreground: hsl(120, 100%, 85%);
+  --destructive: hsl(0, 80%, 50%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(120, 80%, 50%);
   --radius: 0.5rem;
-  --sidebar-background: hsl(222, 84%, 4.9%);
-  --sidebar-foreground: hsl(210, 40%, 98%);
-  --sidebar-primary: hsl(217, 91%, 60%);
-  --sidebar-primary-foreground: hsl(222, 47%, 11%);
-  --sidebar-accent: hsl(217, 32.6%, 17.5%);
-  --sidebar-accent-foreground: hsl(210, 40%, 98%);
-  --sidebar-border: hsl(217, 32.6%, 17.5%);
-  --sidebar-ring: hsl(217, 91%, 60%);
+  --sidebar-background: hsl(0, 0%, 8%);
+  --sidebar-foreground: hsl(120, 100%, 85%);
+  --sidebar-primary: hsl(120, 80%, 50%);
+  --sidebar-primary-foreground: hsl(0, 0%, 8%);
+  --sidebar-accent: hsl(0, 0%, 15%);
+  --sidebar-accent-foreground: hsl(120, 100%, 85%);
+  --sidebar-border: hsl(120, 40%, 25%);
+  --sidebar-ring: hsl(120, 80%, 50%);
 }
 
 .dark {
-  --background: hsl(222, 84%, 4.9%);
-  --foreground: hsl(210, 40%, 98%);
-  --muted: hsl(217, 32.6%, 17.5%);
-  --muted-foreground: hsl(215, 20.2%, 65.1%);
-  --popover: hsl(222, 84%, 4.9%);
-  --popover-foreground: hsl(210, 40%, 98%);
-  --card: hsl(222, 84%, 4.9%);
-  --card-foreground: hsl(210, 40%, 98%);
-  --border: hsl(217, 32.6%, 17.5%);
-  --input: hsl(217, 32.6%, 17.5%);
-  --primary: hsl(217, 91%, 60%);
-  --primary-foreground: hsl(222, 47%, 11%);
-  --secondary: hsl(217, 32.6%, 17.5%);
-  --secondary-foreground: hsl(210, 40%, 98%);
-  --accent: hsl(217, 32.6%, 17.5%);
-  --accent-foreground: hsl(210, 40%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(210, 40%, 98%);
-  --ring: hsl(217, 91%, 60%);
-  --sidebar-background: hsl(222, 84%, 4.9%);
-  --sidebar-foreground: hsl(210, 40%, 98%);
-  --sidebar-primary: hsl(217, 91%, 60%);
-  --sidebar-primary-foreground: hsl(222, 47%, 11%);
-  --sidebar-accent: hsl(217, 32.6%, 17.5%);
-  --sidebar-accent-foreground: hsl(210, 40%, 98%);
-  --sidebar-border: hsl(217, 32.6%, 17.5%);
-  --sidebar-ring: hsl(217, 91%, 60%);
+  /* NetHunter Dark Theme - Same as root for consistency */
+  --background: hsl(0, 0%, 8%);
+  --foreground: hsl(120, 100%, 85%);
+  --muted: hsl(0, 0%, 12%);
+  --muted-foreground: hsl(120, 30%, 60%);
+  --popover: hsl(0, 0%, 10%);
+  --popover-foreground: hsl(120, 100%, 85%);
+  --card: hsl(0, 0%, 12%);
+  --card-foreground: hsl(120, 100%, 85%);
+  --border: hsl(120, 40%, 25%);
+  --input: hsl(0, 0%, 15%);
+  --primary: hsl(120, 80%, 50%);
+  --primary-foreground: hsl(0, 0%, 8%);
+  --secondary: hsl(0, 0%, 15%);
+  --secondary-foreground: hsl(120, 100%, 85%);
+  --accent: hsl(120, 60%, 20%);
+  --accent-foreground: hsl(120, 100%, 85%);
+  --destructive: hsl(0, 80%, 50%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(120, 80%, 50%);
+  --sidebar-background: hsl(0, 0%, 8%);
+  --sidebar-foreground: hsl(120, 100%, 85%);
+  --sidebar-primary: hsl(120, 80%, 50%);
+  --sidebar-primary-foreground: hsl(0, 0%, 8%);
+  --sidebar-accent: hsl(0, 0%, 15%);
+  --sidebar-accent-foreground: hsl(120, 100%, 85%);
+  --sidebar-border: hsl(120, 40%, 25%);
+  --sidebar-ring: hsl(120, 80%, 50%);
 }
 
 @layer base {
@@ -77,23 +79,41 @@
   }
 }
 
-/* Custom scrollbar for logs */
+/* NetHunter Custom scrollbar */
 .log-viewer::-webkit-scrollbar {
   width: 8px;
 }
 
 .log-viewer::-webkit-scrollbar-track {
-  background: hsl(217, 32.6%, 17.5%);
+  background: hsl(0, 0%, 12%);
   border-radius: 4px;
 }
 
 .log-viewer::-webkit-scrollbar-thumb {
-  background: hsl(215, 20.2%, 65.1%);
+  background: hsl(120, 40%, 25%);
   border-radius: 4px;
 }
 
 .log-viewer::-webkit-scrollbar-thumb:hover {
-  background: hsl(210, 40%, 98%);
+  background: hsl(120, 80%, 50%);
+}
+
+/* Global scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(0, 0%, 8%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(120, 40%, 25%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(120, 80%, 50%);
 }
 
 /* Animation for progress bars */
@@ -109,3 +129,79 @@
 .progress-pulse {
   animation: pulse-progress 1.5s ease-in-out infinite;
 }
+
+/* NetHunter Matrix Effect */
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.03;
+}
+
+/* NetHunter Terminal Glow Effect */
+.terminal-glow {
+  box-shadow: 0 0 10px hsl(var(--primary) / 0.3);
+  border: 1px solid hsl(var(--primary) / 0.5);
+}
+
+/* NetHunter Button Animations */
+@keyframes hacker-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px hsl(var(--primary) / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.8);
+  }
+}
+
+.hacker-button:hover {
+  animation: hacker-pulse 2s infinite;
+}
+
+/* NetHunter Text Glow */
+.text-glow {
+  text-shadow: 0 0 10px hsl(var(--primary) / 0.8);
+}
+
+/* NetHunter Custom Scrollbar Enhancement */
+::-webkit-scrollbar-corner {
+  background: hsl(var(--background));
+}
+
+/* NetHunter Loading Animation */
+@keyframes loading-dots {
+  0%, 20% {
+    color: hsl(var(--primary));
+    transform: scale(1);
+  }
+  40% {
+    color: hsl(var(--primary) / 0.5);
+    transform: scale(1.2);
+  }
+  60%, 100% {
+    color: hsl(var(--muted-foreground));
+    transform: scale(1);
+  }
+}
+
+.loading-dots span:nth-child(1) { animation-delay: 0ms; }
+.loading-dots span:nth-child(2) { animation-delay: 200ms; }
+.loading-dots span:nth-child(3) { animation-delay: 400ms; }

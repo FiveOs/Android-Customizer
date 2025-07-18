@@ -15,19 +15,19 @@ export default function GitHubHeader() {
   const { user } = useAuth();
 
   return (
-    <header className="bg-[#24292e] text-white border-b border-[#21262d]">
+    <header className="bg-background border-b border-border">
       <div className="px-6">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
             <Link href="/">
-              <h1 className="text-[14px] font-semibold hover:opacity-80 cursor-pointer">
+              <h1 className="text-[14px] font-semibold hover:opacity-80 cursor-pointer text-primary">
                 Android Kernel Customizer
               </h1>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
             <Link href="/kernel-builder">
-              <Button variant="ghost" size="sm" className="text-[#f0f6fc] hover:bg-[#30363d] border-0 h-8 px-3 text-[14px] font-normal">
+              <Button variant="ghost" size="sm" className="text-foreground hover:bg-accent border-0 h-8 px-3 text-[14px] font-normal">
                 <Plus className="w-4 h-4 mr-1" />
                 New
               </Button>

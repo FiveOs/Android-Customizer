@@ -102,14 +102,14 @@ export default function KernelSUConfiguration({ config, onConfigChange }: Kernel
 
               {/* Core Features */}
               <div className="space-y-4">
-                <h4 className="text-sm font-medium text-slate-300">Core Features</h4>
+                <h4 className="text-sm font-medium text-muted-foreground">Core Features</h4>
                 
-                <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-accent rounded-lg">
                   <div className="flex items-center space-x-3">
-                    <Settings className="text-blue-400" size={16} />
+                    <Settings className="text-primary" size={16} />
                     <div>
-                      <span className="text-white text-sm font-medium">Manager App</span>
-                      <p className="text-xs text-slate-400">Install KernelSU Manager APK for root management</p>
+                      <span className="text-accent-foreground text-sm font-medium">Manager App</span>
+                      <p className="text-xs text-muted-foreground">Install KernelSU Manager APK for root management</p>
                     </div>
                   </div>
                   <Switch
@@ -118,12 +118,12 @@ export default function KernelSUConfiguration({ config, onConfigChange }: Kernel
                   />
                 </div>
 
-                <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-accent rounded-lg">
                   <div className="flex items-center space-x-3">
-                    <Globe className="text-purple-400" size={16} />
+                    <Globe className="text-primary" size={16} />
                     <div>
-                      <span className="text-white text-sm font-medium">Web UI</span>
-                      <p className="text-xs text-slate-400">Enable web-based management interface</p>
+                      <span className="text-accent-foreground text-sm font-medium">Web UI</span>
+                      <p className="text-xs text-muted-foreground">Enable web-based management interface</p>
                     </div>
                   </div>
                   <Switch
@@ -132,12 +132,12 @@ export default function KernelSUConfiguration({ config, onConfigChange }: Kernel
                   />
                 </div>
 
-                <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-accent rounded-lg">
                   <div className="flex items-center space-x-3">
-                    <AlertTriangle className="text-yellow-400" size={16} />
+                    <AlertTriangle className="text-yellow-500" size={16} />
                     <div>
-                      <span className="text-white text-sm font-medium">Safe Mode</span>
-                      <p className="text-xs text-slate-400">Enable additional security checks and protections</p>
+                      <span className="text-accent-foreground text-sm font-medium">Safe Mode</span>
+                      <p className="text-xs text-muted-foreground">Enable additional security checks and protections</p>
                     </div>
                   </div>
                   <Switch

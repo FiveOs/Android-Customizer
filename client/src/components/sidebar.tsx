@@ -111,11 +111,11 @@ export default function Sidebar({ currentStep, wslStatus, onExportConfig, onImpo
       </div>
 
       {/* Quick Actions */}
-      <div className="p-6 border-t border-slate-700">
+      <div className="p-6 border-t border-border">
         <div className="space-y-2">
           <Button
             variant="ghost"
-            className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-700"
+            className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-accent"
             onClick={onExportConfig}
           >
             <Download className="w-4 h-4 mr-2" />
@@ -123,7 +123,7 @@ export default function Sidebar({ currentStep, wslStatus, onExportConfig, onImpo
           </Button>
           <Button
             variant="ghost"
-            className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-700"
+            className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-accent"
             onClick={() => document.getElementById("config-import")?.click()}
           >
             <Upload className="w-4 h-4 mr-2" />
@@ -131,7 +131,7 @@ export default function Sidebar({ currentStep, wslStatus, onExportConfig, onImpo
           </Button>
           <Button
             variant="ghost"
-            className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-700"
+            className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-accent"
           >
             <FileText className="w-4 h-4 mr-2" />
             View Build Logs
