@@ -84,3 +84,25 @@ kernel_build_output/
 # Replit
 .replit
 replit.nix
+.cache/
+.local/
+.upm/
+.config/
+
+# Development assets (moved to docs/assets)
+attached_assets/
+*.png
+*.jpg
+*.jpeg
+*.pdf
+
+# Temporary and cache files
+cookies.txt
+.DS_Store
+Thumbs.db
+
+# Build and development artifacts
+dist/
+build/
+coverage/
+.nyc_output
