@@ -35,7 +35,7 @@ async function createServer() {
       ...viteConfig,
       configFile: false,
       server: {
-        middlewareMode: 'ssr',
+        middlewareMode: true,
         fs: {
           strict: true,
           deny: ["**/.*"],
