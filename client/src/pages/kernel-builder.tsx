@@ -24,6 +24,8 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import BackButton from "@/components/back-button";
 import FloatingActionButton from "@/components/floating-action-button";
+import TabbedDeviceSelector from "@/components/tabbed-device-selector";
+import BreadcrumbNavigation from "@/components/breadcrumb-navigation";
 import { Save, Play, Download, Upload, Code, Zap } from "lucide-react";
 import { KernelConfiguration, InsertKernelConfiguration, BuildJob, devicePresets, DevicePreset } from "@shared/schema";
 
@@ -311,36 +313,38 @@ export default function KernelBuilder() {
         {/* Enhanced Top Bar with Quick Selections */}
         <div className="bg-slate-800/90 border-b border-emerald-500/20 backdrop-blur-sm">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4">
+          <div className="flex items-center justify-between px-6 py-3">
             <div className="flex items-center space-x-4">
               <BackButton to="/" label="Home" className="text-slate-400 hover:text-emerald-400 transition-colors" />
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center border border-emerald-500/30">
-                  <Code className="text-emerald-400" size={20} />
+                <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center border border-emerald-500/30">
+                  <Code className="text-emerald-400" size={16} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-semibold text-white">Kernel Customizer</h2>
-                  <p className="text-sm text-emerald-400/80">Build your perfect Android kernel</p>
+                  <h2 className="text-lg font-semibold text-white font-['Roboto_Condensed']">Kernel Customizer</h2>
+                  <p className="text-xs text-emerald-400/80">Build your perfect Android kernel</p>
                 </div>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               <Button
                 variant="outline"
+                size="sm"
                 onClick={handleSave}
                 disabled={saveConfigMutation.isPending}
-                className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+                className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 text-sm h-8"
               >
-                <Save className="w-4 h-4 mr-2" />
-                Save Draft
+                <Save className="w-3 h-3 mr-1" />
+                Save
               </Button>
               <Button
+                size="sm"
                 onClick={handleStartBuild}
                 disabled={startBuildMutation.isPending}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white border-0"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white border-0 text-sm h-8"
               >
-                <Play className="w-4 h-4 mr-2" />
-                Start Build
+                <Play className="w-3 h-3 mr-1" />
+                Build
               </Button>
             </div>
           </div>
@@ -477,16 +481,23 @@ export default function KernelBuilder() {
 
         {/* Content Area */}
         <div className="flex-1 overflow-y-auto">
-          <div className="max-w-4xl mx-auto p-6 space-y-8">
+          <div className="max-w-5xl mx-auto p-6 space-y-6">
+            <BreadcrumbNavigation 
+              items={[
+                { label: "Kernel Builder", href: "/kernel-builder" },
+                { label: "Configuration", current: true }
+              ]}
+            />
+            
             <div className="slide-in-effect">
-              <DeviceConfiguration
-                config={config}
-                onConfigChange={setConfig}
-                onPresetChange={handleDevicePresetChange}
+              <TabbedDeviceSelector
+                value={config.device || ""}
+                onChange={(value) => setConfig(prev => ({ ...prev, device: value }))}
               />
             </div>
 
-            <FeatureToggles
+            <div className="slide-in-effect" style={{animationDelay: '0.1s'}}>
+              <FeatureToggles
               features={config.features || {
                 // NetHunter Core Features
                 wifiMonitorMode: true,
@@ -609,6 +620,7 @@ export default function KernelBuilder() {
         style={{ display: 'none' }}
         id="config-import"
       />
+      </div>
     </div>
   );
 }
