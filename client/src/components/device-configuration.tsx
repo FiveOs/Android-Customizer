@@ -62,7 +62,7 @@ export default function DeviceConfiguration({ config, onConfigChange, onPresetCh
           preset.device.toLowerCase().includes(searchTerm.toLowerCase()) ||
           preset.codename.toLowerCase().includes(searchTerm.toLowerCase())
         )
-      ]).filter(([, devices]) => devices.length > 0);
+      ]).filter(([, devices]) => (devices as any[]).length > 0);
     }
 
     return filtered as [string, Array<{ key: DevicePreset; preset: typeof devicePresets[DevicePreset] }>][];

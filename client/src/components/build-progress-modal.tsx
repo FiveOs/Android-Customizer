@@ -67,7 +67,7 @@ export default function BuildProgressModal({ build, onClose, onCancel }: BuildPr
               </DialogDescription>
             </div>
             <div className="flex items-center space-x-3">
-              <Badge className={getStatusColor(build.status)}>
+              <Badge variant="outline" className={getStatusColor(build.status)}>
                 {build.status === "running" && <span className="animate-spin mr-1">⟳</span>}
                 {build.status.charAt(0).toUpperCase() + build.status.slice(1)}
               </Badge>

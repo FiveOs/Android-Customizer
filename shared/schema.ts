@@ -278,7 +278,13 @@ export const buildJobs = pgTable("build_jobs", {
 });
 
 // Schema definitions with drizzle-zod
-export const insertUserSchema = createInsertSchema(users).omit({
+export const insertUserSchema = createInsertSchema(users, {
+  id: z.string(),
+  email: z.string().email().optional(),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  profileImageUrl: z.string().url().optional(),
+}).omit({
   createdAt: true,
   updatedAt: true,
 });

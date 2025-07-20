@@ -1,7 +1,7 @@
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Rocket, Save, Download, Upload, Play, Zap } from "lucide-react";
-import { useState } from "react";
 
 interface FloatingActionButtonProps {
   onQuickBuild: () => void;
@@ -18,7 +18,7 @@ export default function FloatingActionButton({
   onImport, 
   isBuilding = false 
 }: FloatingActionButtonProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
 
   const actions = [
     {

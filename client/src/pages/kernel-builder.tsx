@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
@@ -31,9 +31,9 @@ import { KernelConfiguration, InsertKernelConfiguration, BuildJob, devicePresets
 
 export default function KernelBuilder() {
   const { toast } = useToast();
-  const [currentStep, setCurrentStep] = useState(1);
-  const [activeBuildId, setActiveBuildId] = useState<number | null>(null);
-  const [showBuildModal, setShowBuildModal] = useState(false);
+  const [currentStep, setCurrentStep] = React.useState(1);
+  const [activeBuildId, setActiveBuildId] = React.useState<number | null>(null);
+  const [showBuildModal, setShowBuildModal] = React.useState(false);
 
   // Configuration state
   const [config, setConfig] = useState<Partial<InsertKernelConfiguration>>({

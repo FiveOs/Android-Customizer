@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import * as React from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -68,23 +68,23 @@ interface UnbrickParams {
 
 export default function AndroidToolPage() {
   const { toast } = useToast();
-  const [deviceInfo, setDeviceInfo] = useState<DeviceInfo | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [activeOperations, setActiveOperations] = useState<Set<string>>(new Set());
-  const [operationLogs, setOperationLogs] = useState<Record<string, string[]>>({});
-  const [brickStatus, setBrickStatus] = useState<BrickStatus | null>(null);
-  const [showCableInstructions, setShowCableInstructions] = useState(false);
-  const [developerModeInstructions, setDeveloperModeInstructions] = useState<string[]>([]);
+  const [deviceInfo, setDeviceInfo] = React.useState<DeviceInfo | null>(null);
+  const [isConnected, setIsConnected] = React.useState(false);
+  const [activeOperations, setActiveOperations] = React.useState<Set<string>>(new Set());
+  const [operationLogs, setOperationLogs] = React.useState<Record<string, string[]>>({});
+  const [brickStatus, setBrickStatus] = React.useState<BrickStatus | null>(null);
+  const [showCableInstructions, setShowCableInstructions] = React.useState(false);
+  const [developerModeInstructions, setDeveloperModeInstructions] = React.useState<string[]>([]);
   
   // Kernel tweaking form state
-  const [kernelParams, setKernelParams] = useState({
+  const [kernelParams, setKernelParams] = React.useState({
     cpuGovernor: "",
     ioScheduler: "",
     tcpCongestion: ""
   });
 
   // File paths state
-  const [filePaths, setFilePaths] = useState({
+  const [filePaths, setFilePaths] = React.useState({
     recoveryImage: "",
     bootImage: "",
     magiskBoot: "",
@@ -93,7 +93,7 @@ export default function AndroidToolPage() {
   });
 
   // Unbrick configuration state
-  const [unbrickConfig, setUnbrickConfig] = useState<UnbrickParams>({
+  const [unbrickConfig, setUnbrickConfig] = React.useState<UnbrickParams>({
     deviceMode: "edl",
     unbrickMethod: "cable",
     cableConfiguration: {
@@ -108,7 +108,7 @@ export default function AndroidToolPage() {
   // WebSocket for real-time updates
   const { socket, isConnected: wsConnected } = useWebSocket();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (socket) {
       socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
@@ -152,7 +152,7 @@ export default function AndroidToolPage() {
     refetchInterval: 10000,
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (connectivity?.connected) {
       setIsConnected(true);
       if (deviceInfoQuery.data) {
