@@ -467,6 +467,65 @@
     background-color: rgb(30, 41, 59) !important;
     color: white !important;
   }
+
+  /* Extreme specificity - target every possible combination */
+  html body div[data-radix-select-content],
+  html body div[role="listbox"],
+  html body [data-radix-select-content],
+  html body [data-radix-select-viewport],
+  html body [data-radix-collection-item],
+  html body [data-radix-select-item] {
+    background: rgb(30, 41, 59) !important;
+    background-color: rgb(30, 41, 59) !important;
+  }
+
+  /* Override any inline styles or computed styles */
+  *[style*="background"] {
+    background: rgb(30, 41, 59) !important;
+    background-color: rgb(30, 41, 59) !important;
+  }
+
+  /* Target specific Tailwind classes that might be causing transparency */
+  .bg-popover,
+  .bg-background,
+  .bg-card,
+  .bg-muted,
+  .bg-accent,
+  [class*="bg-slate-"] {
+    background: rgb(30, 41, 59) !important;
+    background-color: rgb(30, 41, 59) !important;
+  }
+
+  /* Override Tailwind CSS custom properties */
+  :root {
+    --background: 30 41 59 !important;
+    --popover: 30 41 59 !important;
+    --card: 30 41 59 !important;
+    --muted: 30 41 59 !important;
+    --accent: 16 185 129 !important;
+    --accent-foreground: 255 255 255 !important;
+  }
+
+  /* Force override on all potential Select-related Tailwind classes */
+  *[class*="bg-popover"],
+  *[class*="bg-background"],
+  *[class*="bg-card"],
+  *[class*="bg-muted"],
+  *[class*="bg-accent"] {
+    background: rgb(30, 41, 59) !important;
+    background-color: rgb(30, 41, 59) !important;
+    color: white !important;
+  }
+
+  /* Force solid background on all dropdown-related elements */
+  [data-state="open"] [data-radix-select-content],
+  [data-state="open"] [role="listbox"],
+  [data-state="open"] div[role="listbox"],
+  div[data-radix-select-content][data-state="open"] {
+    background: rgb(30, 41, 59) !important;
+    background-color: rgb(30, 41, 59) !important;
+    backdrop-filter: none !important;
+  }
 }
 
 /* NetHunter Custom scrollbar */
