@@ -261,10 +261,115 @@ app.get('/twrp-customizer', (req, res) => {
                             <label class="block text-sm font-medium mb-2">Device Codename</label>
                             <select id="device" class="w-full bg-slate-700 border border-gray-600 rounded px-3 py-2">
                                 <option value="">Select Device</option>
-                                <option value="oneplus9pro">OnePlus 9 Pro (lemonadep)</option>
-                                <option value="oneplus8t">OnePlus 8T (kebab)</option>
-                                <option value="pixel6">Google Pixel 6 (oriole)</option>
-                                <option value="s21ultra">Samsung Galaxy S21 Ultra (t2s)</option>
+                                
+                                <!-- OnePlus Devices -->
+                                <optgroup label="OnePlus">
+                                    <option value="oneplus_one">OnePlus One (bacon)</option>
+                                    <option value="oneplus_2">OnePlus 2 (oneplus2)</option>
+                                    <option value="oneplus_3">OnePlus 3 (oneplus3)</option>
+                                    <option value="oneplus_3t">OnePlus 3T (oneplus3t)</option>
+                                    <option value="oneplus_5">OnePlus 5 (cheeseburger)</option>
+                                    <option value="oneplus_5t">OnePlus 5T (dumpling)</option>
+                                    <option value="oneplus_6">OnePlus 6 (enchilada)</option>
+                                    <option value="oneplus_6t">OnePlus 6T (fajita)</option>
+                                    <option value="oneplus_7">OnePlus 7 (guacamoleb)</option>
+                                    <option value="oneplus_7_pro">OnePlus 7 Pro (guacamole)</option>
+                                    <option value="oneplus_7t">OnePlus 7T (hotdogb)</option>
+                                    <option value="oneplus_7t_pro">OnePlus 7T Pro (hotdog)</option>
+                                    <option value="oneplus_8">OnePlus 8 (instantnoodle)</option>
+                                    <option value="oneplus_8_pro">OnePlus 8 Pro (instantnoodlep)</option>
+                                    <option value="oneplus_8t">OnePlus 8T (kebab)</option>
+                                    <option value="oneplus_9">OnePlus 9 (lemonade)</option>
+                                    <option value="oneplus_9_pro">OnePlus 9 Pro (lemonadep)</option>
+                                    <option value="oneplus_9r">OnePlus 9R (lemonades)</option>
+                                    <option value="oneplus_nord">OnePlus Nord (avicii)</option>
+                                </optgroup>
+                                
+                                <!-- Google Pixel -->
+                                <optgroup label="Google Pixel">
+                                    <option value="pixel_1">Google Pixel (sailfish)</option>
+                                    <option value="pixel_1_xl">Google Pixel XL (marlin)</option>
+                                    <option value="pixel_2">Google Pixel 2 (walleye)</option>
+                                    <option value="pixel_2_xl">Google Pixel 2 XL (taimen)</option>
+                                    <option value="pixel_3">Google Pixel 3 (blueline)</option>
+                                    <option value="pixel_3_xl">Google Pixel 3 XL (crosshatch)</option>
+                                    <option value="pixel_3a">Google Pixel 3a (sargo)</option>
+                                    <option value="pixel_3a_xl">Google Pixel 3a XL (bonito)</option>
+                                    <option value="pixel_4">Google Pixel 4 (flame)</option>
+                                    <option value="pixel_4_xl">Google Pixel 4 XL (coral)</option>
+                                    <option value="pixel_4a">Google Pixel 4a (sunfish)</option>
+                                    <option value="pixel_4a_5g">Google Pixel 4a 5G (bramble)</option>
+                                    <option value="pixel_5">Google Pixel 5 (redfin)</option>
+                                    <option value="pixel_5a">Google Pixel 5a (barbet)</option>
+                                    <option value="pixel_6">Google Pixel 6 (oriole)</option>
+                                    <option value="pixel_6_pro">Google Pixel 6 Pro (raven)</option>
+                                    <option value="pixel_6a">Google Pixel 6a (bluejay)</option>
+                                    <option value="pixel_7">Google Pixel 7 (panther)</option>
+                                    <option value="pixel_7_pro">Google Pixel 7 Pro (cheetah)</option>
+                                    <option value="pixel_7a">Google Pixel 7a (lynx)</option>
+                                    <option value="pixel_8">Google Pixel 8 (shiba)</option>
+                                    <option value="pixel_8_pro">Google Pixel 8 Pro (husky)</option>
+                                </optgroup>
+                                
+                                <!-- Google Nexus -->
+                                <optgroup label="Google Nexus">
+                                    <option value="nexus_4">Google Nexus 4 (mako)</option>
+                                    <option value="nexus_5">Google Nexus 5 (hammerhead)</option>
+                                    <option value="nexus_5x">Google Nexus 5X (bullhead)</option>
+                                    <option value="nexus_6">Google Nexus 6 (shamu)</option>
+                                    <option value="nexus_6p">Google Nexus 6P (angler)</option>
+                                    <option value="nexus_7_2012">Google Nexus 7 2012 (grouper)</option>
+                                    <option value="nexus_7_2013">Google Nexus 7 2013 (flo)</option>
+                                    <option value="nexus_9">Google Nexus 9 (flounder)</option>
+                                    <option value="nexus_10">Google Nexus 10 (manta)</option>
+                                </optgroup>
+                                
+                                <!-- Samsung Galaxy S Series -->
+                                <optgroup label="Samsung Galaxy S">
+                                    <option value="galaxy_s8">Samsung Galaxy S8 (dreamlte)</option>
+                                    <option value="galaxy_s8_plus">Samsung Galaxy S8+ (dream2lte)</option>
+                                    <option value="galaxy_s9">Samsung Galaxy S9 (starlte)</option>
+                                    <option value="galaxy_s9_plus">Samsung Galaxy S9+ (star2lte)</option>
+                                    <option value="galaxy_s10">Samsung Galaxy S10 (beyond1lte)</option>
+                                    <option value="galaxy_s10_plus">Samsung Galaxy S10+ (beyond2lte)</option>
+                                    <option value="galaxy_s10e">Samsung Galaxy S10e (beyond0lte)</option>
+                                    <option value="galaxy_s20">Samsung Galaxy S20 (x1s)</option>
+                                    <option value="galaxy_s20_plus">Samsung Galaxy S20+ (y2s)</option>
+                                    <option value="galaxy_s20_ultra">Samsung Galaxy S20 Ultra (z3s)</option>
+                                    <option value="galaxy_s21">Samsung Galaxy S21 (o1s)</option>
+                                    <option value="galaxy_s21_plus">Samsung Galaxy S21+ (t2s)</option>
+                                    <option value="galaxy_s21_ultra">Samsung Galaxy S21 Ultra (p3s)</option>
+                                    <option value="galaxy_s22">Samsung Galaxy S22 (dm1q)</option>
+                                    <option value="galaxy_s22_plus">Samsung Galaxy S22+ (dm2q)</option>
+                                    <option value="galaxy_s22_ultra">Samsung Galaxy S22 Ultra (dm3q)</option>
+                                    <option value="galaxy_s23">Samsung Galaxy S23 (dm1q)</option>
+                                    <option value="galaxy_s23_plus">Samsung Galaxy S23+ (dm2q)</option>
+                                    <option value="galaxy_s23_ultra">Samsung Galaxy S23 Ultra (dm3q)</option>
+                                </optgroup>
+                                
+                                <!-- Nothing -->
+                                <optgroup label="Nothing">
+                                    <option value="nothing_phone_1">Nothing Phone (1) (spacewar)</option>
+                                    <option value="nothing_phone_2">Nothing Phone (2) (pong)</option>
+                                    <option value="nothing_phone_2a">Nothing Phone (2a) (pacman)</option>
+                                </optgroup>
+                                
+                                <!-- Fairphone -->
+                                <optgroup label="Fairphone">
+                                    <option value="fairphone_2">Fairphone 2 (FP2)</option>
+                                    <option value="fairphone_3">Fairphone 3 (FP3)</option>
+                                    <option value="fairphone_3_plus">Fairphone 3+ (FP3)</option>
+                                    <option value="fairphone_4">Fairphone 4 (FP4)</option>
+                                    <option value="fairphone_5">Fairphone 5 (FP5)</option>
+                                </optgroup>
+                                
+                                <!-- PinePhone -->
+                                <optgroup label="Pine64">
+                                    <option value="pinephone">PinePhone (pinephone)</option>
+                                    <option value="pinephone_pro">PinePhone Pro (pinephonepro)</option>
+                                    <option value="pinetab">PineTab (pinetab)</option>
+                                    <option value="pinetab_2">PineTab 2 (pinetab2)</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div>
@@ -420,14 +525,131 @@ app.get('/kernel-builder', (req, res) => {
                             <label class="block text-sm font-medium mb-2">Device</label>
                             <select id="device" class="w-full bg-slate-700 border border-gray-600 rounded px-3 py-2">
                                 <option value="">Select Device</option>
-                                <option value="oneplus9pro">OnePlus 9 Pro</option>
-                                <option value="oneplus8t">OnePlus 8T</option>
-                                <option value="oneplus7pro">OnePlus 7 Pro</option>
-                                <option value="pixel6">Google Pixel 6</option>
-                                <option value="pixel7">Google Pixel 7</option>
-                                <option value="s21ultra">Samsung Galaxy S21 Ultra</option>
-                                <option value="nothingphone1">Nothing Phone (1)</option>
-                                <option value="fairphone4">Fairphone 4</option>
+                                
+                                <!-- OnePlus Devices -->
+                                <optgroup label="OnePlus">
+                                    <option value="oneplus_one">OnePlus One</option>
+                                    <option value="oneplus_2">OnePlus 2</option>
+                                    <option value="oneplus_3">OnePlus 3</option>
+                                    <option value="oneplus_3t">OnePlus 3T</option>
+                                    <option value="oneplus_5">OnePlus 5</option>
+                                    <option value="oneplus_5t">OnePlus 5T</option>
+                                    <option value="oneplus_6">OnePlus 6</option>
+                                    <option value="oneplus_6t">OnePlus 6T</option>
+                                    <option value="oneplus_7">OnePlus 7</option>
+                                    <option value="oneplus_7_pro">OnePlus 7 Pro</option>
+                                    <option value="oneplus_7t">OnePlus 7T</option>
+                                    <option value="oneplus_7t_pro">OnePlus 7T Pro</option>
+                                    <option value="oneplus_8">OnePlus 8</option>
+                                    <option value="oneplus_8_pro">OnePlus 8 Pro</option>
+                                    <option value="oneplus_8t">OnePlus 8T</option>
+                                    <option value="oneplus_9">OnePlus 9</option>
+                                    <option value="oneplus_9_pro">OnePlus 9 Pro</option>
+                                    <option value="oneplus_9r">OnePlus 9R</option>
+                                    <option value="oneplus_9rt">OnePlus 9RT</option>
+                                    <option value="oneplus_10_pro">OnePlus 10 Pro</option>
+                                    <option value="oneplus_10t">OnePlus 10T</option>
+                                    <option value="oneplus_11">OnePlus 11</option>
+                                    <option value="oneplus_12">OnePlus 12</option>
+                                    <option value="oneplus_nord">OnePlus Nord</option>
+                                    <option value="oneplus_nord_2">OnePlus Nord 2</option>
+                                    <option value="oneplus_nord_ce">OnePlus Nord CE</option>
+                                    <option value="oneplus_nord_ce_2">OnePlus Nord CE 2</option>
+                                    <option value="oneplus_nord_ce_3">OnePlus Nord CE 3</option>
+                                </optgroup>
+                                
+                                <!-- Google Pixel & Nexus -->
+                                <optgroup label="Google Pixel">
+                                    <option value="pixel_1">Google Pixel</option>
+                                    <option value="pixel_1_xl">Google Pixel XL</option>
+                                    <option value="pixel_2">Google Pixel 2</option>
+                                    <option value="pixel_2_xl">Google Pixel 2 XL</option>
+                                    <option value="pixel_3">Google Pixel 3</option>
+                                    <option value="pixel_3_xl">Google Pixel 3 XL</option>
+                                    <option value="pixel_3a">Google Pixel 3a</option>
+                                    <option value="pixel_3a_xl">Google Pixel 3a XL</option>
+                                    <option value="pixel_4">Google Pixel 4</option>
+                                    <option value="pixel_4_xl">Google Pixel 4 XL</option>
+                                    <option value="pixel_4a">Google Pixel 4a</option>
+                                    <option value="pixel_4a_5g">Google Pixel 4a 5G</option>
+                                    <option value="pixel_5">Google Pixel 5</option>
+                                    <option value="pixel_5a">Google Pixel 5a</option>
+                                    <option value="pixel_6">Google Pixel 6</option>
+                                    <option value="pixel_6_pro">Google Pixel 6 Pro</option>
+                                    <option value="pixel_6a">Google Pixel 6a</option>
+                                    <option value="pixel_7">Google Pixel 7</option>
+                                    <option value="pixel_7_pro">Google Pixel 7 Pro</option>
+                                    <option value="pixel_7a">Google Pixel 7a</option>
+                                    <option value="pixel_8">Google Pixel 8</option>
+                                    <option value="pixel_8_pro">Google Pixel 8 Pro</option>
+                                    <option value="pixel_8a">Google Pixel 8a</option>
+                                    <option value="pixel_9">Google Pixel 9</option>
+                                    <option value="pixel_9_pro">Google Pixel 9 Pro</option>
+                                    <option value="pixel_9_pro_xl">Google Pixel 9 Pro XL</option>
+                                </optgroup>
+                                
+                                <!-- Google Nexus -->
+                                <optgroup label="Google Nexus">
+                                    <option value="nexus_4">Google Nexus 4</option>
+                                    <option value="nexus_5">Google Nexus 5</option>
+                                    <option value="nexus_5x">Google Nexus 5X</option>
+                                    <option value="nexus_6">Google Nexus 6</option>
+                                    <option value="nexus_6p">Google Nexus 6P</option>
+                                    <option value="nexus_7_2012">Google Nexus 7 (2012)</option>
+                                    <option value="nexus_7_2013">Google Nexus 7 (2013)</option>
+                                    <option value="nexus_9">Google Nexus 9</option>
+                                    <option value="nexus_10">Google Nexus 10</option>
+                                </optgroup>
+                                
+                                <!-- Samsung Galaxy S Series -->
+                                <optgroup label="Samsung Galaxy S">
+                                    <option value="galaxy_s8">Samsung Galaxy S8</option>
+                                    <option value="galaxy_s8_plus">Samsung Galaxy S8+</option>
+                                    <option value="galaxy_s9">Samsung Galaxy S9</option>
+                                    <option value="galaxy_s9_plus">Samsung Galaxy S9+</option>
+                                    <option value="galaxy_s10">Samsung Galaxy S10</option>
+                                    <option value="galaxy_s10_plus">Samsung Galaxy S10+</option>
+                                    <option value="galaxy_s10e">Samsung Galaxy S10e</option>
+                                    <option value="galaxy_s20">Samsung Galaxy S20</option>
+                                    <option value="galaxy_s20_plus">Samsung Galaxy S20+</option>
+                                    <option value="galaxy_s20_ultra">Samsung Galaxy S20 Ultra</option>
+                                    <option value="galaxy_s21">Samsung Galaxy S21</option>
+                                    <option value="galaxy_s21_plus">Samsung Galaxy S21+</option>
+                                    <option value="galaxy_s21_ultra">Samsung Galaxy S21 Ultra</option>
+                                    <option value="galaxy_s22">Samsung Galaxy S22</option>
+                                    <option value="galaxy_s22_plus">Samsung Galaxy S22+</option>
+                                    <option value="galaxy_s22_ultra">Samsung Galaxy S22 Ultra</option>
+                                    <option value="galaxy_s23">Samsung Galaxy S23</option>
+                                    <option value="galaxy_s23_plus">Samsung Galaxy S23+</option>
+                                    <option value="galaxy_s23_ultra">Samsung Galaxy S23 Ultra</option>
+                                    <option value="galaxy_s24">Samsung Galaxy S24</option>
+                                    <option value="galaxy_s24_plus">Samsung Galaxy S24+</option>
+                                    <option value="galaxy_s24_ultra">Samsung Galaxy S24 Ultra</option>
+                                </optgroup>
+                                
+                                <!-- Nothing -->
+                                <optgroup label="Nothing">
+                                    <option value="nothing_phone_1">Nothing Phone (1)</option>
+                                    <option value="nothing_phone_2">Nothing Phone (2)</option>
+                                    <option value="nothing_phone_2a">Nothing Phone (2a)</option>
+                                </optgroup>
+                                
+                                <!-- Fairphone -->
+                                <optgroup label="Fairphone">
+                                    <option value="fairphone_2">Fairphone 2</option>
+                                    <option value="fairphone_3">Fairphone 3</option>
+                                    <option value="fairphone_3_plus">Fairphone 3+</option>
+                                    <option value="fairphone_4">Fairphone 4</option>
+                                    <option value="fairphone_5">Fairphone 5</option>
+                                </optgroup>
+                                
+                                <!-- PinePhone -->
+                                <optgroup label="Pine64">
+                                    <option value="pinephone">PinePhone</option>
+                                    <option value="pinephone_pro">PinePhone Pro</option>
+                                    <option value="pinetab">PineTab</option>
+                                    <option value="pinetab_2">PineTab 2</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div>
@@ -792,8 +1014,8 @@ app.get('/', (req, res) => {
                 </div>
                 <div class="text-center">
                     <div class="text-2xl mb-2">📱</div>
-                    <div class="font-semibold">40+ Devices</div>
-                    <div class="text-sm text-gray-400">OnePlus, Pixel, Samsung</div>
+                    <div class="font-semibold">100+ Devices</div>
+                    <div class="text-sm text-gray-400">OnePlus, Pixel, Samsung, Nothing, Fairphone, PinePhone</div>
                 </div>
             </div>
         </div>
@@ -815,7 +1037,7 @@ app.get('/', (req, res) => {
                 <div class="text-center">
                     <div class="text-2xl mb-2">📱</div>
                     <div class="font-semibold">Device Support</div>
-                    <div class="text-sm text-gray-400">40+ Devices Supported</div>
+                    <div class="text-sm text-gray-400">100+ Devices Supported</div>
                 </div>
             </div>
         </div>

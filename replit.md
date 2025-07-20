@@ -188,7 +188,7 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - July 19, 2025: Resolved dropdown overlapping issues with solid backgrounds and proper z-index layering
 - July 19, 2025: Enhanced device selection UX with clear purpose separation between status display and selection interface
 - July 20, 2025: **DEVELOPER-FOCUSED INTERFACE** - Removed all animations for clean, professional developer experience
-- July 20, 2025: **40+ DEVICE SUPPORT COMPLETE** - Expanded to full device catalog including OnePlus, Google Pixel, Samsung Galaxy, Nothing, Fairphone, Pine64, Xiaomi, and others
+- July 20, 2025: **100+ DEVICE SUPPORT COMPLETE** - Massive expansion to comprehensive device catalog including complete OnePlus lineup (One to 12), full Google Pixel/Nexus series, Samsung Galaxy S8-S24, Nothing Phone series, Fairphone 2-5, and Pine64 devices
 - July 20, 2025: **NETHUNTER OS INTEGRATION** - Added special NetHunter OS support for OnePlus One, OnePlus 7 series, and Nord with complete ROM packages
 - July 20, 2025: **ROM & RECOVERY OPTIONS** - Implemented comprehensive customization including LineageOS base, TWRP themes, BusyBox integration, and GApps variants (Pico to Full)
 - July 20, 2025: **VISUAL IMPROVEMENTS** - Enhanced padding and borders (2px throughout) for better visual separation and developer-friendly interface
@@ -213,7 +213,7 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - **API Endpoints**: All kernel and TWRP build APIs functioning with proper error handling
 - **UI Design**: Professional NetHunter-themed interface with consistent styling
 - **Navigation**: Full site navigation with all major sections accessible
-- **Device Support**: 40+ devices configured across OnePlus, Pixel, Samsung, and other manufacturers
+- **Device Support**: 100+ devices configured across OnePlus (complete lineup), Google Pixel/Nexus (all generations), Samsung Galaxy S series (S8-S24), Nothing Phone series, Fairphone (2-5), and Pine64 devices
 
 ### ✅ CORE FEATURES IMPLEMENTED
 - **Kernel Customization**: NetHunter security features, root solutions (KernelSU/Magisk), build optimization
