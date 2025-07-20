@@ -1,6 +1,6 @@
-# [TOOL] Android Kernel Customizer v2.0.0 - Complete Android Customization Platform
+# [BETA] Android Kernel Customizer v2.1.0 - Professional NetHunter Kernel Builder | 40+ Devices | Full ROM Integration
 
-**🚀 HISTORIC UPDATE - July 09, 2025: Revolutionary Platform Integration**
+**🔥 BETA TESTING NOW OPEN - July 20, 2025: Professional Interface Complete**
 
 **Developed by FiveO** | [GitHub Repository](https://github.com/FiveOs/android-kernel-customizer) | [Website: netbriq.com](https://netbriq.com)
 

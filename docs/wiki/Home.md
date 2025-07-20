@@ -35,12 +35,16 @@ Welcome to the comprehensive guide for Android Kernel Customizer - a professiona
 
 ## 🎯 Key Features
 
-### Device Library (40+ Devices)
-- **OnePlus Series**: One, 2, 3/3T, 5/5T, 6/6T, 7/7Pro, 8/8Pro, 9/9Pro, 10/10Pro, 11, 12
-- **Nothing Phone**: Phone (1), Phone (2), Phone (2a)
-- **Fairphone**: Fairphone 3, 4, 5
-- **PinePhone**: Original, Pro with PostmarketOS
-- **LineageOS**: Full database integration
+### Comprehensive Device Library (40+ Devices) ⭐ **EXPANDED**
+- **OnePlus Series**: OnePlus One through OnePlus 12 Pro, complete Nord lineup
+- **Google Pixel**: Pixel 4, 5, 6, 7, 8 series with GrapheneOS support  
+- **Samsung Galaxy**: S20, S21, S22, S23 series with Knox security integration
+- **Nothing Phone**: Phone (1), Phone (2), Phone (2a) with optimizations
+- **Fairphone**: Fairphone 3, 4, 5 with sustainable development focus
+- **Pine64**: PinePhone, PinePhone Pro with PostmarketOS support
+- **Xiaomi**: Redmi Note series, POCO phones with MIUI compatibility
+- **LineageOS**: Complete database integration with custom ROM support
+- **NetHunter OS**: Special ROM packages for OnePlus One, 7 series, Nord
 
 ### NetHunter Arsenal
 - WiFi monitor mode and packet injection

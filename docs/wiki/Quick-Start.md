@@ -1,6 +1,6 @@
-# Quick Start Guide
+# Quick Start Guide - Beta Testing Edition
 
-Build your first custom Android kernel with NetHunter features in under 30 minutes.
+Join the Android Kernel Customizer v2.1.0 Beta and help shape the future of Android kernel customization!
 
 ## Prerequisites Check
 
@@ -42,11 +42,14 @@ npm run dev
 ### Step 1: Access Interface
 Open browser to `http://localhost:5000`
 
-### Step 2: Choose Device
-Select from popular options:
-- **OnePlus Nord** (recommended for beginners)
-- **Nothing Phone (1)** (modern device)
-- **OnePlus 7 Pro** (well-supported)
+### Step 2: Choose Device (40+ Supported!)
+Select from expanded device library:
+- **OnePlus Series**: OnePlus One through OnePlus 12 Pro, Nord lineup
+- **Google Pixel**: Pixel 4, 5, 6, 7, 8 series  
+- **Samsung Galaxy**: S20, S21, S22, S23 series
+- **Nothing Phone**: Phone (1), Phone (2), Phone (2a)
+- **Fairphone**: Fairphone 3, 4, 5
+- **Xiaomi**: Redmi Note series, POCO phones
 
 ### Step 3: Basic Configuration
 Enable essential features:

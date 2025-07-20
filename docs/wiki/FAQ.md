@@ -7,11 +7,15 @@ A professional web-based tool for building custom Android kernels with NetHunter
 
 ### Which devices are supported?
 Currently supports 40+ devices including:
-- OnePlus series (OnePlus One through OnePlus 12 Pro)
-- Nothing Phone (1, 2, 2a)
-- Fairphone (3, 4, 5)
-- PinePhone variants
-- LineageOS compatible devices
+- **OnePlus Series**: OnePlus One through OnePlus 12 Pro, complete Nord lineup
+- **Google Pixel**: Pixel 4, 5, 6, 7, 8 series with GrapheneOS support
+- **Samsung Galaxy**: S20, S21, S22, S23 series with Knox integration  
+- **Nothing Phone**: Phone (1), Phone (2), Phone (2a) with optimizations
+- **Fairphone**: Fairphone 3, 4, 5 with sustainable development focus
+- **Pine64**: PinePhone, PinePhone Pro with PostmarketOS support
+- **Xiaomi**: Redmi Note series, POCO phones with MIUI compatibility
+- **LineageOS**: Complete database with custom ROM compatibility
+- **NetHunter OS**: Special ROM packages for OnePlus One, 7 series, Nord
 
 ### Is this safe to use?
 Yes, when used properly. The tool generates standard kernel builds that can be safely flashed. Always enable kernel signing for production use and test builds thoroughly.
