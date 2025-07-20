@@ -1,44 +1,13 @@
-import * as React from "react";
-
-// Simple toast implementation to replace problematic version
-interface ToastProps {
-  title?: string;
-  description?: string;
-  variant?: "default" | "destructive";
-}
-
-// Simple global toast state without complex reducers
-let toastCallbacks: ((toast: ToastProps) => void)[] = [];
-
-const addToast = (toast: ToastProps) => {
-  toastCallbacks.forEach(callback => callback(toast));
-  // Auto-remove after 3 seconds
-  setTimeout(() => {
-    console.log('Toast:', toast.title || toast.description);
-  }, 3000);
-};
-
+// Extremely simple toast that just logs to console
 export function useToast() {
-  const [toasts, setToasts] = React.useState<ToastProps[]>([]);
-
-  React.useEffect(() => {
-    const callback = (toast: ToastProps) => {
-      setToasts(prev => [...prev, toast]);
-      // Remove after 3 seconds
-      setTimeout(() => {
-        setToasts(prev => prev.slice(1));
-      }, 3000);
-    };
-    
-    toastCallbacks.push(callback);
-    
-    return () => {
-      toastCallbacks = toastCallbacks.filter(cb => cb !== callback);
-    };
-  }, []);
-
   return {
-    toast: addToast,
-    toasts
+    toast: (props: { title?: string; description?: string; variant?: string }) => {
+      console.log(`Toast: ${props.title || props.description}`);
+      // Show a simple browser alert as fallback
+      if (props.variant === 'destructive') {
+        console.error(`Error: ${props.description}`);
+      }
+    },
+    toasts: []
   };
 }
