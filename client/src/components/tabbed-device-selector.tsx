@@ -101,7 +101,7 @@ export default function TabbedDeviceSelector({ value, onChange }: TabbedDeviceSe
             </div>
             
             <Select value={value} onValueChange={onChange}>
-              <SelectTrigger className="dropdown-animate bg-slate-700/60 border-slate-600 text-white h-10">
+              <SelectTrigger className="dropdown-animate bg-slate-700/60 border-slate-600 text-white h-10" style={{zIndex: 10}}>
                 <SelectValue placeholder={`Select ${currentGroup.name} device`}>
                   {selectedDevice && (
                     <div className="flex items-center space-x-2">
@@ -112,7 +112,7 @@ export default function TabbedDeviceSelector({ value, onChange }: TabbedDeviceSe
                   )}
                 </SelectValue>
               </SelectTrigger>
-              <SelectContent className="dropdown-content bg-slate-700 border-slate-600">
+              <SelectContent className="dropdown-content bg-slate-700 border-slate-600" style={{zIndex: 9999}}>
                 {currentGroup.devices.map((device) => (
                   <SelectItem 
                     key={device.value} 

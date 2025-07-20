@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Condensed:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -72,13 +74,31 @@
   background: rgba(16, 185, 129, 0.8);
 }
 
-/* Dropdown animations */
+/* Dropdown animations and positioning */
 .dropdown-animate {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
 .dropdown-content {
   animation: dropdown-slide-in 0.2s ease-out;
+  z-index: 9999 !important;
+  position: absolute !important;
+  background: rgb(51, 65, 85) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Override Radix UI dropdown content positioning */
+[data-radix-select-content] {
+  z-index: 9999 !important;
+  background: rgb(51, 65, 85) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(16, 185, 129, 0.2) !important;
+}
+
+[data-radix-select-viewport] {
+  background: rgb(51, 65, 85) !important;
 }
 
 @keyframes dropdown-slide-in {
@@ -104,6 +124,7 @@
   border-radius: 6px 6px 0 0;
   cursor: pointer;
   transition: all 0.2s ease;
+  z-index: 2;
 }
 
 .tab-button:hover {
@@ -115,6 +136,7 @@
   color: #FFD700;
   background: rgba(255, 215, 0, 0.1);
   border-bottom: 2px solid #FFD700;
+  z-index: 3;
 }
 
 .tab-content {
@@ -122,6 +144,8 @@
   border: 1px solid rgba(16, 185, 129, 0.2);
   border-radius: 0 8px 8px 8px;
   padding: 16px;
+  position: relative;
+  z-index: 1;
 }
 
 :root {
@@ -187,8 +211,6 @@
   --sidebar-ring: hsl(120, 80%, 50%);
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Condensed:wght@300;400;500;600;700&display=swap');
-
 @layer base {
   * {
     border-color: hsl(var(--border));
@@ -211,6 +233,8 @@
   /* Enhanced form styling */
   .form-group {
     margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
   }
 
   .form-section {
@@ -221,6 +245,8 @@
     margin-bottom: 24px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(16, 185, 129, 0.1);
     backdrop-filter: blur(8px);
+    position: relative;
+    z-index: 1;
   }
 
   .form-section-header {
