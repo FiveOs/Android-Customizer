@@ -249,10 +249,35 @@ export const kernelConfigurations = pgTable("kernel_configurations", {
     enabled: boolean;
     version: string;
     theme: string;
+    colorScheme: string;
     encryption: boolean;
+    mtp: boolean;
+    adb: boolean;
+    terminal: boolean;
+    fastboot: boolean;
+    magisk: boolean;
+    backup: boolean;
+    customCommands: boolean;
     touchSupport: boolean;
+    buildName: string;
     customFlags: string[];
-  }>().notNull().default({ enabled: false, version: "latest", theme: "portrait_hdpi", encryption: true, touchSupport: true, customFlags: [] }),
+  }>().notNull().default({ 
+    enabled: false, 
+    version: "latest", 
+    theme: "portrait_hdpi", 
+    colorScheme: "default",
+    encryption: true, 
+    mtp: true,
+    adb: true,
+    terminal: false,
+    fastboot: false,
+    magisk: false,
+    backup: true,
+    customCommands: false,
+    touchSupport: true, 
+    buildName: "",
+    customFlags: [] 
+  }),
   kernelSUConfig: jsonb("kernelsu_config").$type<{
     enabled: boolean;
     version: string;
