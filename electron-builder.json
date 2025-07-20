@@ -1,0 +1,52 @@
+{
+  "appId": "com.fiveo.android-kernel-customizer",
+  "productName": "Android Kernel Customizer",
+  "directories": {
+    "output": "dist-electron"
+  },
+  "files": [
+    "electron/main.js",
+    "electron/preload.js",
+    "dist/**/*",
+    "server/basic-server.ts",
+    "node_modules/**/*"
+  ],
+  "extraResources": [
+    {
+      "from": "server/",
+      "to": "server/"
+    }
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      },
+      {
+        "target": "portable",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "electron/assets/icon.ico",
+    "publisherName": "FiveO",
+    "verifyUpdateCodeSignature": false
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Android Kernel Customizer",
+    "displayLanguageSelector": true,
+    "installerIcon": "electron/assets/icon.ico",
+    "uninstallerIcon": "electron/assets/icon.ico",
+    "runAfterFinish": true,
+    "include": "electron/installer.nsh"
+  },
+  "portable": {
+    "artifactName": "AndroidKernelCustomizer-Portable-${version}.exe"
+  },
+  "compression": "maximum",
+  "buildDependenciesFromSource": false
+}
