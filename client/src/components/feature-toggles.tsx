@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Wifi, Usb, Keyboard, Radio, Shield, Bluetooth, Nfc, Cpu, Activity, Settings, Wrench, Zap, Eye } from "lucide-react";
+import { Wifi, Usb, Keyboard, Radio, Shield, Bluetooth, Nfc, Cpu, Activity, Settings, Wrench, Zap, Eye, Smartphone, Terminal } from "lucide-react";
 
 interface FeatureTogglesProps {
   features: {
@@ -253,6 +253,60 @@ const featureGroups = [
       },
     ]
   },
+  {
+    title: "ROM & Recovery Options",
+    description: "Custom ROM base, recovery options, and system integrations",
+    features: [
+      {
+        key: "lineageosBase" as const,
+        title: "LineageOS Base",
+        description: "Build with LineageOS as ROM foundation",
+        details: "Uses LineageOS source tree for enhanced compatibility",
+        icon: Shield,
+        color: "orange",
+      },
+      {
+        key: "nethunterOS" as const,
+        title: "NetHunter OS",
+        description: "Complete NetHunter ROM (OnePlus devices)",
+        details: "Full NetHunter OS ROM for supported OnePlus devices",
+        icon: Shield,
+        color: "red",
+      },
+      {
+        key: "twrpCustomization" as const,
+        title: "TWRP Recovery",
+        description: "Custom TWRP with themes and encryption",
+        details: "TeamWin Recovery Project with custom themes",
+        icon: Settings,
+        color: "blue",
+      },
+      {
+        key: "busyboxIncluded" as const,
+        title: "BusyBox Integration",
+        description: "Essential Unix utilities for Android",
+        details: "BusyBox provides essential command-line tools",
+        icon: Terminal,
+        color: "green",
+      },
+      {
+        key: "gappsSupport" as const,
+        title: "Google Apps Support",
+        description: "OpenGApps integration support",
+        details: "Support for various GApps packages (Pico to Full)",
+        icon: Smartphone,
+        color: "cyan",
+      },
+      {
+        key: "customBootAnimation" as const,
+        title: "Custom Boot Animation",
+        description: "NetHunter-themed boot animation",
+        details: "Custom boot animation with NetHunter branding",
+        icon: Eye,
+        color: "purple",
+      },
+    ]
+  },
 ];
 
 export default function FeatureToggles({ features, onFeaturesChange }: FeatureTogglesProps) {
@@ -264,10 +318,10 @@ export default function FeatureToggles({ features, onFeaturesChange }: FeatureTo
   };
 
   return (
-    <div className="space-y-6 slide-in-effect">
+    <div className="space-y-8">
       <div className="text-center relative mb-8">
-        <div className="inline-flex items-center space-x-3 p-4 bg-slate-900/50 rounded-xl border border-emerald-500/20 float-effect">
-          <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center border border-emerald-500/30 pulse-glow-effect">
+        <div className="inline-flex items-center space-x-3 p-6 bg-slate-900/80 rounded-lg border-2 border-emerald-500/30">
+          <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center border-2 border-emerald-500/40">
             <Shield className="text-emerald-400" size={24} />
           </div>
           <div>
@@ -280,16 +334,17 @@ export default function FeatureToggles({ features, onFeaturesChange }: FeatureTo
       {featureGroups.map((group, groupIndex) => {
         const groupColors = {
           "NetHunter Core Features": "#FFD700",
-          "Advanced NetHunter Features": "#FF7043",
+          "Advanced NetHunter Features": "#FF7043", 
           "Wireless Drivers": "#4FC3F7",
           "Root & Security": "#9C27B0",
           "Performance & Debugging": "#00E676",
-          "Custom Recovery Support": "#FF5722"
+          "Custom Recovery Support": "#FF5722",
+          "ROM & Recovery Options": "#FF6900"
         };
         const groupColor = groupColors[group.title as keyof typeof groupColors] || "#4FC3F7";
         
         return (
-          <div key={group.title} className="form-section interactive-card slide-in-effect" style={{animationDelay: `${groupIndex * 0.1}s`}}>
+          <div key={group.title} className="form-section interactive-card">
             <div className="form-section-header">
               <Shield size={18} style={{color: groupColor}} />
               <span style={{color: groupColor}}>{group.title}</span>
@@ -299,7 +354,7 @@ export default function FeatureToggles({ features, onFeaturesChange }: FeatureTo
             </div>
             <p className="text-sm text-slate-400 mb-4 -mt-2">{group.description}</p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {group.features.map((feature, featureIndex) => {
                 const Icon = feature.icon;
                 const isEnabled = features[feature.key];
@@ -307,12 +362,11 @@ export default function FeatureToggles({ features, onFeaturesChange }: FeatureTo
                 return (
                   <div
                     key={feature.key}
-                    className={`p-3 rounded-lg border transition-all duration-200 cursor-pointer interactive-card ${
+                    className={`p-4 rounded-lg border-2 cursor-pointer ${
                       isEnabled 
-                        ? 'bg-slate-600/40 border-emerald-500/40' 
-                        : 'bg-slate-700/30 border-slate-600/50 hover:border-slate-500'
+                        ? 'bg-slate-600/50 border-emerald-500/50' 
+                        : 'bg-slate-700/40 border-slate-600/60 hover:border-slate-500'
                     }`}
-                    style={{animationDelay: `${(groupIndex * 0.1) + (featureIndex * 0.05)}s`}}
                     onClick={() => handleFeatureChange(feature.key)(!isEnabled)}
                   >
                     <div className="flex items-start justify-between mb-2">

@@ -27,10 +27,57 @@ const deviceGroups: DeviceGroup[] = [
     icon: Zap,
     color: "#FF7043",
     devices: [
-      { value: "oneplus_nord", label: "Nord", emoji: "🔥", specs: "SD 765G • 12GB" },
-      { value: "oneplus_9", label: "OnePlus 9", emoji: "⚡", specs: "SD 888 • 12GB" },
+      { value: "oneplus_one", label: "OnePlus One ⭐", emoji: "🥇", specs: "SD 801 • 3GB • NetHunter OS" },
+      { value: "oneplus_7", label: "OnePlus 7 ⭐", emoji: "⚡", specs: "SD 855 • 8GB • NetHunter OS" },
+      { value: "oneplus_7_pro", label: "OnePlus 7 Pro ⭐", emoji: "👑", specs: "SD 855 • 12GB • NetHunter OS" },
+      { value: "oneplus_nord", label: "OnePlus Nord ⭐", emoji: "🔥", specs: "SD 765G • 12GB • NetHunter OS" },
+      { value: "oneplus_2", label: "OnePlus 2", emoji: "📱", specs: "SD 810 • 4GB" },
+      { value: "oneplus_3", label: "OnePlus 3", emoji: "📱", specs: "SD 820 • 6GB" },
+      { value: "oneplus_3t", label: "OnePlus 3T", emoji: "📱", specs: "SD 821 • 6GB" },
+      { value: "oneplus_5", label: "OnePlus 5", emoji: "📱", specs: "SD 835 • 8GB" },
+      { value: "oneplus_5t", label: "OnePlus 5T", emoji: "📱", specs: "SD 835 • 8GB" },
+      { value: "oneplus_6", label: "OnePlus 6", emoji: "📱", specs: "SD 845 • 8GB" },
+      { value: "oneplus_6t", label: "OnePlus 6T", emoji: "📱", specs: "SD 845 • 8GB" },
+      { value: "oneplus_7t", label: "OnePlus 7T", emoji: "📱", specs: "SD 855+ • 8GB" },
+      { value: "oneplus_7t_pro", label: "OnePlus 7T Pro", emoji: "📱", specs: "SD 855+ • 12GB" },
+      { value: "oneplus_8", label: "OnePlus 8", emoji: "📱", specs: "SD 865 • 12GB" },
+      { value: "oneplus_8_pro", label: "OnePlus 8 Pro", emoji: "📱", specs: "SD 865 • 12GB" },
+      { value: "oneplus_8t", label: "OnePlus 8T", emoji: "📱", specs: "SD 865 • 12GB" },
+      { value: "oneplus_9", label: "OnePlus 9", emoji: "📱", specs: "SD 888 • 12GB" },
+      { value: "oneplus_9_pro", label: "OnePlus 9 Pro", emoji: "📱", specs: "SD 888 • 12GB" },
       { value: "oneplus_10_pro", label: "OnePlus 10 Pro", emoji: "🚀", specs: "SD 8 Gen 1 • 12GB" },
       { value: "oneplus_11", label: "OnePlus 11", emoji: "💫", specs: "SD 8 Gen 2 • 16GB" }
+    ]
+  },
+  {
+    id: "google",
+    name: "Google Pixel",
+    icon: Smartphone,
+    color: "#4285F4",
+    devices: [
+      { value: "pixel_7", label: "Pixel 7", emoji: "📱", specs: "Tensor G2 • 8GB" },
+      { value: "pixel_7_pro", label: "Pixel 7 Pro", emoji: "👑", specs: "Tensor G2 • 12GB" },
+      { value: "pixel_6", label: "Pixel 6", emoji: "📱", specs: "Tensor • 8GB" },
+      { value: "pixel_6_pro", label: "Pixel 6 Pro", emoji: "👑", specs: "Tensor • 12GB" },
+      { value: "pixel_5", label: "Pixel 5", emoji: "📱", specs: "SD 765G • 8GB" },
+      { value: "pixel_4", label: "Pixel 4", emoji: "📱", specs: "SD 855 • 6GB" },
+      { value: "pixel_4_xl", label: "Pixel 4 XL", emoji: "📱", specs: "SD 855 • 6GB" },
+      { value: "nexus_6p", label: "Nexus 6P", emoji: "📱", specs: "SD 810 • 3GB" },
+      { value: "nexus_5x", label: "Nexus 5X", emoji: "📱", specs: "SD 808 • 2GB" }
+    ]
+  },
+  {
+    id: "samsung",
+    name: "Samsung Galaxy",
+    icon: Smartphone,
+    color: "#1428A0",
+    devices: [
+      { value: "galaxy_s21", label: "Galaxy S21", emoji: "📱", specs: "Exynos 2100 • 8GB" },
+      { value: "galaxy_s21_ultra", label: "Galaxy S21 Ultra", emoji: "👑", specs: "Exynos 2100 • 16GB" },
+      { value: "galaxy_s20", label: "Galaxy S20", emoji: "📱", specs: "Exynos 990 • 12GB" },
+      { value: "galaxy_s10", label: "Galaxy S10", emoji: "📱", specs: "Exynos 9820 • 8GB" },
+      { value: "galaxy_s9", label: "Galaxy S9", emoji: "📱", specs: "Exynos 9810 • 4GB" },
+      { value: "galaxy_note_20", label: "Galaxy Note 20", emoji: "📝", specs: "Exynos 990 • 8GB" }
     ]
   },
   {
@@ -48,10 +95,47 @@ const deviceGroups: DeviceGroup[] = [
     id: "fairphone",
     name: "Fairphone",
     icon: Cpu,
-    color: "#FFD700",
+    color: "#00C851",
     devices: [
+      { value: "fairphone_5", label: "Fairphone 5", emoji: "♻️", specs: "QCM6490 • 8GB" },
       { value: "fairphone_4", label: "Fairphone 4", emoji: "🌱", specs: "SD 750G • 8GB" },
-      { value: "fairphone_5", label: "Fairphone 5", emoji: "♻️", specs: "QCM6490 • 8GB" }
+      { value: "fairphone_3", label: "Fairphone 3", emoji: "🌿", specs: "SD 632 • 4GB" }
+    ]
+  },
+  {
+    id: "pine64",
+    name: "Pine64",
+    icon: Cpu,
+    color: "#8BC34A",
+    devices: [
+      { value: "pinephone_pro", label: "PinePhone Pro", emoji: "🍍", specs: "RK3399S • 4GB" },
+      { value: "pinephone", label: "PinePhone", emoji: "🍍", specs: "A64 • 3GB" }
+    ]
+  },
+  {
+    id: "xiaomi",
+    name: "Xiaomi",
+    icon: Smartphone,
+    color: "#FF6900",
+    devices: [
+      { value: "mi_11", label: "Mi 11", emoji: "📱", specs: "SD 888 • 12GB" },
+      { value: "redmi_note_11", label: "Redmi Note 11", emoji: "📱", specs: "SD 695 • 8GB" },
+      { value: "poco_f3", label: "POCO F3", emoji: "🚀", specs: "SD 870 • 8GB" }
+    ]
+  },
+  {
+    id: "other",
+    name: "Others",
+    icon: Smartphone,
+    color: "#9E9E9E",
+    devices: [
+      { value: "essential_ph1", label: "Essential PH-1", emoji: "📱", specs: "SD 835 • 4GB" },
+      { value: "moto_g_power", label: "Moto G Power", emoji: "🔋", specs: "SD 665 • 4GB" },
+      { value: "xperia_1_iii", label: "Xperia 1 III", emoji: "📱", specs: "SD 888 • 12GB" },
+      { value: "lg_g8", label: "LG G8", emoji: "📱", specs: "SD 855 • 6GB" },
+      { value: "htc_u11", label: "HTC U11", emoji: "📱", specs: "SD 835 • 6GB" },
+      { value: "zenfone_8", label: "ZenFone 8", emoji: "📱", specs: "SD 888 • 16GB" },
+      { value: "rog_phone_5", label: "ROG Phone 5", emoji: "🎮", specs: "SD 888 • 18GB" }
     ]
   }
 ];

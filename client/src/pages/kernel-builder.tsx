@@ -507,14 +507,14 @@ export default function KernelBuilder() {
               ]}
             />
             
-            <div className="slide-in-effect">
+            <div>
               <TabbedDeviceSelector
                 value={config.device || ""}
                 onChange={(value) => setConfig(prev => ({ ...prev, device: value }))}
               />
             </div>
 
-            <div className="slide-in-effect" style={{animationDelay: '0.1s'}}>
+            <div>
               <FeatureToggles
               features={config.features || {
                 // NetHunter Core Features
@@ -557,6 +557,113 @@ export default function KernelBuilder() {
               }}
               onFeaturesChange={(features) => setConfig(prev => ({ ...prev, features }))}
             />
+
+            {/* ROM & Recovery Options */}
+            <div className="form-section">
+              <div className="flex items-center space-x-3 mb-6">
+                <Settings size={18} style={{color: '#FF6900'}} />
+                <h3 className="text-lg font-medium text-white">ROM & Recovery Options</h3>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-3">ROM Base</label>
+                  <select 
+                    className="w-full bg-slate-700 border-2 border-slate-600 rounded-lg px-4 py-3 text-white"
+                    value={config.customROM || 'lineageos'}
+                    onChange={(e) => setConfig(prev => ({ ...prev, customROM: e.target.value }))}
+                  >
+                    <option value="lineageos">LineageOS</option>
+                    <option value="nethunter">NetHunter OS (OnePlus only)</option>
+                    <option value="aosp">AOSP</option>
+                    <option value="custom">Custom Base</option>
+                  </select>
+                  <p className="text-xs text-slate-400 mt-2">Choose your ROM foundation</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-3">GApps Package</label>
+                  <select 
+                    className="w-full bg-slate-700 border-2 border-slate-600 rounded-lg px-4 py-3 text-white"
+                    value={config.gappsVariant || 'none'}
+                    onChange={(e) => setConfig(prev => ({ ...prev, gappsVariant: e.target.value }))}
+                  >
+                    <option value="none">No GApps</option>
+                    <option value="pico">Pico (Minimal - 50MB)</option>
+                    <option value="nano">Nano (Basic - 150MB)</option>
+                    <option value="micro">Micro (Standard - 300MB)</option>
+                    <option value="mini">Mini (Extended - 500MB)</option>
+                    <option value="full">Full (Complete - 1GB+)</option>
+                  </select>
+                  <p className="text-xs text-slate-400 mt-2">Google Apps integration level</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-3">TWRP Theme</label>
+                  <select 
+                    className="w-full bg-slate-700 border-2 border-slate-600 rounded-lg px-4 py-3 text-white"
+                    value={config.twrpTheme || 'portrait_hdpi'}
+                    onChange={(e) => setConfig(prev => ({ ...prev, twrpTheme: e.target.value }))}
+                  >
+                    <option value="portrait_hdpi">Portrait (HD)</option>
+                    <option value="landscape_hdpi">Landscape (HD)</option>
+                    <option value="watch_hdpi">Watch Style</option>
+                    <option value="portrait_mdpi">Portrait (Standard)</option>
+                  </select>
+                  <p className="text-xs text-slate-400 mt-2">Recovery interface theme</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div className="bg-slate-700/30 border-2 border-slate-600/60 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-white font-medium">BusyBox Integration</h4>
+                      <p className="text-slate-400 text-sm mt-1">Essential Unix utilities for Android</p>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={config.busyboxIncluded !== false}
+                      onChange={(e) => setConfig(prev => ({ ...prev, busyboxIncluded: e.target.checked }))}
+                      className="w-5 h-5 text-emerald-600 rounded"
+                    />
+                  </div>
+                </div>
+                
+                <div className="bg-slate-700/30 border-2 border-slate-600/60 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-white font-medium">TWRP Recovery</h4>
+                      <p className="text-slate-400 text-sm mt-1">Custom recovery with themes & encryption</p>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={config.twrpCustomization || false}
+                      onChange={(e) => setConfig(prev => ({ ...prev, twrpCustomization: e.target.checked }))}
+                      className="w-5 h-5 text-emerald-600 rounded"
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* NetHunter OS Notice for OnePlus */}
+              {config.device && config.device.includes('oneplus') && config.customROM === 'nethunter' && (
+                <div className="mt-6 p-4 bg-emerald-900/20 border-2 border-emerald-500/40 rounded-lg">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-emerald-400 text-sm">⭐</span>
+                    </div>
+                    <div>
+                      <h4 className="text-emerald-400 font-medium">NetHunter OS Available</h4>
+                      <p className="text-emerald-300/80 text-sm mt-1">
+                        This OnePlus device supports complete NetHunter OS ROM with all security tools pre-installed.
+                        Perfect for penetration testing and security research.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
 
             <KernelSUConfiguration
               config={config.kernelSUConfig || {

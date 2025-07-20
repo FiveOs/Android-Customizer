@@ -253,23 +253,32 @@
     background-color: hsl(var(--background));
   }
 
-  /* Enhanced form styling */
+  /* Clean developer-focused styling with proper padding and borders */
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     position: relative;
     z-index: 1;
   }
 
   .form-section {
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 12px;
-    padding: 20px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    border-radius: 8px;
+    padding: 24px;
     margin-bottom: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(16, 185, 129, 0.1);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     position: relative;
     z-index: 1;
+  }
+
+  .interactive-card {
+    border: 2px solid rgba(16, 185, 129, 0.25);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .interactive-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
   }
 
   .form-section-header {
