@@ -368,20 +368,28 @@ export default function KernelBuilder() {
                     <SelectTrigger className="bg-slate-700/50 border-emerald-500/30 text-white hover:border-emerald-400 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10">
                       <SelectValue placeholder="Choose Device" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-emerald-500/30">
-                      <SelectItem value="oneplus_nord" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                    <SelectContent 
+                      className="border-emerald-500/30"
+                      style={{
+                        backgroundColor: 'rgb(30, 41, 59)',
+                        zIndex: 9999,
+                        border: '1px solid rgba(16, 185, 129, 0.4)',
+                        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.8)'
+                      }}
+                    >
+                      <SelectItem value="oneplus_nord" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         📱 OnePlus Nord
                       </SelectItem>
-                      <SelectItem value="oneplus_9_pro" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="oneplus_9_pro" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         📱 OnePlus 9 Pro
                       </SelectItem>
-                      <SelectItem value="nothing_phone_1" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="nothing_phone_1" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         📱 Nothing Phone 1
                       </SelectItem>
-                      <SelectItem value="fairphone_4" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="fairphone_4" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         📱 Fairphone 4
                       </SelectItem>
-                      <SelectItem value="pinephone_pro" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="pinephone_pro" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         📱 PinePhone Pro
                       </SelectItem>
                     </SelectContent>
@@ -407,14 +415,22 @@ export default function KernelBuilder() {
                     <SelectTrigger className="bg-slate-700/50 border-emerald-500/30 text-white hover:border-emerald-400 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10">
                       <SelectValue placeholder="Root Method" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-emerald-500/30">
-                      <SelectItem value="kernelsu" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                    <SelectContent 
+                      className="border-emerald-500/30"
+                      style={{
+                        backgroundColor: 'rgb(30, 41, 59)',
+                        zIndex: 9999,
+                        border: '1px solid rgba(16, 185, 129, 0.4)',
+                        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.8)'
+                      }}
+                    >
+                      <SelectItem value="kernelsu" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         🔑 KernelSU (Recommended)
                       </SelectItem>
-                      <SelectItem value="magisk" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="magisk" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         🎭 Magisk
                       </SelectItem>
-                      <SelectItem value="both" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="both" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         ⚡ Both Solutions
                       </SelectItem>
                     </SelectContent>
@@ -441,14 +457,22 @@ export default function KernelBuilder() {
                     <SelectTrigger className="bg-slate-700/50 border-emerald-500/30 text-white hover:border-emerald-400 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10">
                       <SelectValue placeholder="NetHunter" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-emerald-500/30">
-                      <SelectItem value="full" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                    <SelectContent 
+                      className="border-emerald-500/30"
+                      style={{
+                        backgroundColor: 'rgb(30, 41, 59)',
+                        zIndex: 9999,
+                        border: '1px solid rgba(16, 185, 129, 0.4)',
+                        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.8)'
+                      }}
+                    >
+                      <SelectItem value="full" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         🚀 Full NetHunter
                       </SelectItem>
-                      <SelectItem value="lite" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="lite" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         💡 NetHunter Lite
                       </SelectItem>
-                      <SelectItem value="custom" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="custom" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         🔧 Custom Build
                       </SelectItem>
                     </SelectContent>
@@ -461,14 +485,22 @@ export default function KernelBuilder() {
                     <SelectTrigger className="bg-slate-700/50 border-emerald-500/30 text-white hover:border-emerald-400 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10">
                       <SelectValue placeholder="Output" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-emerald-500/30">
-                      <SelectItem value="boot_img" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                    <SelectContent 
+                      className="border-emerald-500/30"
+                      style={{
+                        backgroundColor: 'rgb(30, 41, 59)',
+                        zIndex: 9999,
+                        border: '1px solid rgba(16, 185, 129, 0.4)',
+                        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.8)'
+                      }}
+                    >
+                      <SelectItem value="boot_img" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         📦 Boot Image
                       </SelectItem>
-                      <SelectItem value="kernel_only" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="kernel_only" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         🔧 Kernel Only
                       </SelectItem>
-                      <SelectItem value="full_package" className="text-white hover:bg-emerald-500/20 focus:bg-emerald-500/20">
+                      <SelectItem value="full_package" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
                         📱 Flashable ZIP
                       </SelectItem>
                     </SelectContent>

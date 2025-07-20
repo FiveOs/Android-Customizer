@@ -83,22 +83,45 @@
 .dropdown-content {
   animation: dropdown-slide-in 0.2s ease-out;
   z-index: 9999 !important;
-  position: absolute !important;
-  background: rgb(51, 65, 85) !important;
-  border: 1px solid rgba(16, 185, 129, 0.3) !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(16, 185, 129, 0.2) !important;
+  position: fixed !important;
+  background: rgb(30, 41, 59) !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 8px 16px rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: none !important;
 }
 
 /* Override Radix UI dropdown content positioning */
 [data-radix-select-content] {
   z-index: 9999 !important;
-  background: rgb(51, 65, 85) !important;
-  border: 1px solid rgba(16, 185, 129, 0.3) !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(16, 185, 129, 0.2) !important;
+  position: fixed !important;
+  background: rgb(30, 41, 59) !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 8px 16px rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: none !important;
 }
 
 [data-radix-select-viewport] {
-  background: rgb(51, 65, 85) !important;
+  background: rgb(30, 41, 59) !important;
+}
+
+/* Additional Radix UI overrides for solid background */
+[data-radix-collection-item] {
+  background: rgb(30, 41, 59) !important;
+}
+
+/* SelectItem specific styling */
+[data-radix-select-item] {
+  background: rgb(30, 41, 59) !important;
+  color: white !important;
+}
+
+[data-radix-select-item]:hover {
+  background: rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Portal container for dropdowns */
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
 }
 
 @keyframes dropdown-slide-in {
