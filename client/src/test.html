@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>React CDN Test</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <style>
+        body { background: #0f172a; color: #d1fae5; font-family: system-ui; padding: 2rem; }
+        h1 { color: #34d399; }
+    </style>
+</head>
+<body>
+    <div id="test-root"></div>
+    <script>
+        const { createElement } = React;
+        const { createRoot } = ReactDOM;
+        
+        function App() {
+            return createElement('div', null, [
+                createElement('h1', { key: 'h1' }, 'CDN React Test - Working!'),
+                createElement('p', { key: 'p' }, 'Direct React from CDN')
+            ]);
+        }
+        
+        const container = document.getElementById('test-root');
+        const root = createRoot(container);
+        root.render(createElement(App));
+    </script>
+</body>
+</html>
