@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast"; // Removed to fix React conflicts
 import { apiRequest } from "@/lib/queryClient";
 import { useWebSocket } from "@/hooks/use-websocket";
 import BackButton from "@/components/back-button";
@@ -67,7 +67,7 @@ interface UnbrickParams {
 }
 
 export default function AndroidToolPage() {
-  const { toast } = useToast();
+  
   const [deviceInfo, setDeviceInfo] = React.useState<DeviceInfo | null>(null);
   const [isConnected, setIsConnected] = React.useState(false);
   const [activeOperations, setActiveOperations] = React.useState<Set<string>>(new Set());
@@ -171,13 +171,13 @@ export default function AndroidToolPage() {
     },
     onSuccess: (data) => {
       setActiveOperations(prev => new Set(prev).add(data.operationId));
-      toast({
+      console.log({
         title: "Kernel tweaking started",
         description: "Real-time progress will be shown below.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Failed to start kernel tweaking",
         variant: "destructive",
       });
@@ -191,13 +191,13 @@ export default function AndroidToolPage() {
     },
     onSuccess: (data) => {
       setActiveOperations(prev => new Set(prev).add(data.operationId));
-      toast({
+      console.log({
         title: "Recovery flashing started",
         description: "Real-time progress will be shown below.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Failed to start recovery flashing",
         variant: "destructive",
       });
@@ -211,13 +211,13 @@ export default function AndroidToolPage() {
     },
     onSuccess: (data) => {
       setActiveOperations(prev => new Set(prev).add(data.operationId));
-      toast({
+      console.log({
         title: "Boot image patching started",
         description: "Real-time progress will be shown below.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Failed to start boot patching",
         variant: "destructive",
       });
@@ -231,13 +231,13 @@ export default function AndroidToolPage() {
     },
     onSuccess: (data) => {
       setActiveOperations(prev => new Set(prev).add(data.operationId));
-      toast({
+      console.log({
         title: "Magisk sideloading started",
         description: "Real-time progress will be shown below.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Failed to start Magisk sideloading",
         variant: "destructive",
       });
@@ -251,13 +251,13 @@ export default function AndroidToolPage() {
     },
     onSuccess: (data) => {
       setActiveOperations(prev => new Set(prev).add(data.operationId));
-      toast({
+      console.log({
         title: "Boot image dumping started",
         description: "Real-time progress will be shown below.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Failed to start boot dumping",
         variant: "destructive",
       });
@@ -274,13 +274,13 @@ export default function AndroidToolPage() {
       if (data.brickStatus) {
         setBrickStatus(data.brickStatus);
       }
-      toast({
+      console.log({
         title: "Device analysis started",
         description: "Analyzing brick status and recovery options.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Failed to analyze device",
         variant: "destructive",
       });
@@ -294,13 +294,13 @@ export default function AndroidToolPage() {
     },
     onSuccess: (data) => {
       setActiveOperations(prev => new Set(prev).add(data.operationId));
-      toast({
+      console.log({
         title: "Entering special mode",
         description: "Follow the instructions below.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Failed to enter mode",
         variant: "destructive",
       });
@@ -314,13 +314,13 @@ export default function AndroidToolPage() {
     },
     onSuccess: (data) => {
       setActiveOperations(prev => new Set(prev).add(data.operationId));
-      toast({
+      console.log({
         title: "Device unbrick started",
         description: "Recovery procedure in progress.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Failed to start unbrick",
         variant: "destructive",
       });
@@ -346,13 +346,13 @@ export default function AndroidToolPage() {
     },
     onSuccess: (data) => {
       setActiveOperations(prev => new Set(prev).add(data.operationId));
-      toast({
+      console.log({
         title: "Enabling developer mode",
         description: "Attempting to enable via recovery...",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Failed to enable developer mode",
         variant: "destructive",
       });

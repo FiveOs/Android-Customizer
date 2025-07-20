@@ -6,13 +6,13 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Trash2, Edit, Copy, Plus, Search } from "lucide-react";
 import { Link } from "wouter";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast"; // Removed to fix React conflicts
 import { apiRequest } from "@/lib/queryClient";
 import BackButton from "@/components/back-button";
 
 export default function ConfigurationsPage() {
   const [searchTerm, setSearchTerm] = React.useState("");
-  const { toast } = useToast();
+  
   const queryClient = useQueryClient();
 
   const { data: configurations = [], isLoading } = useQuery({
@@ -25,13 +25,13 @@ export default function ConfigurationsPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/configurations"] });
-      toast({
+      console.log({
         title: "Configuration deleted",
         description: "The configuration has been removed successfully.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Delete failed",
         description: "Failed to delete the configuration.",
         variant: "destructive",
@@ -54,13 +54,13 @@ export default function ConfigurationsPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/configurations"] });
-      toast({
+      console.log({
         title: "Configuration duplicated",
         description: "A copy of the configuration has been created.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Duplicate failed",
         description: "Failed to duplicate the configuration.",
         variant: "destructive",

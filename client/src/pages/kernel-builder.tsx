@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
 import { useWebSocket } from "@/hooks/use-websocket";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast"; // Removed to fix React conflicts
 import Sidebar from "@/components/sidebar";
 import DeviceConfiguration from "@/components/device-configuration";
 import FeatureToggles from "@/components/feature-toggles";
@@ -30,7 +30,7 @@ import { Save, Play, Download, Upload, Code, Zap, Settings } from "lucide-react"
 import { KernelConfiguration, InsertKernelConfiguration, BuildJob, devicePresets, DevicePreset } from "@shared/schema";
 
 export default function KernelBuilder() {
-  const { toast } = useToast();
+  
   const [currentStep, setCurrentStep] = React.useState(1);
   const [activeBuildId, setActiveBuildId] = React.useState<number | null>(null);
   const [showBuildModal, setShowBuildModal] = React.useState(false);
@@ -152,14 +152,14 @@ export default function KernelBuilder() {
       return response.json();
     },
     onSuccess: (data) => {
-      toast({
+      console.log({
         title: "Configuration saved",
         description: "Your kernel configuration has been saved successfully.",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/configurations"] });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Save failed",
         description: "Failed to save configuration. Please try again.",
         variant: "destructive",
@@ -192,13 +192,13 @@ export default function KernelBuilder() {
     onSuccess: (buildJob) => {
       setActiveBuildId(buildJob.id);
       setShowBuildModal(true);
-      toast({
+      console.log({
         title: "Build started",
         description: "Your kernel build has been started.",
       });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Build failed to start",
         description: "Failed to start the build process. Please check your configuration.",
         variant: "destructive",
@@ -211,14 +211,14 @@ export default function KernelBuilder() {
       await apiRequest("POST", `/api/builds/${buildId}/cancel`, {});
     },
     onSuccess: () => {
-      toast({
+      console.log({
         title: "Build cancelled",
         description: "The build process has been cancelled.",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/builds", activeBuildId] });
     },
     onError: () => {
-      toast({
+      console.log({
         title: "Cancel failed",
         description: "Failed to cancel the build process.",
         variant: "destructive",
@@ -236,7 +236,7 @@ export default function KernelBuilder() {
 
   const handleSave = () => {
     if (!config.name || !config.device || !config.codename) {
-      toast({
+      console.log({
         title: "Validation error",
         description: "Please fill in all required fields.",
         variant: "destructive",
@@ -249,7 +249,7 @@ export default function KernelBuilder() {
 
   const handleStartBuild = () => {
     if (!config.name || !config.device || !config.codename) {
-      toast({
+      console.log({
         title: "Validation error",
         description: "Please fill in all required fields.",
         variant: "destructive",
@@ -285,12 +285,12 @@ export default function KernelBuilder() {
       try {
         const importedConfig = JSON.parse(e.target?.result as string);
         setConfig(importedConfig);
-        toast({
+        console.log({
           title: "Configuration imported",
           description: "Configuration has been imported successfully.",
         });
       } catch (error) {
-        toast({
+        console.log({
           title: "Import failed",
           description: "Failed to parse the configuration file.",
           variant: "destructive",
