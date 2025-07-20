@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Smartphone, Settings, Search, Star } from "lucide-react";
 import { InsertKernelConfiguration, DevicePreset, devicePresets } from "@shared/schema";
-import { useState, useMemo } from "react";
+import * as React from "react";
 
 interface DeviceConfigurationProps {
   config: Partial<InsertKernelConfiguration>;
@@ -16,8 +16,8 @@ interface DeviceConfigurationProps {
 }
 
 export default function DeviceConfiguration({ config, onConfigChange, onPresetChange }: DeviceConfigurationProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [selectedCategory, setSelectedCategory] = React.useState("all");
 
   const handleInputChange = (field: keyof InsertKernelConfiguration) => (
     value: string | string[]
@@ -33,7 +33,7 @@ export default function DeviceConfiguration({ config, onConfigChange, onPresetCh
   };
 
   // Group devices by category
-  const devicesByCategory = useMemo(() => {
+  const devicesByCategory = React.useMemo(() => {
     const categories: Record<string, Array<{ key: DevicePreset; preset: typeof devicePresets[DevicePreset] }>> = {};
     
     Object.entries(devicePresets).forEach(([key, preset]) => {
@@ -48,7 +48,7 @@ export default function DeviceConfiguration({ config, onConfigChange, onPresetCh
   }, []);
 
   // Filter devices based on search and category
-  const filteredDevices = useMemo(() => {
+  const filteredDevices = React.useMemo(() => {
     let filtered = Object.entries(devicesByCategory);
 
     if (selectedCategory !== "all") {

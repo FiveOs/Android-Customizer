@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { wsManager } from "@/lib/websocket";
 
 export function useWebSocket(onMessage?: (data: any) => void) {
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Connect to WebSocket
     wsManager.connect();
 

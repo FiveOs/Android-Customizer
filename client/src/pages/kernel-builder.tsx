@@ -36,7 +36,7 @@ export default function KernelBuilder() {
   const [showBuildModal, setShowBuildModal] = React.useState(false);
 
   // Configuration state
-  const [config, setConfig] = useState<Partial<InsertKernelConfiguration>>({
+  const [config, setConfig] = React.useState<Partial<InsertKernelConfiguration>>({
     name: "My Kernel Build",
     device: "oneplus_nord",
     codename: "avicii",

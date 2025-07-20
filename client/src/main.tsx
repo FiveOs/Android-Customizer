@@ -1,6 +1,5 @@
-import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App";
+import TestApp from "./TestApp";
 import "./index.css";
 
 // Force cache invalidation
@@ -14,4 +13,4 @@ if ('serviceWorker' in navigator) {
 document.documentElement.setAttribute('data-theme-version', '2.1');
 document.documentElement.style.setProperty('--cache-bust', Math.random().toString());
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(<TestApp />);

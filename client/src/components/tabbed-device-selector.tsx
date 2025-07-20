@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Smartphone, Zap, Cpu } from "lucide-react";
 
@@ -141,7 +141,7 @@ const deviceGroups: DeviceGroup[] = [
 ];
 
 export default function TabbedDeviceSelector({ value, onChange }: TabbedDeviceSelectorProps) {
-  const [activeTab, setActiveTab] = useState("oneplus");
+  const [activeTab, setActiveTab] = React.useState("oneplus");
   
   const currentGroup = deviceGroups.find(g => g.id === activeTab);
   const selectedDevice = deviceGroups.flatMap(g => g.devices).find(d => d.value === value);

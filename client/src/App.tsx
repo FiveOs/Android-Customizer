@@ -1,56 +1,13 @@
-import * as React from "react";
-import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { useAuth } from "@/hooks/useAuth";
-import KernelBuilder from "@/pages/kernel-builder";
-import Landing from "@/pages/landing";
-import Home from "@/pages/home";
-import ConfigurationsPage from "@/pages/configurations";
-import BuildHistoryPage from "@/pages/build-history";
-import AndroidToolPage from "@/pages/android-tool";
-import NotFound from "@/pages/not-found";
-
-function Router() {
-  const { isAuthenticated, isLoading } = useAuth();
-
-  return (
-    <Switch>
-      {isLoading || !isAuthenticated ? (
-        <Route path="/" component={Landing} />
-      ) : (
-        <>
-          <Route path="/" component={Home} />
-          <Route path="/kernel-builder" component={KernelBuilder} />
-          <Route path="/configurations" component={ConfigurationsPage} />
-          <Route path="/build-history" component={BuildHistoryPage} />
-          <Route path="/android-tool" component={AndroidToolPage} />
-        </>
-      )}
-      <Route component={NotFound} />
-    </Switch>
-  );
-}
-
+// Minimal React component without hooks
 function App() {
-  // Ensure dark theme is applied immediately
-  React.useEffect(() => {
-    document.documentElement.classList.add('dark');
-    document.body.classList.add('dark');
-    document.body.style.backgroundColor = 'hsl(0, 0%, 8%)';
-    document.body.style.color = 'hsl(120, 100%, 85%)';
-  }, []);
-  
   return (
-    <div className="dark min-h-screen bg-slate-900 text-emerald-100">
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </QueryClientProvider>
+    <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', color: '#d1fae5', padding: '2rem' }}>
+      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center' }}>
+        Android Kernel Customizer
+      </h1>
+      <p style={{ textAlign: 'center', marginTop: '1rem', color: '#94a3b8' }}>
+        Testing basic React functionality...
+      </p>
     </div>
   );
 }

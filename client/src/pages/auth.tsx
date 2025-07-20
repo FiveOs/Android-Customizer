@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,8 +10,8 @@ import { apiRequest } from "@/lib/queryClient";
 import { Shield } from "lucide-react";
 
 export default function AuthPage() {
-  const [loginData, setLoginData] = useState({ username: "", password: "" });
-  const [registerData, setRegisterData] = useState({ username: "", password: "" });
+  const [loginData, setLoginData] = React.useState({ username: "", password: "" });
+  const [registerData, setRegisterData] = React.useState({ username: "", password: "" });
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
