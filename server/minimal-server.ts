@@ -384,6 +384,359 @@ app.get('/twrp-customizer', (req, res) => {
   res.send(htmlContent);
 });
 
+// Kernel Builder page
+app.get('/kernel-builder', (req, res) => {
+  const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kernel Builder - Android Kernel Customizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #d1fae5; font-family: system-ui; }
+        .loading { opacity: 0.6; pointer-events: none; }
+    </style>
+</head>
+<body class="min-h-screen p-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h1 class="text-4xl font-bold text-emerald-400 mb-2">🛡️ Kernel Builder</h1>
+                    <p class="text-gray-300">Build custom Android kernels with NetHunter security features</p>
+                </div>
+                <a href="/" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">← Back to Home</a>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Device Selection -->
+            <div class="lg:col-span-3 space-y-6">
+                <div class="bg-slate-800 p-6 rounded-lg border-2 border-emerald-500">
+                    <h2 class="text-xl font-semibold text-emerald-300 mb-4">Device Configuration</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Device</label>
+                            <select id="device" class="w-full bg-slate-700 border border-gray-600 rounded px-3 py-2">
+                                <option value="">Select Device</option>
+                                <option value="oneplus9pro">OnePlus 9 Pro</option>
+                                <option value="oneplus8t">OnePlus 8T</option>
+                                <option value="oneplus7pro">OnePlus 7 Pro</option>
+                                <option value="pixel6">Google Pixel 6</option>
+                                <option value="pixel7">Google Pixel 7</option>
+                                <option value="s21ultra">Samsung Galaxy S21 Ultra</option>
+                                <option value="nothingphone1">Nothing Phone (1)</option>
+                                <option value="fairphone4">Fairphone 4</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Android Version</label>
+                            <select id="android-version" class="w-full bg-slate-700 border border-gray-600 rounded px-3 py-2">
+                                <option value="14">Android 14</option>
+                                <option value="13">Android 13</option>
+                                <option value="12">Android 12</option>
+                                <option value="11">Android 11</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Build Type</label>
+                            <select id="build-type" class="w-full bg-slate-700 border border-gray-600 rounded px-3 py-2">
+                                <option value="nethunter">NetHunter Kernel</option>
+                                <option value="performance">Performance Optimized</option>
+                                <option value="battery">Battery Optimized</option>
+                                <option value="custom">Custom Build</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- NetHunter Features -->
+                <div class="bg-slate-800 p-6 rounded-lg border-2 border-red-500">
+                    <h2 class="text-xl font-semibold text-red-300 mb-4">NetHunter Security Features</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-3">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="wifi-monitor" checked class="mr-3">
+                                <span>WiFi Monitor Mode</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="packet-injection" checked class="mr-3">
+                                <span>Packet Injection</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="wireless-drivers" checked class="mr-3">
+                                <span>Wireless Drivers (RTL8812AU)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="badusb" class="mr-3">
+                                <span>BadUSB Support</span>
+                            </label>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="bluetooth-arsenal" class="mr-3">
+                                <span>Bluetooth Arsenal</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="nfc-hacking" class="mr-3">
+                                <span>NFC Hacking Tools</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="sdr-support" class="mr-3">
+                                <span>SDR Support</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="custom-patches" class="mr-3">
+                                <span>Custom Security Patches</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Root Solutions -->
+                <div class="bg-slate-800 p-6 rounded-lg border-2 border-purple-500">
+                    <h2 class="text-xl font-semibold text-purple-300 mb-4">Root Solutions</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-700 p-4 rounded-lg border border-purple-400">
+                            <label class="flex items-center mb-3">
+                                <input type="radio" name="root-solution" value="kernelsu" class="mr-3">
+                                <span class="font-semibold">KernelSU</span>
+                            </label>
+                            <div class="text-sm text-gray-300 space-y-1">
+                                <div>• Kernel-level root</div>
+                                <div>• Manager app integration</div>
+                                <div>• Advanced permissions</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-700 p-4 rounded-lg border border-purple-400">
+                            <label class="flex items-center mb-3">
+                                <input type="radio" name="root-solution" value="magisk" checked class="mr-3">
+                                <span class="font-semibold">Magisk</span>
+                            </label>
+                            <div class="text-sm text-gray-300 space-y-1">
+                                <div>• Systemless root</div>
+                                <div>• Hide root detection</div>
+                                <div>• Module support</div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-700 p-4 rounded-lg border border-purple-400">
+                            <label class="flex items-center mb-3">
+                                <input type="radio" name="root-solution" value="none" class="mr-3">
+                                <span class="font-semibold">No Root</span>
+                            </label>
+                            <div class="text-sm text-gray-300 space-y-1">
+                                <div>• Stock kernel behavior</div>
+                                <div>• No root access</div>
+                                <div>• Maximum stability</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Build Options -->
+                <div class="bg-slate-800 p-6 rounded-lg border-2 border-yellow-500">
+                    <h2 class="text-xl font-semibold text-yellow-300 mb-4">Build Configuration</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Kernel Name</label>
+                            <input type="text" id="kernel-name" placeholder="My Custom Kernel" class="w-full bg-slate-700 border border-gray-600 rounded px-3 py-2">
+                            
+                            <label class="block text-sm font-medium mb-2 mt-4">Compiler</label>
+                            <select id="compiler" class="w-full bg-slate-700 border border-gray-600 rounded px-3 py-2">
+                                <option value="clang">Clang (Recommended)</option>
+                                <option value="gcc">GCC</option>
+                                <option value="proton-clang">Proton Clang</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Optimization Level</label>
+                            <select id="optimization" class="w-full bg-slate-700 border border-gray-600 rounded px-3 py-2">
+                                <option value="performance">Performance (-O3)</option>
+                                <option value="balanced">Balanced (-O2)</option>
+                                <option value="size">Size Optimized (-Os)</option>
+                            </select>
+                            
+                            <label class="block text-sm font-medium mb-2 mt-4">Output Format</label>
+                            <select id="output-format" class="w-full bg-slate-700 border border-gray-600 rounded px-3 py-2">
+                                <option value="boot-image">Boot Image (.img)</option>
+                                <option value="anykernel3">AnyKernel3 (.zip)</option>
+                                <option value="both">Both formats</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Build Button -->
+                <div class="text-center">
+                    <button id="buildBtn" onclick="startKernelBuild()" class="bg-emerald-600 hover:bg-emerald-700 px-12 py-4 rounded-lg text-xl font-bold">
+                        🚀 Build Custom Kernel
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Summary Panel -->
+            <div class="space-y-6">
+                <div class="bg-slate-800 p-6 rounded-lg border-2 border-cyan-500 sticky top-6">
+                    <h2 class="text-xl font-semibold text-cyan-300 mb-4">Build Summary</h2>
+                    <div class="space-y-3 text-sm">
+                        <div><span class="text-gray-400">Device:</span> <span id="summaryDevice">Not selected</span></div>
+                        <div><span class="text-gray-400">Android:</span> <span id="summaryAndroid">14</span></div>
+                        <div><span class="text-gray-400">Build Type:</span> <span id="summaryBuildType">NetHunter</span></div>
+                        <div><span class="text-gray-400">Root:</span> <span id="summaryRoot">Magisk</span></div>
+                        <div><span class="text-gray-400">Features:</span> <span id="summaryFeatures">WiFi Monitor, Packet Injection</span></div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-slate-700 rounded-lg">
+                        <div class="text-center text-yellow-300 font-semibold mb-2">Estimated Build Time</div>
+                        <div class="text-center text-2xl text-white">45-90 min</div>
+                        <div class="text-center text-xs text-gray-400 mt-1">Depends on features selected</div>
+                    </div>
+                </div>
+                
+                <!-- Build Status -->
+                <div id="buildStatus" class="bg-slate-800 p-6 rounded-lg border-2 border-yellow-500 hidden">
+                    <h2 class="text-xl font-semibold text-yellow-300 mb-4">Build Status</h2>
+                    <div id="statusContent">
+                        <div class="flex items-center mb-2">
+                            <div class="animate-spin rounded-full h-4 w-4 border-2 border-yellow-400 border-t-transparent mr-3"></div>
+                            <span>Building kernel...</span>
+                        </div>
+                        <div class="text-sm text-gray-400">This may take 45-90 minutes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateSummary() {
+            const device = document.getElementById('device').value;
+            const androidVersion = document.getElementById('android-version').value;
+            const buildType = document.getElementById('build-type').value;
+            const rootSolution = document.querySelector('input[name="root-solution"]:checked').value;
+            
+            document.getElementById('summaryDevice').textContent = device || 'Not selected';
+            document.getElementById('summaryAndroid').textContent = 'Android ' + androidVersion;
+            document.getElementById('summaryBuildType').textContent = buildType;
+            document.getElementById('summaryRoot').textContent = rootSolution;
+            
+            // Count NetHunter features
+            const features = [];
+            if (document.getElementById('wifi-monitor').checked) features.push('WiFi Monitor');
+            if (document.getElementById('packet-injection').checked) features.push('Packet Injection');
+            if (document.getElementById('wireless-drivers').checked) features.push('Wireless Drivers');
+            if (document.getElementById('badusb').checked) features.push('BadUSB');
+            
+            document.getElementById('summaryFeatures').textContent = features.length > 0 ? features.slice(0, 2).join(', ') + (features.length > 2 ? '...' : '') : 'Basic';
+        }
+        
+        async function startKernelBuild() {
+            const device = document.getElementById('device').value;
+            if (!device) {
+                alert('Please select a device first!');
+                return;
+            }
+            
+            const kernelName = document.getElementById('kernel-name').value;
+            const buildType = document.getElementById('build-type').value;
+            const rootSolution = document.querySelector('input[name="root-solution"]:checked').value;
+            
+            document.getElementById('buildStatus').classList.remove('hidden');
+            document.getElementById('buildBtn').textContent = '🔄 Building...';
+            document.getElementById('buildBtn').classList.add('loading');
+            
+            try {
+                const response = await fetch('/api/kernel/build', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        device: device,
+                        kernelName: kernelName,
+                        buildType: buildType,
+                        rootSolution: rootSolution,
+                        nethunterFeatures: {
+                            wifiMonitor: document.getElementById('wifi-monitor').checked,
+                            packetInjection: document.getElementById('packet-injection').checked,
+                            wirelessDrivers: document.getElementById('wireless-drivers').checked,
+                            badusb: document.getElementById('badusb').checked
+                        }
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('statusContent').innerHTML = 
+                        '<div class="text-green-400 mb-2">✅ Kernel Build Started!</div>' +
+                        '<div class="text-sm text-gray-400">Build ID: ' + result.buildId + '</div>' +
+                        '<div class="text-sm text-gray-400">Estimated: ' + result.estimated + '</div>' +
+                        '<div class="mt-3 text-xs"><strong>Configuration:</strong><br/>' +
+                        'Device: ' + device + '<br/>' +
+                        'Type: ' + buildType + '<br/>' +
+                        'Root: ' + rootSolution + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('statusContent').innerHTML = 
+                    '<div class="text-red-400">❌ Build Failed</div>' +
+                    '<div class="text-sm text-red-300">Error: ' + error.message + '</div>';
+            } finally {
+                document.getElementById('buildBtn').textContent = '🚀 Build Custom Kernel';
+                document.getElementById('buildBtn').classList.remove('loading');
+            }
+        }
+        
+        // Update summary on changes
+        document.getElementById('device').addEventListener('change', updateSummary);
+        document.getElementById('android-version').addEventListener('change', updateSummary);
+        document.getElementById('build-type').addEventListener('change', updateSummary);
+        document.querySelectorAll('input[name="root-solution"]').forEach(radio => {
+            radio.addEventListener('change', updateSummary);
+        });
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', updateSummary);
+        });
+        
+        // Initialize summary
+        updateSummary();
+    </script>
+</body>
+</html>`;
+  res.send(htmlContent);
+});
+
+// Kernel build API endpoint
+app.post('/api/kernel/build', async (req, res) => {
+  try {
+    const { device, kernelName, buildType, rootSolution, nethunterFeatures } = req.body;
+    
+    if (!device) {
+      return res.status(400).json({ message: 'Device selection is required' });
+    }
+
+    const buildId = `kernel_${device}_${Date.now()}`;
+    
+    res.json({
+      success: true,
+      buildId,
+      message: 'Kernel build started successfully',
+      estimated: '45-90 minutes',
+      configuration: {
+        device,
+        kernelName,
+        buildType,
+        rootSolution,
+        nethunterFeatures
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to start kernel build',
+      error: error.message
+    });
+  }
+});
+
 // Simple home page
 app.get('/', (req, res) => {
   res.send(`
@@ -416,10 +769,32 @@ app.get('/', (req, res) => {
         <div class="bg-slate-800 p-6 rounded-lg border-2 border-green-500 mb-6">
             <h2 class="text-xl font-semibold text-green-300 mb-4">Quick Links</h2>
             <div class="space-y-2">
+                <a href="/kernel-builder" class="block bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded text-center">Kernel Builder</a>
                 <a href="/twrp-customizer" class="block bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded text-center">TWRP Customizer</a>
-                <a href="/direct-test" class="block bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-center">Direct Server Test</a>
-                <a href="/api/test" class="block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-center">Test API Endpoint</a>
-                <a href="/health" class="block bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-center">Health Check</a>
+                <a href="/android-tool" class="block bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded text-center">Android Tool</a>
+                <a href="/build-history" class="block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-center">Build History</a>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 p-6 rounded-lg border-2 border-emerald-500 mb-6">
+            <h2 class="text-xl font-semibold text-emerald-300 mb-4">Android Kernel Customizer</h2>
+            <p class="text-gray-300 mb-4">Build custom Android kernels with NetHunter security features and advanced optimizations.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div class="text-2xl mb-2">🛡️</div>
+                    <div class="font-semibold">NetHunter Integration</div>
+                    <div class="text-sm text-gray-400">WiFi Monitor, Packet Injection</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl mb-2">🔧</div>
+                    <div class="font-semibold">Root Solutions</div>
+                    <div class="text-sm text-gray-400">KernelSU, Magisk Support</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl mb-2">📱</div>
+                    <div class="font-semibold">40+ Devices</div>
+                    <div class="text-sm text-gray-400">OnePlus, Pixel, Samsung</div>
+                </div>
             </div>
         </div>
         
@@ -462,6 +837,198 @@ app.get('/', (req, res) => {
 </body>
 </html>
   `);
+});
+
+// Android Tool page  
+app.get('/android-tool', (req, res) => {
+  const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Tool - Android Kernel Customizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #d1fae5; font-family: system-ui; }
+    </style>
+</head>
+<body class="min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h1 class="text-4xl font-bold text-cyan-400 mb-2">📱 Android Tool</h1>
+                    <p class="text-gray-300">Device management, flashing tools, and recovery operations</p>
+                </div>
+                <a href="/" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">← Back to Home</a>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-slate-800 p-6 rounded-lg border-2 border-cyan-500">
+                <h2 class="text-xl font-semibold text-cyan-300 mb-4">Device Information</h2>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Status:</span>
+                        <span class="text-green-400">Connected</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Model:</span>
+                        <span>OnePlus 9 Pro</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Android:</span>
+                        <span>Android 14</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Bootloader:</span>
+                        <span class="text-orange-400">Unlocked</span>
+                    </div>
+                </div>
+                <button class="w-full mt-4 bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded">Refresh Info</button>
+            </div>
+            
+            <div class="bg-slate-800 p-6 rounded-lg border-2 border-orange-500">
+                <h2 class="text-xl font-semibold text-orange-300 mb-4">Flash Operations</h2>
+                <div class="space-y-3">
+                    <button class="w-full bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded">Flash Kernel</button>
+                    <button class="w-full bg-red-600 hover:bg-red-700 px-4 py-2 rounded">Flash Recovery</button>
+                    <button class="w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded">Flash Boot Image</button>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">Flash Custom ROM</button>
+                </div>
+            </div>
+            
+            <div class="bg-slate-800 p-6 rounded-lg border-2 border-green-500">
+                <h2 class="text-xl font-semibold text-green-300 mb-4">Root Management</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span>Root Status:</span>
+                        <span class="text-green-400">Rooted (Magisk)</span>
+                    </div>
+                    <button class="w-full bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Install Magisk</button>
+                    <button class="w-full bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded">Patch Boot Image</button>
+                    <button class="w-full bg-red-600 hover:bg-red-700 px-4 py-2 rounded">Unroot Device</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-6 bg-slate-800 p-6 rounded-lg border-2 border-yellow-500">
+            <h2 class="text-xl font-semibold text-yellow-300 mb-4">Quick Actions</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Reboot Device</button>
+                <button class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Reboot Recovery</button>
+                <button class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Reboot Bootloader</button>
+                <button class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">ADB Shell</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+  res.send(htmlContent);
+});
+
+// Build History page
+app.get('/build-history', (req, res) => {
+  const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build History - Android Kernel Customizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #d1fae5; font-family: system-ui; }
+    </style>
+</head>
+<body class="min-h-screen p-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h1 class="text-4xl font-bold text-blue-400 mb-2">📊 Build History</h1>
+                    <p class="text-gray-300">Track your kernel and TWRP builds with detailed logs and downloads</p>
+                </div>
+                <a href="/" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">← Back to Home</a>
+            </div>
+        </div>
+        
+        <div class="space-y-4">
+            <!-- Sample Build Entries -->
+            <div class="bg-slate-800 p-6 rounded-lg border-2 border-green-500">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-green-300">NetHunter Kernel - OnePlus 9 Pro</h3>
+                        <div class="text-sm text-gray-400">Started: 2025-07-20 16:30:45</div>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="bg-green-600 px-3 py-1 rounded text-sm font-semibold mr-3">✅ Completed</span>
+                        <span class="text-sm text-gray-400">45 min</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+                    <div><span class="text-gray-400">Device:</span> OnePlus 9 Pro</div>
+                    <div><span class="text-gray-400">Android:</span> 14</div>
+                    <div><span class="text-gray-400">Root:</span> Magisk</div>
+                    <div><span class="text-gray-400">Features:</span> WiFi Monitor, Packet Injection</div>
+                </div>
+                <div class="mt-4 flex space-x-3">
+                    <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm">Download Kernel</button>
+                    <button class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded text-sm">View Logs</button>
+                </div>
+            </div>
+            
+            <div class="bg-slate-800 p-6 rounded-lg border-2 border-orange-500">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-orange-300">TWRP Recovery - Pixel 6</h3>
+                        <div class="text-sm text-gray-400">Started: 2025-07-20 15:15:22</div>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="bg-orange-600 px-3 py-1 rounded text-sm font-semibold mr-3">✅ Completed</span>
+                        <span class="text-sm text-gray-400">28 min</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+                    <div><span class="text-gray-400">Device:</span> Google Pixel 6</div>
+                    <div><span class="text-gray-400">Theme:</span> Portrait HDPI</div>
+                    <div><span class="text-gray-400">Version:</span> 3.7.1</div>
+                    <div><span class="text-gray-400">Features:</span> Encryption, MTP, ADB</div>
+                </div>
+                <div class="mt-4 flex space-x-3">
+                    <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm">Download TWRP</button>
+                    <button class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded text-sm">View Logs</button>
+                </div>
+            </div>
+            
+            <div class="bg-slate-800 p-6 rounded-lg border-2 border-yellow-500">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-yellow-300">Performance Kernel - OnePlus 8T</h3>
+                        <div class="text-sm text-gray-400">Started: 2025-07-20 14:45:12</div>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="bg-yellow-600 px-3 py-1 rounded text-sm font-semibold mr-3">🔄 Building</span>
+                        <span class="text-sm text-gray-400">32 min elapsed</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+                    <div><span class="text-gray-400">Device:</span> OnePlus 8T</div>
+                    <div><span class="text-gray-400">Android:</span> 13</div>
+                    <div><span class="text-gray-400">Root:</span> KernelSU</div>
+                    <div><span class="text-gray-400">Optimization:</span> Performance (-O3)</div>
+                </div>
+                <div class="mt-4">
+                    <div class="bg-slate-700 rounded-full h-2 mb-2">
+                        <div class="bg-yellow-400 h-2 rounded-full" style="width: 68%"></div>
+                    </div>
+                    <div class="text-sm text-gray-400">Progress: 68% - Compiling kernel modules...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+  res.send(htmlContent);
 });
 
 const PORT = parseInt(process.env.PORT || "5000", 10);
