@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Kernel Customizer - Direct Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            background: #0f172a; 
+            color: #d1fae5; 
+            font-family: system-ui, sans-serif; 
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-900 text-emerald-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold text-center text-emerald-400 mb-8">
+            🔧 Android Kernel Customizer - STATIC TEST
+        </h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-slate-800 p-6 rounded-lg border border-emerald-500">
+                <h2 class="text-xl font-semibold text-emerald-300 mb-4">Status Check</h2>
+                <div id="status-list">
+                    <p class="mb-2">✅ HTML Loading: SUCCESS</p>
+                    <p class="mb-2">✅ Tailwind CSS: SUCCESS</p>
+                    <p class="mb-2">✅ JavaScript: <span id="js-status">TESTING...</span></p>
+                    <p class="mb-2">❌ Vite HMR: BYPASSED</p>
+                </div>
+            </div>
+            
+            <div class="bg-slate-800 p-6 rounded-lg border border-emerald-500">
+                <h2 class="text-xl font-semibold text-emerald-300 mb-4">Interactive Test</h2>
+                <button id="test-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded mb-4 transition-colors">
+                    Click Me!
+                </button>
+                <div id="click-count" class="text-center text-lg">
+                    Clicks: <span class="text-emerald-400 font-bold">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 p-6 rounded-lg border border-yellow-500">
+            <h2 class="text-xl font-semibold text-yellow-300 mb-4">Next Steps</h2>
+            <p class="mb-2">If this static version works, the issue is Vite websocket configuration.</p>
+            <p class="mb-2">We can proceed with React using a different build approach.</p>
+            <p>Access this file directly at: <code class="bg-slate-700 px-2 py-1 rounded">/static-test.html</code></p>
+        </div>
+    </div>
+
+    <script>
+        console.log('=== STATIC HTML TEST ===');
+        document.getElementById('js-status').textContent = 'SUCCESS';
+        
+        let clicks = 0;
+        const button = document.getElementById('test-btn');
+        const counter = document.querySelector('#click-count span');
+        
+        button.addEventListener('click', () => {
+            clicks++;
+            counter.textContent = clicks;
+            console.log('Button clicked:', clicks);
+        });
+        
+        console.log('Static HTML fully loaded and interactive');
+    </script>
+</body>
+</html>

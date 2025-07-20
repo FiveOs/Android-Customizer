@@ -2,12 +2,19 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import bcrypt from "bcrypt";
+import path from "path";
 import { storage } from "./storage";
 // import { insertKernelConfigurationSchema, insertBuildJobSchema } from "@shared/schema";
 import { KernelBuilderService } from "./services/kernel-builder";
 import { AndroidToolService } from "./services/android-tool";
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
+  
+  // EMERGENCY BYPASS: Direct static test route (bypasses Vite entirely)
+  app.get('/static-test', (req, res) => {
+    const staticTestPath = path.resolve(import.meta.dirname, '..', 'static-test.html');
+    res.sendFile(staticTestPath);
+  });
   
   // WebSocket server for real-time build updates
   const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
