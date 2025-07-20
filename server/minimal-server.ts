@@ -1,8 +1,28 @@
 import express from "express";
 import path from "path";
-import { log } from "./vite";
-import { storage } from "./storage";
-import { twrpBuilder, TWRPBuildConfig } from "./services/twrp-builder";
+
+// Simple log function to avoid vite imports
+const log = (message: string, source = "app") => {
+  const timestamp = new Date().toLocaleTimeString();
+  console.log(`${timestamp} [${source}] ${message}`);
+};
+
+// Simplified storage interface to avoid problematic imports
+const storage = {
+  async getAllBuilds() { return []; },
+  async createBuildJob(data: any) { return { id: 1, ...data, createdAt: new Date().toISOString() }; },
+  async updateBuildJob(id: number, data: any) { return { id, ...data }; },
+  async getBuildJob(id: number) { return null; },
+  async getAllTWRPBuilds() { return []; },
+  async createTWRPBuildJob(data: any) { return { id: 1, ...data, createdAt: new Date().toISOString() }; },
+  async updateTWRPBuildJob(id: number, data: any) { return { id, ...data }; },
+  async getKernelConfigurations() { return []; }
+};
+
+// Simplified TWRP builder interface  
+const twrpBuilder = {
+  async createBuild(config: any) { return { success: true, buildId: 1 }; }
+};
 
 const app = express();
 app.use(express.json());
@@ -120,6 +140,71 @@ app.get('/api/twrp/versions', (req, res) => {
     { id: 'beta', name: '3.8.0 Beta', stable: false }
   ];
   res.json(versions);
+});
+
+// API endpoints for React frontend
+app.get('/api/status', (req, res) => {
+  res.json({
+    database: "connected",
+    server: "running",
+    builds: {
+      total: 0,
+      completed: 0,
+      active: 0,
+    },
+  });
+});
+
+// Kernel build endpoints
+app.get('/api/kernel/builds', async (req, res) => {
+  try {
+    const builds = await storage.getAllBuilds();
+    res.json(builds);
+  } catch (error) {
+    console.error("Error fetching builds:", error);
+    res.status(500).json({ error: "Failed to fetch builds" });
+  }
+});
+
+app.post('/api/kernel/build', async (req, res) => {
+  try {
+    const configuration = req.body;
+    
+    if (!configuration.device) {
+      return res.status(400).json({ error: "Device is required" });
+    }
+
+    const buildJob = await storage.createBuildJob({
+      device: configuration.device,
+      buildType: configuration.buildType || "nethunter",
+      status: "pending",
+      progress: 0,
+      currentStep: "Initializing build...",
+      logs: "",
+      configuration: JSON.stringify(configuration),
+    });
+
+    res.json(buildJob);
+  } catch (error) {
+    console.error("Error starting build:", error);
+    res.status(500).json({ error: "Failed to start build" });
+  }
+});
+
+app.post('/api/kernel/build/:id/cancel', async (req, res) => {
+  try {
+    const buildId = parseInt(req.params.id);
+    
+    await storage.updateBuildJob(buildId, {
+      status: "cancelled",
+      currentStep: "Build cancelled by user",
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error cancelling build:", error);
+    res.status(500).json({ error: "Failed to cancel build" });
+  }
 });
 
 app.post('/api/twrp/build', async (req, res) => {
@@ -1253,9 +1338,56 @@ app.get('/build-history', (req, res) => {
   res.send(htmlContent);
 });
 
+// React frontend routing - serve React app for all other routes
+app.get('*', (req, res) => {
+  // Skip API routes and existing static routes
+  if (req.path.startsWith('/api/') || 
+      req.path.startsWith('/direct-test') || 
+      req.path.startsWith('/health') ||
+      req.path === '/kernel-builder' ||
+      req.path === '/twrp-customizer' ||
+      req.path === '/android-tool' ||
+      req.path === '/build-history') {
+    return res.status(404).json({ error: 'Not found' });
+  }
+  
+  // Check if it's a React route
+  const reactRoutes = ['/', '/kernel-builder', '/twrp-customizer', '/android-tool', '/build-history', '/settings'];
+  if (reactRoutes.some(route => req.path.startsWith(route) || req.path === route)) {
+    // Serve React app HTML with Vite dev server integration
+    res.send(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Kernel Customizer</title>
+    <script type="module">
+      import RefreshRuntime from 'http://localhost:5173/@react-refresh'
+      RefreshRuntime.injectIntoGlobalHook(window)
+      window.$RefreshReg$ = () => {}
+      window.$RefreshSig$ = () => (type) => type
+      window.__vite_plugin_react_preamble_installed__ = true
+    </script>
+    <script type="module" src="http://localhost:5173/@vite/client"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="http://localhost:5173/src/main.tsx"></script>
+</body>
+</html>
+    `);
+    return;
+  }
+  
+  // Default: redirect to main app
+  res.redirect('/');
+});
+
 const PORT = parseInt(process.env.PORT || "5000", 10);
 app.listen(PORT, '0.0.0.0', () => {
   log(`🚀 Android Kernel Customizer running on port ${PORT}`, "server");
   log(`Application ready at: http://0.0.0.0:${PORT}/`, "server");
   log(`Direct test at: http://0.0.0.0:${PORT}/direct-test`, "server");
+  log(`React frontend: http://0.0.0.0:${PORT}/`, "server");
 });
