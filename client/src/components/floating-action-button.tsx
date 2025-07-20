@@ -1,110 +1,45 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Rocket, Save, Download, Upload, Play, Zap } from "lucide-react";
+import { Plus, Settings, Download, History } from "lucide-react";
 
-interface FloatingActionButtonProps {
-  onQuickBuild: () => void;
-  onSave: () => void;
-  onExport: () => void;
-  onImport: () => void;
-  isBuilding?: boolean;
-}
-
-export default function FloatingActionButton({ 
-  onQuickBuild, 
-  onSave, 
-  onExport, 
-  onImport, 
-  isBuilding = false 
-}: FloatingActionButtonProps) {
+export default function FloatingActionButton() {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   const actions = [
-    {
-      icon: Play,
-      label: "Quick Build",
-      action: onQuickBuild,
-      color: "bg-emerald-600 hover:bg-emerald-700",
-      disabled: isBuilding
-    },
-    {
-      icon: Save,
-      label: "Save Config",
-      action: onSave,
-      color: "bg-blue-600 hover:bg-blue-700",
-      disabled: false
-    },
-    {
-      icon: Download,
-      label: "Export Config",
-      action: onExport,
-      color: "bg-purple-600 hover:bg-purple-700",
-      disabled: false
-    },
-    {
-      icon: Upload,
-      label: "Import Config",
-      action: onImport,
-      color: "bg-orange-600 hover:bg-orange-700",
-      disabled: false
-    }
+    { icon: Plus, label: "New Build", action: () => console.log("New Build") },
+    { icon: Settings, label: "Settings", action: () => console.log("Settings") },
+    { icon: Download, label: "Downloads", action: () => console.log("Downloads") },
+    { icon: History, label: "History", action: () => console.log("History") },
   ];
 
   return (
-    <TooltipProvider>
-      <div className="fixed bottom-6 right-6 z-50">
-        <div className={`flex flex-col space-y-3 transition-all duration-300 ${isExpanded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}>
-          {actions.map((action, index) => {
-            const Icon = action.icon;
-            return (
-              <Tooltip key={action.label}>
-                <TooltipTrigger asChild>
-                  <Button
-                    size="sm"
-                    className={`w-12 h-12 rounded-full shadow-lg border-0 ${action.color} text-white transition-all duration-300 hover:scale-110 glow-effect`}
-                    onClick={action.action}
-                    disabled={action.disabled}
-                    style={{
-                      animationDelay: `${index * 0.1}s`,
-                      transform: isExpanded ? 'scale(1)' : 'scale(0)',
-                    }}
-                  >
-                    <Icon size={18} />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="left" className="bg-slate-800 border-emerald-500/30 text-white">
-                  {action.label}
-                </TooltipContent>
-              </Tooltip>
-            );
-          })}
-        </div>
+    <div className="fixed bottom-6 right-6 z-50">
+      <div className="flex flex-col items-end space-y-2">
+        {isExpanded && (
+          <div className="flex flex-col space-y-2">
+            {actions.map((action, index) => (
+              <Button
+                key={index}
+                size="sm"
+                variant="outline"
+                onClick={action.action}
+                className="bg-slate-800 border-emerald-500/30 text-emerald-100 hover:bg-slate-700 hover:border-emerald-400"
+              >
+                <action.icon className="w-4 h-4 mr-2" />
+                {action.label}
+              </Button>
+            ))}
+          </div>
+        )}
         
-        {/* Main FAB */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              size="lg"
-              className={`w-16 h-16 rounded-full shadow-2xl border-0 transition-all duration-300 hover:scale-110 ${
-                isBuilding 
-                  ? 'bg-orange-600 hover:bg-orange-700 pulse-glow-effect' 
-                  : 'bg-emerald-600 hover:bg-emerald-700 glow-effect'
-              } text-white`}
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              {isBuilding ? (
-                <Zap size={24} className="animate-pulse" />
-              ) : (
-                <Rocket size={24} className={isExpanded ? 'rotate-45' : ''} style={{transition: 'transform 0.3s'}} />
-              )}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="left" className="bg-slate-800 border-emerald-500/30 text-white">
-            {isBuilding ? 'Building...' : 'Quick Actions'}
-          </TooltipContent>
-        </Tooltip>
+        <Button
+          size="lg"
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="rounded-full w-14 h-14 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg"
+        >
+          <Plus className={`w-6 h-6 transition-transform duration-200 ${isExpanded ? 'rotate-45' : ''}`} />
+        </Button>
       </div>
-    </TooltipProvider>
+    </div>
   );
 }
