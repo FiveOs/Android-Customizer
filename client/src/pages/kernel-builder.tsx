@@ -26,7 +26,7 @@ import BackButton from "@/components/back-button";
 import FloatingActionButton from "@/components/floating-action-button";
 import TabbedDeviceSelector from "@/components/tabbed-device-selector";
 import BreadcrumbNavigation from "@/components/breadcrumb-navigation";
-import { Save, Play, Download, Upload, Code, Zap } from "lucide-react";
+import { Save, Play, Download, Upload, Code, Zap, Settings } from "lucide-react";
 import { KernelConfiguration, InsertKernelConfiguration, BuildJob, devicePresets, DevicePreset } from "@shared/schema";
 
 export default function KernelBuilder() {
