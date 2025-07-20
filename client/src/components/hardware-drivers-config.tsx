@@ -193,10 +193,10 @@ export default function HardwareDriversConfig({ config, onConfigChange }: Hardwa
                       value={config.displayDrivers.panelType} 
                       onValueChange={handleSelectChange("displayDrivers", "panelType")}
                     >
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                      <SelectTrigger className="">
                         <SelectValue placeholder="Select panel" />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-700 border-slate-600">
+                      <SelectContent className="">
                         <SelectItem value="samsung_s6e3fa7">Samsung S6E3FA7 (AMOLED)</SelectItem>
                         <SelectItem value="samsung_sofef00">Samsung SOFEF00 (AMOLED)</SelectItem>
                         <SelectItem value="lg_sw49408">LG SW49408 (OLED)</SelectItem>
@@ -213,10 +213,10 @@ export default function HardwareDriversConfig({ config, onConfigChange }: Hardwa
                       value={config.displayDrivers.resolution} 
                       onValueChange={handleSelectChange("displayDrivers", "resolution")}
                     >
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                      <SelectTrigger className="">
                         <SelectValue placeholder="Select resolution" />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-700 border-slate-600">
+                      <SelectContent className="">
                         <SelectItem value="1080x2400">1080x2400 (FHD+)</SelectItem>
                         <SelectItem value="1440x3168">1440x3168 (QHD+)</SelectItem>
                         <SelectItem value="1080x2340">1080x2340 (FHD+)</SelectItem>
@@ -321,10 +321,10 @@ export default function HardwareDriversConfig({ config, onConfigChange }: Hardwa
                     value={config.audioDrivers.codecType} 
                     onValueChange={handleSelectChange("audioDrivers", "codecType")}
                   >
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectTrigger className="">
                       <SelectValue placeholder="Select codec" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
+                    <SelectContent className="">
                       <SelectItem value="wcd9340">WCD9340 (Qualcomm)</SelectItem>
                       <SelectItem value="wcd9370">WCD9370 (Qualcomm)</SelectItem>
                       <SelectItem value="wcd9380">WCD9380 (Qualcomm)</SelectItem>

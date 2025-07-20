@@ -96,10 +96,10 @@ export default function MagiskConfiguration({ config, onConfigChange }: MagiskCo
                     Magisk Version
                   </Label>
                   <Select value={config.version} onValueChange={handleVersionChange}>
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
+                    <SelectContent>
                       <SelectItem value="latest">Latest (Recommended)</SelectItem>
                       <SelectItem value="v27.0">v27.0 (Stable)</SelectItem>
                       <SelectItem value="v26.4">v26.4 (Legacy)</SelectItem>

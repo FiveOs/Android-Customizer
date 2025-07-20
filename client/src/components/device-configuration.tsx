@@ -216,10 +216,10 @@ export default function DeviceConfiguration({ config, onConfigChange, onPresetCh
                   value={config.kernelArch || "arm64"} 
                   onValueChange={handleInputChange("kernelArch")}
                 >
-                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                  <SelectTrigger className="">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-700 border-slate-600">
+                  <SelectContent className="">
                     <SelectItem value="arm64">ARM64 (aarch64)</SelectItem>
                     <SelectItem value="arm">ARM (32-bit)</SelectItem>
                     <SelectItem value="x86_64">x86_64</SelectItem>

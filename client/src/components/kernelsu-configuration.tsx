@@ -70,10 +70,10 @@ export default function KernelSUConfiguration({ config, onConfigChange }: Kernel
                     KernelSU Version
                   </Label>
                   <Select value={config.version} onValueChange={handleSelectChange("version")}>
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectTrigger className="">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
+                    <SelectContent className="">
                       <SelectItem value="latest">Latest (Recommended)</SelectItem>
                       <SelectItem value="v0.7.2">v0.7.2 (Stable)</SelectItem>
                       <SelectItem value="v0.6.9">v0.6.9 (Legacy)</SelectItem>
@@ -87,10 +87,10 @@ export default function KernelSUConfiguration({ config, onConfigChange }: Kernel
                     Log Level
                   </Label>
                   <Select value={config.logLevel} onValueChange={handleSelectChange("logLevel")}>
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectTrigger className="">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
+                    <SelectContent className="">
                       <SelectItem value="info">Info (Recommended)</SelectItem>
                       <SelectItem value="debug">Debug (Verbose)</SelectItem>
                       <SelectItem value="warn">Warning Only</SelectItem>

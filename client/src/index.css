@@ -330,6 +330,75 @@
   .font-mono {
     font-family: "Fira Code", Monaco, Consolas, monospace;
   }
+
+  /* Dropdown and Select fixes */
+  [data-radix-popper-content-wrapper] {
+    z-index: 9999 !important;
+  }
+
+  [data-state="open"][data-side] {
+    z-index: 9999 !important;
+  }
+
+  .dropdown-content,
+  [role="listbox"],
+  [data-radix-select-content] {
+    z-index: 9999 !important;
+    background-color: rgb(30, 41, 59) !important;
+    border: 2px solid rgba(16, 185, 129, 0.4) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), 0 8px 16px rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(8px) !important;
+  }
+
+  [data-radix-select-content] [data-radix-select-viewport] {
+    background-color: rgb(30, 41, 59) !important;
+  }
+
+  [data-radix-select-item] {
+    background-color: rgb(30, 41, 59) !important;
+    color: white !important;
+    padding: 12px 16px !important;
+    border-radius: 6px !important;
+    margin: 2px !important;
+  }
+
+  [data-radix-select-item]:hover,
+  [data-radix-select-item][data-highlighted] {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+    color: white !important;
+  }
+
+  [data-radix-select-item][data-state="checked"] {
+    background-color: rgba(16, 185, 129, 0.3) !important;
+    color: white !important;
+  }
+
+  /* Select trigger styling */
+  [data-radix-select-trigger] {
+    background-color: rgb(51, 65, 85) !important;
+    border: 2px solid rgb(71, 85, 105) !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    color: white !important;
+    min-height: 44px !important;
+  }
+
+  [data-radix-select-trigger]:hover {
+    border-color: rgb(100, 116, 139) !important;
+  }
+
+  [data-radix-select-trigger]:focus {
+    border-color: rgba(16, 185, 129, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+  }
+
+  /* Additional dropdown menu fixes */
+  [data-radix-dropdown-menu-content] {
+    z-index: 9999 !important;
+    background-color: rgb(30, 41, 59) !important;
+    border: 2px solid rgba(16, 185, 129, 0.4) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9) !important;
+  }
 }
 
 /* NetHunter Custom scrollbar */

@@ -127,10 +127,10 @@ export default function PerformanceConfig({ config, onConfigChange }: Performanc
                   value={config.cpuGovernors.defaultGovernor} 
                   onValueChange={handleSelectChange("cpuGovernors", "defaultGovernor")}
                 >
-                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                  <SelectTrigger className="">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-700 border-slate-600">
+                  <SelectContent className="">
                     <SelectItem value="schedutil">Schedutil (Recommended)</SelectItem>
                     <SelectItem value="ondemand">OnDemand (Dynamic)</SelectItem>
                     <SelectItem value="performance">Performance (Max Speed)</SelectItem>
@@ -191,10 +191,10 @@ export default function PerformanceConfig({ config, onConfigChange }: Performanc
                     value={config.memoryManagement.zramSize} 
                     onValueChange={handleSelectChange("memoryManagement", "zramSize")}
                   >
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectTrigger className="">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
+                    <SelectContent className="">
                       <SelectItem value="512M">512 MB</SelectItem>
                       <SelectItem value="1G">1 GB (Recommended)</SelectItem>
                       <SelectItem value="2G">2 GB</SelectItem>
@@ -249,10 +249,10 @@ export default function PerformanceConfig({ config, onConfigChange }: Performanc
                 value={config.ioScheduler.defaultScheduler} 
                 onValueChange={handleSelectChange("ioScheduler", "defaultScheduler")}
               >
-                <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                <SelectTrigger className="">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-700 border-slate-600">
+                <SelectContent className="">
                   <SelectItem value="mq-deadline">MQ-Deadline (Recommended)</SelectItem>
                   <SelectItem value="kyber">Kyber (Low Latency)</SelectItem>
                   <SelectItem value="bfq">BFQ (Desktop/Interactive)</SelectItem>

@@ -86,10 +86,10 @@ export default function BuildOutputConfig({ config, onConfigChange }: BuildOutpu
               <div>
                 <Label className="text-sm font-medium text-slate-300 mb-2 block">Package Format</Label>
                 <Select value={config.outputFormat} onValueChange={handleSelectChange("outputFormat")}>
-                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-700 border-slate-600">
+                  <SelectContent>
                     <SelectItem value="boot_img">Boot Image (boot.img)</SelectItem>
                     <SelectItem value="kernel_only">Kernel Only (zImage/Image)</SelectItem>
                     <SelectItem value="kernel_modules">Kernel + Modules</SelectItem>
@@ -101,10 +101,10 @@ export default function BuildOutputConfig({ config, onConfigChange }: BuildOutpu
               <div>
                 <Label className="text-sm font-medium text-slate-300 mb-2 block">Compression</Label>
                 <Select value={config.compressionType} onValueChange={handleSelectChange("compressionType")}>
-                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-700 border-slate-600">
+                  <SelectContent>
                     <SelectItem value="gzip">gzip (Standard)</SelectItem>
                     <SelectItem value="lz4">LZ4 (Fast)</SelectItem>
                     <SelectItem value="xz">XZ (High Compression)</SelectItem>

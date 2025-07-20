@@ -568,48 +568,60 @@ export default function KernelBuilder() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-3">ROM Base</label>
-                  <select 
-                    className="w-full bg-slate-700 border-2 border-slate-600 rounded-lg px-4 py-3 text-white"
+                  <Select 
                     value={config.customROM || 'lineageos'}
-                    onChange={(e) => setConfig(prev => ({ ...prev, customROM: e.target.value }))}
+                    onValueChange={(value) => setConfig(prev => ({ ...prev, customROM: value }))}
                   >
-                    <option value="lineageos">LineageOS</option>
-                    <option value="nethunter">NetHunter OS (OnePlus only)</option>
-                    <option value="aosp">AOSP</option>
-                    <option value="custom">Custom Base</option>
-                  </select>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select ROM base" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="lineageos">LineageOS</SelectItem>
+                      <SelectItem value="nethunter">NetHunter OS (OnePlus only)</SelectItem>
+                      <SelectItem value="aosp">AOSP</SelectItem>
+                      <SelectItem value="custom">Custom Base</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <p className="text-xs text-slate-400 mt-2">Choose your ROM foundation</p>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-3">GApps Package</label>
-                  <select 
-                    className="w-full bg-slate-700 border-2 border-slate-600 rounded-lg px-4 py-3 text-white"
+                  <Select 
                     value={config.gappsVariant || 'none'}
-                    onChange={(e) => setConfig(prev => ({ ...prev, gappsVariant: e.target.value }))}
+                    onValueChange={(value) => setConfig(prev => ({ ...prev, gappsVariant: value }))}
                   >
-                    <option value="none">No GApps</option>
-                    <option value="pico">Pico (Minimal - 50MB)</option>
-                    <option value="nano">Nano (Basic - 150MB)</option>
-                    <option value="micro">Micro (Standard - 300MB)</option>
-                    <option value="mini">Mini (Extended - 500MB)</option>
-                    <option value="full">Full (Complete - 1GB+)</option>
-                  </select>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select GApps package" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">No GApps</SelectItem>
+                      <SelectItem value="pico">Pico (Minimal - 50MB)</SelectItem>
+                      <SelectItem value="nano">Nano (Basic - 150MB)</SelectItem>
+                      <SelectItem value="micro">Micro (Standard - 300MB)</SelectItem>
+                      <SelectItem value="mini">Mini (Extended - 500MB)</SelectItem>
+                      <SelectItem value="full">Full (Complete - 1GB+)</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <p className="text-xs text-slate-400 mt-2">Google Apps integration level</p>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-3">TWRP Theme</label>
-                  <select 
-                    className="w-full bg-slate-700 border-2 border-slate-600 rounded-lg px-4 py-3 text-white"
+                  <Select 
                     value={config.twrpTheme || 'portrait_hdpi'}
-                    onChange={(e) => setConfig(prev => ({ ...prev, twrpTheme: e.target.value }))}
+                    onValueChange={(value) => setConfig(prev => ({ ...prev, twrpTheme: value }))}
                   >
-                    <option value="portrait_hdpi">Portrait (HD)</option>
-                    <option value="landscape_hdpi">Landscape (HD)</option>
-                    <option value="watch_hdpi">Watch Style</option>
-                    <option value="portrait_mdpi">Portrait (Standard)</option>
-                  </select>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select TWRP theme" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="portrait_hdpi">Portrait (HD)</SelectItem>
+                      <SelectItem value="landscape_hdpi">Landscape (HD)</SelectItem>
+                      <SelectItem value="watch_hdpi">Watch Style</SelectItem>
+                      <SelectItem value="portrait_mdpi">Portrait (Standard)</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <p className="text-xs text-slate-400 mt-2">Recovery interface theme</p>
                 </div>
               </div>

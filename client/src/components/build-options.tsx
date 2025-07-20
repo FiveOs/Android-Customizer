@@ -90,10 +90,10 @@ export default function BuildOptions({ config, onConfigChange }: BuildOptionsPro
               value={config.wslDistroName || "kali-linux"}
               onValueChange={handleInputChange("wslDistroName")}
             >
-              <SelectTrigger className="bg-slate-700 border-slate-600 text-white focus:ring-primary focus:border-primary">
+              <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-slate-700 border-slate-600">
+              <SelectContent>
                 <SelectItem value="kali-linux">Kali Linux</SelectItem>
                 <SelectItem value="Ubuntu">Ubuntu</SelectItem>
                 <SelectItem value="Debian">Debian</SelectItem>
@@ -109,10 +109,10 @@ export default function BuildOptions({ config, onConfigChange }: BuildOptionsPro
               value={config.gitPatchLevel || "1"}
               onValueChange={handleInputChange("gitPatchLevel")}
             >
-              <SelectTrigger className="bg-slate-700 border-slate-600 text-white focus:ring-primary focus:border-primary">
+              <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-slate-700 border-slate-600">
+              <SelectContent>
                 <SelectItem value="1">Level 1 (recommended)</SelectItem>
                 <SelectItem value="0">Level 0</SelectItem>
                 <SelectItem value="2">Level 2</SelectItem>

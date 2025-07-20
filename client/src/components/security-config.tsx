@@ -196,10 +196,10 @@ export default function SecurityConfig({ config, onConfigChange }: SecurityConfi
                       value={config.kernelSigning.algorithm} 
                       onValueChange={handleSelectChange("kernelSigning", "algorithm")}
                     >
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                      <SelectTrigger className="">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-700 border-slate-600">
+                      <SelectContent className="">
                         <SelectItem value="sha256">SHA-256 (Recommended)</SelectItem>
                         <SelectItem value="sha384">SHA-384</SelectItem>
                         <SelectItem value="sha512">SHA-512</SelectItem>
@@ -242,10 +242,10 @@ export default function SecurityConfig({ config, onConfigChange }: SecurityConfi
                       value={config.securityPatches.patchLevel} 
                       onValueChange={handleSelectChange("securityPatches", "patchLevel")}
                     >
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                      <SelectTrigger className="">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-700 border-slate-600">
+                      <SelectContent className="">
                         <SelectItem value="latest">Latest (Recommended)</SelectItem>
                         <SelectItem value="2024-12">December 2024</SelectItem>
                         <SelectItem value="2024-11">November 2024</SelectItem>

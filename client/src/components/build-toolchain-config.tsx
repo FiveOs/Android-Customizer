@@ -66,10 +66,10 @@ export default function BuildToolchainConfig({ config, onConfigChange }: BuildTo
               <div>
                 <Label className="text-sm font-medium text-slate-300 mb-2 block">Primary Compiler</Label>
                 <Select value={config.compiler} onValueChange={handleSelectChange("compiler")}>
-                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-700 border-slate-600">
+                  <SelectContent>
                     <SelectItem value="gcc">GCC (GNU Compiler Collection)</SelectItem>
                     <SelectItem value="clang">Clang/LLVM</SelectItem>
                   </SelectContent>
@@ -84,10 +84,10 @@ export default function BuildToolchainConfig({ config, onConfigChange }: BuildTo
                   value={config.compiler === "gcc" ? config.gccVersion : config.clangVersion} 
                   onValueChange={handleSelectChange(config.compiler === "gcc" ? "gccVersion" : "clangVersion")}
                 >
-                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-700 border-slate-600">
+                  <SelectContent>
                     {config.compiler === "gcc" ? (
                       <>
                         <SelectItem value="13.2.0">GCC 13.2.0 (Latest)</SelectItem>
@@ -129,10 +129,10 @@ export default function BuildToolchainConfig({ config, onConfigChange }: BuildTo
               <div>
                 <Label className="text-sm font-medium text-slate-300 mb-2 block">Optimization Level</Label>
                 <Select value={config.optimizationLevel} onValueChange={handleSelectChange("optimizationLevel")}>
-                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-700 border-slate-600">
+                  <SelectContent>
                     <SelectItem value="O2">-O2 (Recommended)</SelectItem>
                     <SelectItem value="O3">-O3 (Maximum Performance)</SelectItem>
                     <SelectItem value="Os">-Os (Size Optimized)</SelectItem>
@@ -191,10 +191,10 @@ export default function BuildToolchainConfig({ config, onConfigChange }: BuildTo
                 <div>
                   <Label className="text-sm font-medium text-slate-300 mb-2 block">Cache Size</Label>
                   <Select value={config.ccacheSize} onValueChange={handleSelectChange("ccacheSize")}>
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectTrigger className="">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
+                    <SelectContent className="">
                       <SelectItem value="1G">1 GB (Minimal)</SelectItem>
                       <SelectItem value="2G">2 GB (Small)</SelectItem>
                       <SelectItem value="5G">5 GB (Recommended)</SelectItem>

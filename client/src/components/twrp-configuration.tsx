@@ -96,10 +96,10 @@ export default function TWRPConfiguration({ config, onConfigChange }: TWRPConfig
                     TWRP Version
                   </Label>
                   <Select value={config.version} onValueChange={handleSelectChange("version")}>
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectTrigger className="">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
+                    <SelectContent className="">
                       <SelectItem value="latest">Latest (3.7.0+)</SelectItem>
                       <SelectItem value="3.7.0">3.7.0 (Stable)</SelectItem>
                       <SelectItem value="3.6.2">3.6.2 (Legacy)</SelectItem>
@@ -114,10 +114,10 @@ export default function TWRPConfiguration({ config, onConfigChange }: TWRPConfig
                     Theme
                   </Label>
                   <Select value={config.theme} onValueChange={handleSelectChange("theme")}>
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectTrigger className="">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
+                    <SelectContent className="">
                       <SelectItem value="portrait_hdpi">Portrait HDPI</SelectItem>
                       <SelectItem value="landscape_hdpi">Landscape HDPI</SelectItem>
                       <SelectItem value="portrait_mdpi">Portrait MDPI</SelectItem>

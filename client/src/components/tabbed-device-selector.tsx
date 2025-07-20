@@ -188,7 +188,7 @@ export default function TabbedDeviceSelector({ value, onChange }: TabbedDeviceSe
             </div>
             
             <Select value={value} onValueChange={onChange}>
-              <SelectTrigger className="dropdown-animate bg-slate-700/60 border-slate-600 text-white h-10" style={{zIndex: 10}}>
+              <SelectTrigger className="w-full min-h-[48px]">
                 <SelectValue placeholder={`Select ${currentGroup.name} device`}>
                   {selectedDevice && (
                     <div className="flex items-center space-x-2">
@@ -199,24 +199,11 @@ export default function TabbedDeviceSelector({ value, onChange }: TabbedDeviceSe
                   )}
                 </SelectValue>
               </SelectTrigger>
-              <SelectContent 
-                className="dropdown-content border-slate-600" 
-                style={{
-                  zIndex: 9999,
-                  backgroundColor: 'rgb(30, 41, 59)',
-                  border: '1px solid rgba(16, 185, 129, 0.4)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.8), 0 8px 16px rgba(0, 0, 0, 0.6)'
-                }}
-              >
+              <SelectContent>
                 {currentGroup.devices.map((device) => (
                   <SelectItem 
                     key={device.value} 
                     value={device.value}
-                    className="hover:bg-emerald-500/20 py-3"
-                    style={{
-                      backgroundColor: 'rgb(30, 41, 59)',
-                      color: 'white'
-                    }}
                   >
                     <div className="flex flex-col">
                       <div className="flex items-center space-x-2">
