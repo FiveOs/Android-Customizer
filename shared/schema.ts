@@ -16,6 +16,8 @@ export const sessions = pgTable(
 // User storage table for Replit Auth
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().notNull(),
+  username: varchar("username").unique(),
+  password: varchar("password"),
   email: varchar("email").unique(),
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
@@ -278,19 +280,11 @@ export const buildJobs = pgTable("build_jobs", {
 });
 
 // Schema definitions with drizzle-zod
-export const insertUserSchema = createInsertSchema(users, {
-  id: z.string(),
-  email: z.string().email().optional(),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  profileImageUrl: z.string().url().optional(),
-}).omit({
+export const insertUserSchema = createInsertSchema(users).omit({
+  id: true,
   createdAt: true,
   updatedAt: true,
 });
-
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
 
 export const insertKernelConfigurationSchema = createInsertSchema(kernelConfigurations).omit({
   id: true,
@@ -305,50 +299,15 @@ export const insertBuildJobSchema = createInsertSchema(buildJobs).omit({
   completedAt: true,
 });
 
+// Type definitions
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type User = typeof users.$inferSelect;
 export type UpsertUser = typeof users.$inferInsert;
 
-export type InsertKernelConfiguration = {
-  name: string;
-  device: string;
-  codename: string;
-  kernelRepo: string;
-  kernelBranch: string;
-  nethunterPatchesRepo: string;
-  nethunterPatchesBranch: string;
-  nethunterPatchesDirRelative: string;
-  gitPatchLevel: string;
-  outputDir: string;
-  defconfigFilenameTemplate: string;
-  kernelArch: string;
-  kernelCrossCompile: string;
-  kernelImageNamePatterns: string[];
-  features: Record<string, boolean>;
-  customKernelConfigs: string[];
-  wslDistroName: string;
-  toolchainConfig: Record<string, any>;
-  buildOutputConfig: Record<string, any>;
-  deviceTreeConfig: Record<string, any>;
-  hardwareConfig: Record<string, any>;
-  performanceConfig: Record<string, any>;
-  securityConfig: Record<string, any>;
-  skipOptions: Record<string, boolean>;
-  magiskConfig: Record<string, any>;
-  twrpConfig: Record<string, any>;
-  kernelSUConfig: Record<string, any>;
-};
-
+export type InsertKernelConfiguration = z.infer<typeof insertKernelConfigurationSchema>;
 export type KernelConfiguration = typeof kernelConfigurations.$inferSelect;
-export type InsertBuildJob = {
-  configurationId: number;
-  status: "pending" | "running" | "completed" | "failed" | "cancelled";
-  currentStep: string;
-  progress: number;
-  logs: string;
-  errorMessage?: string;
-  outputFiles: string[];
-  startedAt?: Date;
-  completedAt?: Date;
-};
+
+export type InsertBuildJob = z.infer<typeof insertBuildJobSchema>;
 export type BuildJob = typeof buildJobs.$inferSelect;
 
 // Device presets organized by manufacturer and series

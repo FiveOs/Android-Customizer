@@ -5,6 +5,8 @@ import { eq } from "drizzle-orm";
 export interface IStorage {
   // User operations (Replit Auth)
   getUser(id: string): Promise<User | undefined>;
+  getUserByUsername(username: string): Promise<User | undefined>;
+  createUser(user: { username: string; password: string }): Promise<User>;
   upsertUser(user: UpsertUser): Promise<User>;
 
   // Kernel Configurations
@@ -26,6 +28,22 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
   async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
+  }
+
+  async createUser(userData: { username: string; password: string }): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values({
+        id: crypto.randomUUID(),
+        ...userData
+      })
+      .returning();
     return user;
   }
 
@@ -134,6 +152,32 @@ export class MemStorage implements IStorage {
     this.buildJobs = new Map();
     this.currentConfigId = 1;
     this.currentJobId = 1;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    for (const [_id, user] of this.users.entries()) {
+      if (user.username === username) {
+        return user;
+      }
+    }
+    return undefined;
+  }
+
+  async createUser(userData: { username: string; password: string }): Promise<User> {
+    const now = new Date();
+    const user: User = {
+      id: crypto.randomUUID(),
+      username: userData.username,
+      password: userData.password,
+      email: null,
+      firstName: null,
+      lastName: null,
+      profileImageUrl: null,
+      createdAt: now,
+      updatedAt: now,
+    };
+    this.users.set(user.id, user);
+    return user;
   }
 
   async getUser(id: string): Promise<User | undefined> {

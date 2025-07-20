@@ -5,8 +5,17 @@ import bcrypt from "bcrypt";
 import path from "path";
 import { storage } from "./storage";
 // import { insertKernelConfigurationSchema, insertBuildJobSchema } from "@shared/schema";
+import { insertBuildJobSchema } from "@shared/schema";
 import { KernelBuilderService } from "./services/kernel-builder";
 import { AndroidToolService } from "./services/android-tool";
+
+// Type for device information - this should be moved to schema later
+interface DeviceInfo {
+  deviceState: "normal" | "recovery" | "fastboot" | "locked" | "unauthorized" | "offline";
+  isAuthorized?: boolean;
+  bootloaderLocked?: boolean;
+  developerModeEnabled?: boolean;
+}
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
   
@@ -458,7 +467,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/android/developer-mode/instructions", async (req, res) => {
     try {
-      const deviceState = req.query.state as DeviceInfo["deviceState"];
+      const deviceState = req.query.state as "normal" | "recovery" | "fastboot" | "locked" | "unauthorized";
       const instructions = await androidTool.getDeveloperModeInstructions(deviceState);
       res.json(instructions);
     } catch (error) {
