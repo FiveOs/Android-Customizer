@@ -1,57 +1,56 @@
-// NO HOOKS - Testing basic React functionality
+import * as React from "react";
+import { Switch, Route } from "wouter";
+import { queryClient } from "./lib/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { useAuth } from "@/hooks/useAuth";
+import KernelBuilder from "@/pages/kernel-builder";
+import Landing from "@/pages/landing";
+import Home from "@/pages/home";
+import ConfigurationsPage from "@/pages/configurations";
+import BuildHistoryPage from "@/pages/build-history";
+import AndroidToolPage from "@/pages/android-tool";
+import NotFound from "@/pages/not-found";
+
+function Router() {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  return (
+    <Switch>
+      {isLoading || !isAuthenticated ? (
+        <Route path="/" component={Landing} />
+      ) : (
+        <>
+          <Route path="/" component={Home} />
+          <Route path="/kernel-builder" component={KernelBuilder} />
+          <Route path="/configurations" component={ConfigurationsPage} />
+          <Route path="/build-history" component={BuildHistoryPage} />
+          <Route path="/android-tool" component={AndroidToolPage} />
+        </>
+      )}
+      <Route component={NotFound} />
+    </Switch>
+  );
+}
+
 function App() {
-  // Apply theme without hooks
-  document.documentElement.classList.add('dark');
-  document.body.style.backgroundColor = '#0f172a';
-  document.body.style.color = '#d1fae5';
+  // Ensure dark theme is applied immediately
+  React.useEffect(() => {
+    document.documentElement.classList.add('dark');
+    document.body.classList.add('dark');
+    document.body.style.backgroundColor = 'hsl(0, 0%, 8%)';
+    document.body.style.color = 'hsl(120, 100%, 85%)';
+  }, []);
   
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      backgroundColor: '#0f172a', 
-      color: '#d1fae5', 
-      padding: '2rem',
-      fontFamily: 'system-ui, sans-serif'
-    }}>
-      <h1 style={{ 
-        fontSize: '2.5rem', 
-        fontWeight: 'bold', 
-        textAlign: 'center', 
-        marginBottom: '2rem',
-        color: '#34d399'
-      }}>
-        Android Kernel Customizer
-      </h1>
-      <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
-        <div style={{
-          backgroundColor: '#1e293b',
-          border: '1px solid rgba(52, 211, 153, 0.3)',
-          borderRadius: '0.5rem',
-          padding: '1.5rem'
-        }}>
-          <h2 style={{ 
-            fontSize: '1.5rem', 
-            fontWeight: '600', 
-            marginBottom: '1rem',
-            color: '#34d399'
-          }}>
-            React Status Test (No Hooks)
-          </h2>
-          <p style={{ color: '#cbd5e1', marginBottom: '1rem' }}>
-            Testing React without hooks to isolate the issue...
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <div style={{ width: '12px', height: '12px', backgroundColor: '#10b981', borderRadius: '50%' }}></div>
-              <span>React Component - Working</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <div style={{ width: '12px', height: '12px', backgroundColor: '#f59e0b', borderRadius: '50%' }}></div>
-              <span>React Hooks - Testing...</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="dark min-h-screen bg-slate-900 text-emerald-100">
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </QueryClientProvider>
     </div>
   );
 }
