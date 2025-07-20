@@ -192,6 +192,7 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - July 20, 2025: **NETHUNTER OS INTEGRATION** - Added special NetHunter OS support for OnePlus One, OnePlus 7 series, and Nord with complete ROM packages
 - July 20, 2025: **ROM & RECOVERY OPTIONS** - Implemented comprehensive customization including LineageOS base, TWRP themes, BusyBox integration, and GApps variants (Pico to Full)
 - July 20, 2025: **VISUAL IMPROVEMENTS** - Enhanced padding and borders (2px throughout) for better visual separation and developer-friendly interface
+- July 20, 2025: **DROPDOWN FIXES** - Fixed all dropdown overlapping and transparency issues with comprehensive CSS overrides targeting all Radix UI Select components
 
 ## Current Status
 

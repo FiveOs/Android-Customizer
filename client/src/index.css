@@ -331,7 +331,7 @@
     font-family: "Fira Code", Monaco, Consolas, monospace;
   }
 
-  /* Dropdown and Select fixes */
+  /* Comprehensive Dropdown and Select fixes */
   [data-radix-popper-content-wrapper] {
     z-index: 9999 !important;
   }
@@ -340,9 +340,14 @@
     z-index: 9999 !important;
   }
 
+  /* Target all possible Select content selectors */
   .dropdown-content,
   [role="listbox"],
-  [data-radix-select-content] {
+  [data-radix-select-content],
+  [data-radix-select-content-impl],
+  [cmdk-overlay],
+  .select-content,
+  [data-radix-collection-item] {
     z-index: 9999 !important;
     background-color: rgb(30, 41, 59) !important;
     border: 2px solid rgba(16, 185, 129, 0.4) !important;
@@ -350,11 +355,19 @@
     backdrop-filter: blur(8px) !important;
   }
 
-  [data-radix-select-content] [data-radix-select-viewport] {
+  /* Viewport and content area fixes */
+  [data-radix-select-content] [data-radix-select-viewport],
+  [data-radix-select-viewport],
+  .select-viewport {
     background-color: rgb(30, 41, 59) !important;
   }
 
-  [data-radix-select-item] {
+  /* Select items - comprehensive targeting */
+  [data-radix-select-item],
+  [role="option"],
+  .select-item,
+  [cmdk-item],
+  [data-radix-collection-item] {
     background-color: rgb(30, 41, 59) !important;
     color: white !important;
     padding: 12px 16px !important;
@@ -363,19 +376,27 @@
   }
 
   [data-radix-select-item]:hover,
-  [data-radix-select-item][data-highlighted] {
+  [data-radix-select-item][data-highlighted],
+  [role="option"]:hover,
+  [role="option"][data-highlighted],
+  .select-item:hover {
     background-color: rgba(16, 185, 129, 0.2) !important;
     color: white !important;
   }
 
-  [data-radix-select-item][data-state="checked"] {
+  [data-radix-select-item][data-state="checked"],
+  [role="option"][aria-selected="true"] {
     background-color: rgba(16, 185, 129, 0.3) !important;
     color: white !important;
   }
 
-  /* Select trigger styling */
-  [data-radix-select-trigger] {
+  /* Select trigger styling - comprehensive */
+  [data-radix-select-trigger],
+  .select-trigger,
+  button[role="combobox"],
+  body [data-radix-select-trigger] {
     background-color: rgb(51, 65, 85) !important;
+    background: rgb(51, 65, 85) !important;
     border: 2px solid rgb(71, 85, 105) !important;
     border-radius: 8px !important;
     padding: 12px 16px !important;
@@ -383,21 +404,68 @@
     min-height: 44px !important;
   }
 
-  [data-radix-select-trigger]:hover {
+  [data-radix-select-trigger]:hover,
+  .select-trigger:hover,
+  button[role="combobox"]:hover {
     border-color: rgb(100, 116, 139) !important;
   }
 
-  [data-radix-select-trigger]:focus {
+  [data-radix-select-trigger]:focus,
+  .select-trigger:focus,
+  button[role="combobox"]:focus {
     border-color: rgba(16, 185, 129, 0.5) !important;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
   }
 
   /* Additional dropdown menu fixes */
-  [data-radix-dropdown-menu-content] {
+  [data-radix-dropdown-menu-content],
+  [data-radix-context-menu-content] {
     z-index: 9999 !important;
     background-color: rgb(30, 41, 59) !important;
     border: 2px solid rgba(16, 185, 129, 0.4) !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9) !important;
+  }
+
+  /* Override any transparent backgrounds */
+  [data-radix-select-content],
+  [data-radix-select-content] *,
+  div[role="listbox"],
+  div[role="listbox"] *,
+  [data-radix-select-content-impl],
+  [data-radix-select-content-impl] * {
+    background: rgb(30, 41, 59) !important;
+    background-color: rgb(30, 41, 59) !important;
+  }
+
+  /* Force solid backgrounds on all select-related elements */
+  .bg-transparent,
+  *[class*="bg-transparent"] {
+    background-color: rgb(30, 41, 59) !important;
+  }
+
+  /* Ultra-specific selectors to override everything */
+  body [data-radix-select-content],
+  body div[role="listbox"],
+  body [data-radix-select-viewport] {
+    background: rgb(30, 41, 59) !important;
+    background-color: rgb(30, 41, 59) !important;
+  }
+
+  body [data-radix-select-item],
+  body div[role="option"] {
+    background: rgb(30, 41, 59) !important;
+    background-color: rgb(30, 41, 59) !important;
+    color: white !important;
+  }
+
+  /* Nuclear option - override all backgrounds in Select components */
+  [data-radix-select-content] > *,
+  [data-radix-select-viewport] > *,
+  [role="listbox"] > *,
+  [role="option"] {
+    background: rgb(30, 41, 59) !important;
+    background-color: rgb(30, 41, 59) !important;
+    color: white !important;
   }
 }
 
