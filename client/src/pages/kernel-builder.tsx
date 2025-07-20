@@ -363,37 +363,23 @@ export default function KernelBuilder() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-slate-300">📱 Device</label>
-                  <Select onValueChange={(value) => handleDevicePresetChange(value as DevicePreset)}>
-                    <SelectTrigger className="bg-slate-700/50 border-emerald-500/30 text-white hover:border-emerald-400 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10">
-                      <SelectValue placeholder="Choose Device" />
-                    </SelectTrigger>
-                    <SelectContent 
-                      className="border-emerald-500/30"
-                      style={{
-                        backgroundColor: 'rgb(30, 41, 59)',
-                        zIndex: 9999,
-                        border: '1px solid rgba(16, 185, 129, 0.4)',
-                        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.8)'
-                      }}
-                    >
-                      <SelectItem value="oneplus_nord" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
-                        📱 OnePlus Nord
-                      </SelectItem>
-                      <SelectItem value="oneplus_9_pro" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
-                        📱 OnePlus 9 Pro
-                      </SelectItem>
-                      <SelectItem value="nothing_phone_1" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
-                        📱 Nothing Phone 1
-                      </SelectItem>
-                      <SelectItem value="fairphone_4" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
-                        📱 Fairphone 4
-                      </SelectItem>
-                      <SelectItem value="pinephone_pro" className="hover:bg-emerald-500/20" style={{backgroundColor: 'rgb(30, 41, 59)', color: 'white'}}>
-                        📱 PinePhone Pro
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <label className="text-xs font-medium text-slate-300">📱 Selected Device</label>
+                  <div className="bg-slate-700/30 border border-emerald-500/30 text-white px-3 py-2 rounded-md text-sm">
+                    {config.device ? (
+                      <div className="flex items-center space-x-2">
+                        <span className="text-emerald-400">✓</span>
+                        <span>{config.device.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center space-x-2 text-slate-400">
+                        <span>⚠</span>
+                        <span>No device selected</span>
+                      </div>
+                    )}
+                  </div>
+                  {!config.device && (
+                    <p className="text-xs text-yellow-400">Choose a device in the Device Selection section below</p>
+                  )}
                 </div>
                 
                 <div className="space-y-1">

@@ -67,6 +67,9 @@ export default function TabbedDeviceSelector({ value, onChange }: TabbedDeviceSe
       <div className="form-section-header">
         <Smartphone size={18} style={{color: '#4FC3F7'}} />
         <span>Device Selection</span>
+        <div className="ml-auto text-xs text-slate-400">
+          Choose your target device
+        </div>
       </div>
       
       {/* Tab Navigation */}

@@ -184,6 +184,9 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - July 18, 2025: Enhanced form sections with shadows, borders, and proper breathing room
 - July 18, 2025: Added breadcrumb navigation and animated dropdown transitions
 - July 18, 2025: Improved component grouping with interactive cards and hover states
+- July 19, 2025: **UX IMPROVEMENT** - Fixed confusing dual device selection by making Quick Start show selected device status
+- July 19, 2025: Resolved dropdown overlapping issues with solid backgrounds and proper z-index layering
+- July 19, 2025: Enhanced device selection UX with clear purpose separation between status display and selection interface
 
 ## Current Status
 
