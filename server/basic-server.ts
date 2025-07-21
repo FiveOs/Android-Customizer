@@ -812,8 +812,404 @@ const server = http.createServer(async (req, res) => {
     `);
   }
 
+  // Kernel Builder page
+  if (pathname === '/kernel-builder') {
+    return htmlResponse(res, `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kernel Builder - Android Customizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #d1fae5; font-family: system-ui; }
+        .glow { box-shadow: 0 0 20px #10b981; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex h-screen bg-slate-950 text-white">
+        <!-- Sidebar -->
+        <div class="w-64 bg-slate-900 border-r border-emerald-500/20 p-4">
+            <div class="flex items-center mb-8">
+                <div class="w-8 h-8 bg-emerald-500 rounded mr-3"></div>
+                <span class="text-lg font-bold text-emerald-400">Kernel Builder</span>
+            </div>
+            <nav class="space-y-2">
+                <a href="/" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🏠</span> Home
+                </a>
+                <a href="/kernel-builder" class="flex items-center px-3 py-2 rounded bg-emerald-600 text-white">
+                    <span class="mr-3">⚙️</span> Kernel Builder
+                </a>
+                <a href="/rom-customizer" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📱</span> ROM Builder
+                </a>
+                <a href="/twrp-customizer" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🛠️</span> TWRP Builder
+                </a>
+                <a href="/android-tool" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🔧</span> Android Tool
+                </a>
+                <a href="/apk-manager" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📦</span> APK Manager
+                </a>
+                <a href="/build-history" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📊</span> Build History
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="flex-1 overflow-auto p-8">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-4xl font-bold text-center text-emerald-400 mb-8 glow">
+                    ⚙️ Custom Kernel Builder
+                </h1>
+                
+                <div class="text-center mb-8">
+                    <p class="text-xl text-slate-300">Build custom Android kernels with NetHunter security features</p>
+                    <p class="text-slate-400 mt-2">100+ supported devices • NetHunter OS • Advanced security research</p>
+                </div>
+                
+                <div class="bg-slate-800 p-8 rounded-lg border-2 border-emerald-500/30 text-center">
+                    <div class="text-6xl mb-6">🚧</div>
+                    <h2 class="text-2xl font-bold text-emerald-400 mb-4">Coming Soon!</h2>
+                    <p class="text-slate-300 mb-6">The Kernel Builder interface is being updated with the latest features.</p>
+                    <p class="text-slate-400">For now, use the ROM Builder which includes kernel customization options.</p>
+                    <div class="mt-8">
+                        <a href="/rom-customizer" class="bg-emerald-600 hover:bg-emerald-700 px-6 py-3 rounded-lg font-semibold">
+                            Use ROM Builder →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+    `);
+  }
+
+  // TWRP Customizer page
+  if (pathname === '/twrp-customizer') {
+    return htmlResponse(res, `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TWRP Customizer - Android Customizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #d1fae5; font-family: system-ui; }
+        .glow { box-shadow: 0 0 20px #8b5cf6; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex h-screen bg-slate-950 text-white">
+        <!-- Sidebar -->
+        <div class="w-64 bg-slate-900 border-r border-purple-500/20 p-4">
+            <div class="flex items-center mb-8">
+                <div class="w-8 h-8 bg-purple-500 rounded mr-3"></div>
+                <span class="text-lg font-bold text-purple-400">TWRP Builder</span>
+            </div>
+            <nav class="space-y-2">
+                <a href="/" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🏠</span> Home
+                </a>
+                <a href="/kernel-builder" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">⚙️</span> Kernel Builder
+                </a>
+                <a href="/rom-customizer" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📱</span> ROM Builder
+                </a>
+                <a href="/twrp-customizer" class="flex items-center px-3 py-2 rounded bg-purple-600 text-white">
+                    <span class="mr-3">🛠️</span> TWRP Builder
+                </a>
+                <a href="/android-tool" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🔧</span> Android Tool
+                </a>
+                <a href="/apk-manager" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📦</span> APK Manager
+                </a>
+                <a href="/build-history" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📊</span> Build History
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="flex-1 overflow-auto p-8">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-4xl font-bold text-center text-purple-400 mb-8 glow">
+                    🛠️ TWRP Recovery Builder
+                </h1>
+                
+                <div class="text-center mb-8">
+                    <p class="text-xl text-slate-300">Build custom TWRP recovery with themes and advanced features</p>
+                    <p class="text-slate-400 mt-2">Custom themes • Encryption support • Device-specific builds</p>
+                </div>
+                
+                <div class="bg-slate-800 p-8 rounded-lg border-2 border-purple-500/30 text-center">
+                    <div class="text-6xl mb-6">🚧</div>
+                    <h2 class="text-2xl font-bold text-purple-400 mb-4">Coming Soon!</h2>
+                    <p class="text-slate-300 mb-6">The TWRP Customizer interface is being updated with enhanced features.</p>
+                    <p class="text-slate-400">Custom themes, encryption support, and device-specific optimizations.</p>
+                    <div class="mt-8">
+                        <a href="/rom-customizer" class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold">
+                            Use ROM Builder →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+    `);
+  }
+
+  // Android Tool page
+  if (pathname === '/android-tool') {
+    return htmlResponse(res, `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Tool - Android Customizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #d1fae5; font-family: system-ui; }
+        .glow { box-shadow: 0 0 20px #f59e0b; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex h-screen bg-slate-950 text-white">
+        <!-- Sidebar -->
+        <div class="w-64 bg-slate-900 border-r border-yellow-500/20 p-4">
+            <div class="flex items-center mb-8">
+                <div class="w-8 h-8 bg-yellow-500 rounded mr-3"></div>
+                <span class="text-lg font-bold text-yellow-400">Android Tool</span>
+            </div>
+            <nav class="space-y-2">
+                <a href="/" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🏠</span> Home
+                </a>
+                <a href="/kernel-builder" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">⚙️</span> Kernel Builder
+                </a>
+                <a href="/rom-customizer" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📱</span> ROM Builder
+                </a>
+                <a href="/twrp-customizer" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🛠️</span> TWRP Builder
+                </a>
+                <a href="/android-tool" class="flex items-center px-3 py-2 rounded bg-yellow-600 text-white">
+                    <span class="mr-3">🔧</span> Android Tool
+                </a>
+                <a href="/apk-manager" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📦</span> APK Manager
+                </a>
+                <a href="/build-history" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📊</span> Build History
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="flex-1 overflow-auto p-8">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-4xl font-bold text-center text-yellow-400 mb-8 glow">
+                    🔧 Android Device Tools
+                </h1>
+                
+                <div class="text-center mb-8">
+                    <p class="text-xl text-slate-300">Comprehensive Android device management and debugging tools</p>
+                    <p class="text-slate-400 mt-2">ADB/Fastboot • Device flashing • Root management • Unbrick tools</p>
+                </div>
+                
+                <div class="bg-slate-800 p-8 rounded-lg border-2 border-yellow-500/30 text-center">
+                    <div class="text-6xl mb-6">🚧</div>
+                    <h2 class="text-2xl font-bold text-yellow-400 mb-4">Coming Soon!</h2>
+                    <p class="text-slate-300 mb-6">Advanced Android device management tools are being developed.</p>
+                    <p class="text-slate-400">ADB operations, fastboot flashing, device diagnostics, and unbrick solutions.</p>
+                    <div class="mt-8">
+                        <a href="/rom-customizer" class="bg-yellow-600 hover:bg-yellow-700 px-6 py-3 rounded-lg font-semibold">
+                            Use ROM Builder →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+    `);
+  }
+
+  // Build History page
+  if (pathname === '/build-history') {
+    return htmlResponse(res, `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build History - Android Customizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #d1fae5; font-family: system-ui; }
+        .glow { box-shadow: 0 0 20px #06b6d4; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex h-screen bg-slate-950 text-white">
+        <!-- Sidebar -->
+        <div class="w-64 bg-slate-900 border-r border-cyan-500/20 p-4">
+            <div class="flex items-center mb-8">
+                <div class="w-8 h-8 bg-cyan-500 rounded mr-3"></div>
+                <span class="text-lg font-bold text-cyan-400">Build History</span>
+            </div>
+            <nav class="space-y-2">
+                <a href="/" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🏠</span> Home
+                </a>
+                <a href="/kernel-builder" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">⚙️</span> Kernel Builder
+                </a>
+                <a href="/rom-customizer" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📱</span> ROM Builder
+                </a>
+                <a href="/twrp-customizer" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🛠️</span> TWRP Builder
+                </a>
+                <a href="/android-tool" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">🔧</span> Android Tool
+                </a>
+                <a href="/apk-manager" class="flex items-center px-3 py-2 rounded hover:bg-slate-800 text-slate-300">
+                    <span class="mr-3">📦</span> APK Manager
+                </a>
+                <a href="/build-history" class="flex items-center px-3 py-2 rounded bg-cyan-600 text-white">
+                    <span class="mr-3">📊</span> Build History
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <main class="flex-1 overflow-auto p-8">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-4xl font-bold text-center text-cyan-400 mb-8 glow">
+                    📊 Build History & Progress
+                </h1>
+                
+                <div class="text-center mb-8">
+                    <p class="text-xl text-slate-300">Track all your ROM builds, kernel compilations, and TWRP customizations</p>
+                    <p class="text-slate-400 mt-2">Real-time progress • Build logs • Download links</p>
+                </div>
+                
+                <div class="space-y-6" id="build-list">
+                    <!-- Builds will be loaded here -->
+                </div>
+                
+                <div id="no-builds" class="bg-slate-800 p-8 rounded-lg border-2 border-cyan-500/30 text-center">
+                    <div class="text-6xl mb-6">📋</div>
+                    <h2 class="text-2xl font-bold text-cyan-400 mb-4">No Builds Yet</h2>
+                    <p class="text-slate-300 mb-6">Start building custom ROMs and kernels to see your progress here.</p>
+                    <div class="space-x-4">
+                        <a href="/rom-customizer" class="bg-orange-600 hover:bg-orange-700 px-6 py-3 rounded-lg font-semibold">
+                            Build ROM
+                        </a>
+                        <a href="/kernel-builder" class="bg-emerald-600 hover:bg-emerald-700 px-6 py-3 rounded-lg font-semibold">
+                            Build Kernel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Load build history
+        async function loadBuilds() {
+            try {
+                const [romBuilds, kernelBuilds, twrpBuilds] = await Promise.all([
+                    fetch('/api/rom/builds').then(r => r.json()),
+                    fetch('/api/kernel/builds').then(r => r.json()),
+                    fetch('/api/twrp/builds').then(r => r.json())
+                ]);
+                
+                const allBuilds = [
+                    ...romBuilds.map(b => ({...b, type: 'ROM'})),
+                    ...kernelBuilds.map(b => ({...b, type: 'Kernel'})),
+                    ...twrpBuilds.map(b => ({...b, type: 'TWRP'}))
+                ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                
+                const buildList = document.getElementById('build-list');
+                const noBuilds = document.getElementById('no-builds');
+                
+                if (allBuilds.length === 0) {
+                    noBuilds.style.display = 'block';
+                    buildList.style.display = 'none';
+                } else {
+                    noBuilds.style.display = 'none';
+                    buildList.style.display = 'block';
+                    
+                    buildList.innerHTML = allBuilds.map(build => \`
+                        <div class="bg-slate-800 p-6 rounded-lg border-2 border-slate-600">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-white">\${build.type} Build - \${build.device}</h3>
+                                    <p class="text-slate-400">Created: \${new Date(build.createdAt).toLocaleString()}</p>
+                                </div>
+                                <span class="px-3 py-1 rounded \${
+                                    build.status === 'completed' ? 'bg-green-600 text-white' :
+                                    build.status === 'failed' ? 'bg-red-600 text-white' :
+                                    build.status === 'running' ? 'bg-blue-600 text-white' :
+                                    'bg-yellow-600 text-white'
+                                }">\${build.status.toUpperCase()}</span>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-slate-400 mb-1">
+                                    <span>Progress</span>
+                                    <span>\${build.progress}%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-cyan-600 h-2 rounded-full" style="width: \${build.progress}%"></div>
+                                </div>
+                            </div>
+                            
+                            <p class="text-slate-300 mb-4">\${build.currentStep}</p>
+                            
+                            <div class="flex space-x-3">
+                                <button class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded">View Logs</button>
+                                \${build.status === 'completed' ? 
+                                    '<button class="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded">Download</button>' : 
+                                    ''
+                                }
+                            </div>
+                        </div>
+                    \`).join('');
+                }
+            } catch (error) {
+                console.error('Failed to load builds:', error);
+            }
+        }
+        
+        loadBuilds();
+        
+        // Refresh every 5 seconds
+        setInterval(loadBuilds, 5000);
+    </script>
+</body>
+</html>
+    `);
+  }
+
   // Default React app - serve the complete working application directly
-  if (!pathname.startsWith('/api/') && !pathname.startsWith('/direct-test') && !pathname.startsWith('/health') && !pathname.startsWith('/rom-customizer') && !pathname.startsWith('/apk-manager')) {
+  if (!pathname.startsWith('/api/') && !pathname.startsWith('/direct-test') && !pathname.startsWith('/health') && !pathname.startsWith('/rom-customizer') && !pathname.startsWith('/apk-manager') && !pathname.startsWith('/kernel-builder') && !pathname.startsWith('/twrp-customizer') && !pathname.startsWith('/android-tool') && !pathname.startsWith('/build-history')) {
     return htmlResponse(res, `
 <!DOCTYPE html>
 <html lang="en">
