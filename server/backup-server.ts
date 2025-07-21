@@ -1851,54 +1851,15 @@ const server = http.createServer(async (req, res) => {
                         </div>
                     </div>
 
-                    <div class="bg-slate-800 p-6 rounded-lg border border-slate-700">
-                        <h2 class="text-xl font-semibold text-emerald-300 mb-4">Application Status</h2>
-                        <div id="status-info" class="space-y-2">
-                            <p class="text-emerald-400">✅ Backend Server: Online</p>
-                            <p class="text-emerald-400">✅ React Frontend: Operational</p>
-                            <p class="text-emerald-400">✅ NetHunter Features: Ready</p>
-                            <p class="text-emerald-400">✅ 100+ Device Support: Active</p>
-                        </div>
-                        <button onclick="testAPI()" class="mt-4 bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded">
-                            Test API Connection
-                        </button>
-                        <div id="api-result" class="mt-2 text-sm"></div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-    
-    <script>
-        async function testAPI() {
-            const resultDiv = document.getElementById('api-result');
-            resultDiv.innerHTML = 'Testing API...';
-            
-            try {
-                const response = await fetch('/api/status');
-                const data = await response.json();
-                resultDiv.innerHTML = \`<span class="text-emerald-400">✅ API Test: \${data.server} - Database: \${data.database}</span>\`;
-            } catch (error) {
-                resultDiv.innerHTML = \`<span class="text-red-400">❌ API Test Failed: \${error.message}</span>\`;
-            }
-        }
-        
-        // Auto-test API on load
-        setTimeout(testAPI, 1000);
-    </script>
-</body>
-</html>
-    `);
-  }
 
-  // 404 for API routes
-  jsonResponse(res, 404, { error: 'Not found' });
-});
 
-const PORT = parseInt(process.env.PORT || "5000", 10);
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Android Customizer running on port ${PORT}`);
-  console.log(`Application ready at: http://0.0.0.0:${PORT}/`);
-  console.log(`Direct test at: http://0.0.0.0:${PORT}/direct-test`);
-  console.log(`React frontend: http://0.0.0.0:${PORT}/`);
-});
+
+
+
+
+
+
+
+
+
+
