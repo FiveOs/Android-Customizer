@@ -22,6 +22,11 @@ export const users = pgTable("users", {
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
+  // Subscription fields
+  subscriptionPlan: text("subscription_plan", { enum: ["free", "3_month", "6_month", "12_month"] }).notNull().default("free"),
+  subscriptionEndDate: timestamp("subscription_end_date"),
+  stripeCustomerId: varchar("stripe_customer_id"),
+  stripeSubscriptionId: varchar("stripe_subscription_id"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -325,14 +330,14 @@ export const insertBuildJobSchema = createInsertSchema(buildJobs).omit({
 });
 
 // Type definitions
-export type InsertUser = z.infer<typeof insertUserSchema>;
+export type InsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
 export type UpsertUser = typeof users.$inferInsert;
 
-export type InsertKernelConfiguration = z.infer<typeof insertKernelConfigurationSchema>;
+export type InsertKernelConfiguration = typeof kernelConfigurations.$inferInsert;
 export type KernelConfiguration = typeof kernelConfigurations.$inferSelect;
 
-export type InsertBuildJob = z.infer<typeof insertBuildJobSchema>;
+export type InsertBuildJob = typeof buildJobs.$inferInsert;
 export type BuildJob = typeof buildJobs.$inferSelect;
 
 // Device presets organized by manufacturer and series

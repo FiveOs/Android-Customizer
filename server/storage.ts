@@ -1,4 +1,5 @@
-import { users, kernelConfigurations, buildJobs, type User, type UpsertUser, type KernelConfiguration, type InsertKernelConfiguration, type BuildJob, type InsertBuildJob } from "@shared/schema";
+import { users, kernelConfigurations, buildJobs } from "@shared/schema";
+import type { User, UpsertUser, KernelConfiguration, InsertKernelConfiguration, BuildJob, InsertBuildJob } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 

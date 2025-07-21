@@ -14,18 +14,25 @@ export const queryClient = new QueryClient({
 });
 
 // Default fetcher for react-query
-export async function apiRequest(url: string, options?: RequestInit) {
+export async function apiRequest(method: string, url: string, data?: any) {
   const response = await fetch(url, {
+    method,
     headers: {
       'Content-Type': 'application/json',
-      ...options?.headers,
     },
-    ...options,
+    body: data ? JSON.stringify(data) : undefined,
   });
 
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(error || 'Network request failed');
+    const errorText = await response.text();
+    let errorMessage;
+    try {
+      const errorJson = JSON.parse(errorText);
+      errorMessage = errorJson.message || 'Network request failed';
+    } catch {
+      errorMessage = errorText || 'Network request failed';
+    }
+    throw new Error(`${response.status}: ${errorMessage}`);
   }
 
   return response.json();
@@ -35,6 +42,6 @@ export async function apiRequest(url: string, options?: RequestInit) {
 queryClient.setQueryDefaults([], {
   queryFn: ({ queryKey }) => {
     const [url] = queryKey as [string];
-    return apiRequest(url);
+    return apiRequest('GET', url);
   },
 });
