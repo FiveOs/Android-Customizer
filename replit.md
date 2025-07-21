@@ -222,7 +222,7 @@ Android Customizer is a comprehensive web-based platform for complete Android cu
 - **Build History**: Complete build tracking with real-time progress and download links
 - **API Endpoints**: All ROM, kernel, TWRP, and APK APIs functioning with proper error handling
 - **Navigation**: ALL PAGES NOW ACCESSIBLE - Fixed routing issues completely
-- **Device Support**: 100+ devices configured across OnePlus (complete lineup), Google Pixel/Nexus (all generations), Samsung Galaxy S series (S8-S24), Nothing Phone series, Fairphone (2-5), and Pine64 devices
+- **Device Support**: Complete 100+ device catalog with organized manufacturer groups: OnePlus (One to 12, all Nord series), Google Pixel/Nexus (complete lineup), Samsung Galaxy S series (S8-S24 Ultra), Nothing Phone (1/2/2a), Fairphone (2-5), Pine64 (PinePhone/Pro/Tab), Xiaomi/POCO, Essential Phone, Sony Xperia - properly organized with model numbers and codenames
 
 ### ✅ CORE FEATURES IMPLEMENTED
 - **Kernel Customization**: NetHunter security features, root solutions (KernelSU/Magisk), build optimization

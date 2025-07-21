@@ -394,12 +394,151 @@ const server = http.createServer(async (req, res) => {
                                     <label class="block text-sm font-medium text-slate-300 mb-2">Target Device</label>
                                     <select id="device-select" class="w-full p-3 bg-slate-700 border border-slate-600 rounded text-white">
                                         <option value="">Select your device...</option>
-                                        <option value="oneplus_9">OnePlus 9 (lemonade)</option>
-                                        <option value="oneplus_10">OnePlus 10 Pro (op5159l1)</option>
-                                        <option value="pixel_7">Google Pixel 7 (panther)</option>
-                                        <option value="pixel_8">Google Pixel 8 (shiba)</option>
-                                        <option value="nothing_phone_2">Nothing Phone (2) (Pong)</option>
-                                        <option value="fairphone_5">Fairphone 5 (FP5)</option>
+                                        
+                                        <!-- OnePlus Series (Complete Lineup) -->
+                                        <optgroup label="OnePlus Devices">
+                                            <option value="oneplus_12">OnePlus 12 (CPH2581)</option>
+                                            <option value="oneplus_11">OnePlus 11 (CPH2449)</option>
+                                            <option value="oneplus_10_pro">OnePlus 10 Pro (NE2213)</option>
+                                            <option value="oneplus_10t">OnePlus 10T (CPH2413)</option>
+                                            <option value="oneplus_9_pro">OnePlus 9 Pro (LE2123)</option>
+                                            <option value="oneplus_9">OnePlus 9 (LE2113)</option>
+                                            <option value="oneplus_9r">OnePlus 9R (LE2101)</option>
+                                            <option value="oneplus_8_pro">OnePlus 8 Pro (IN2023)</option>
+                                            <option value="oneplus_8">OnePlus 8 (IN2013)</option>
+                                            <option value="oneplus_8t">OnePlus 8T (KB2005)</option>
+                                            <option value="oneplus_7_pro">OnePlus 7 Pro (GM1913)</option>
+                                            <option value="oneplus_7">OnePlus 7 (GM1903)</option>
+                                            <option value="oneplus_7t_pro">OnePlus 7T Pro (HD1913)</option>
+                                            <option value="oneplus_7t">OnePlus 7T (HD1903)</option>
+                                            <option value="oneplus_6t">OnePlus 6T (A6013)</option>
+                                            <option value="oneplus_6">OnePlus 6 (A6003)</option>
+                                            <option value="oneplus_5t">OnePlus 5T (A5010)</option>
+                                            <option value="oneplus_5">OnePlus 5 (A5000)</option>
+                                            <option value="oneplus_3t">OnePlus 3T (A3003)</option>
+                                            <option value="oneplus_3">OnePlus 3 (A3000)</option>
+                                            <option value="oneplus_2">OnePlus 2 (A2005)</option>
+                                            <option value="oneplus_one">OnePlus One (A0001) ⭐ NetHunter OS</option>
+                                            <option value="oneplus_nord_3">OnePlus Nord 3 (CPH2493)</option>
+                                            <option value="oneplus_nord_2">OnePlus Nord 2 (DN2103)</option>
+                                            <option value="oneplus_nord">OnePlus Nord (AC2003)</option>
+                                            <option value="oneplus_nord_ce_3">OnePlus Nord CE 3 (CPH2491)</option>
+                                            <option value="oneplus_nord_ce_2">OnePlus Nord CE 2 (CPH2401)</option>
+                                            <option value="oneplus_nord_ce">OnePlus Nord CE (EB2103)</option>
+                                        </optgroup>
+
+                                        <!-- Google Pixel/Nexus Series -->
+                                        <optgroup label="Google Pixel Devices">
+                                            <option value="pixel_8_pro">Google Pixel 8 Pro (husky)</option>
+                                            <option value="pixel_8">Google Pixel 8 (shiba)</option>
+                                            <option value="pixel_7a">Google Pixel 7a (lynx)</option>
+                                            <option value="pixel_7_pro">Google Pixel 7 Pro (cheetah)</option>
+                                            <option value="pixel_7">Google Pixel 7 (panther)</option>
+                                            <option value="pixel_6a">Google Pixel 6a (bluejay)</option>
+                                            <option value="pixel_6_pro">Google Pixel 6 Pro (raven)</option>
+                                            <option value="pixel_6">Google Pixel 6 (oriole)</option>
+                                            <option value="pixel_5a">Google Pixel 5a (barbet)</option>
+                                            <option value="pixel_5">Google Pixel 5 (redfin)</option>
+                                            <option value="pixel_4a_5g">Google Pixel 4a 5G (bramble)</option>
+                                            <option value="pixel_4a">Google Pixel 4a (sunfish)</option>
+                                            <option value="pixel_4_xl">Google Pixel 4 XL (coral)</option>
+                                            <option value="pixel_4">Google Pixel 4 (flame)</option>
+                                            <option value="pixel_3a_xl">Google Pixel 3a XL (bonito)</option>
+                                            <option value="pixel_3a">Google Pixel 3a (sargo)</option>
+                                            <option value="pixel_3_xl">Google Pixel 3 XL (crosshatch)</option>
+                                            <option value="pixel_3">Google Pixel 3 (blueline)</option>
+                                            <option value="pixel_2_xl">Google Pixel 2 XL (taimen)</option>
+                                            <option value="pixel_2">Google Pixel 2 (walleye)</option>
+                                            <option value="pixel_xl">Google Pixel XL (marlin)</option>
+                                            <option value="pixel">Google Pixel (sailfish)</option>
+                                        </optgroup>
+
+                                        <optgroup label="Google Nexus Devices">
+                                            <option value="nexus_6p">Nexus 6P (angler)</option>
+                                            <option value="nexus_5x">Nexus 5X (bullhead)</option>
+                                            <option value="nexus_6">Nexus 6 (shamu)</option>
+                                            <option value="nexus_5">Nexus 5 (hammerhead) ⭐ NetHunter OS</option>
+                                            <option value="nexus_4">Nexus 4 (mako)</option>
+                                            <option value="nexus_7_2013">Nexus 7 2013 (flo)</option>
+                                            <option value="nexus_7_2012">Nexus 7 2012 (grouper)</option>
+                                            <option value="nexus_10">Nexus 10 (manta)</option>
+                                        </optgroup>
+
+                                        <!-- Samsung Galaxy S Series -->
+                                        <optgroup label="Samsung Galaxy S Series">
+                                            <option value="galaxy_s24_ultra">Samsung Galaxy S24 Ultra (SM-S928B)</option>
+                                            <option value="galaxy_s24_plus">Samsung Galaxy S24+ (SM-S926B)</option>
+                                            <option value="galaxy_s24">Samsung Galaxy S24 (SM-S921B)</option>
+                                            <option value="galaxy_s23_ultra">Samsung Galaxy S23 Ultra (SM-S918B)</option>
+                                            <option value="galaxy_s23_plus">Samsung Galaxy S23+ (SM-S916B)</option>
+                                            <option value="galaxy_s23">Samsung Galaxy S23 (SM-S911B)</option>
+                                            <option value="galaxy_s22_ultra">Samsung Galaxy S22 Ultra (SM-S908B)</option>
+                                            <option value="galaxy_s22_plus">Samsung Galaxy S22+ (SM-S906B)</option>
+                                            <option value="galaxy_s22">Samsung Galaxy S22 (SM-S901B)</option>
+                                            <option value="galaxy_s21_ultra">Samsung Galaxy S21 Ultra (SM-G998B)</option>
+                                            <option value="galaxy_s21_plus">Samsung Galaxy S21+ (SM-G996B)</option>
+                                            <option value="galaxy_s21">Samsung Galaxy S21 (SM-G991B)</option>
+                                            <option value="galaxy_s20_ultra">Samsung Galaxy S20 Ultra (SM-G988B)</option>
+                                            <option value="galaxy_s20_plus">Samsung Galaxy S20+ (SM-G985F)</option>
+                                            <option value="galaxy_s20">Samsung Galaxy S20 (SM-G980F)</option>
+                                            <option value="galaxy_s10_plus">Samsung Galaxy S10+ (SM-G975F)</option>
+                                            <option value="galaxy_s10">Samsung Galaxy S10 (SM-G973F)</option>
+                                            <option value="galaxy_s10e">Samsung Galaxy S10e (SM-G970F)</option>
+                                            <option value="galaxy_s9_plus">Samsung Galaxy S9+ (SM-G965F)</option>
+                                            <option value="galaxy_s9">Samsung Galaxy S9 (SM-G960F)</option>
+                                            <option value="galaxy_s8_plus">Samsung Galaxy S8+ (SM-G955F)</option>
+                                            <option value="galaxy_s8">Samsung Galaxy S8 (SM-G950F)</option>
+                                        </optgroup>
+
+                                        <!-- Nothing Phone Series -->
+                                        <optgroup label="Nothing Devices">
+                                            <option value="nothing_phone_2a">Nothing Phone (2a) (A142)</option>
+                                            <option value="nothing_phone_2">Nothing Phone (2) (A142P)</option>
+                                            <option value="nothing_phone_1">Nothing Phone (1) (A063)</option>
+                                        </optgroup>
+
+                                        <!-- Fairphone Series -->
+                                        <optgroup label="Fairphone Devices">
+                                            <option value="fairphone_5">Fairphone 5 (FP5)</option>
+                                            <option value="fairphone_4">Fairphone 4 (FP4)</option>
+                                            <option value="fairphone_3_plus">Fairphone 3+ (FP3+)</option>
+                                            <option value="fairphone_3">Fairphone 3 (FP3)</option>
+                                            <option value="fairphone_2">Fairphone 2 (FP2)</option>
+                                        </optgroup>
+
+                                        <!-- Pine64 Devices -->
+                                        <optgroup label="Pine64 Devices">
+                                            <option value="pinephone_pro">PinePhone Pro (pine64-pinephonepro)</option>
+                                            <option value="pinephone">PinePhone (pine64-pinephone)</option>
+                                            <option value="pinetab2">PineTab2 (pine64-pinetab2)</option>
+                                            <option value="pinetab">PineTab (pine64-pinetab)</option>
+                                        </optgroup>
+
+                                        <!-- Xiaomi Devices -->
+                                        <optgroup label="Xiaomi Devices">
+                                            <option value="mi_14">Xiaomi 14 (houji)</option>
+                                            <option value="mi_13">Xiaomi 13 (fuxi)</option>
+                                            <option value="mi_12">Xiaomi 12 (cupid)</option>
+                                            <option value="mi_11">Xiaomi Mi 11 (venus)</option>
+                                            <option value="mi_10">Xiaomi Mi 10 (umi)</option>
+                                            <option value="poco_f5_pro">POCO F5 Pro (mondrian)</option>
+                                            <option value="poco_f4">POCO F4 (munch)</option>
+                                            <option value="poco_f3">POCO F3 (alioth)</option>
+                                            <option value="redmi_note_12_pro">Redmi Note 12 Pro (ruby)</option>
+                                        </optgroup>
+
+                                        <!-- Essential Phone -->
+                                        <optgroup label="Essential Devices">
+                                            <option value="essential_ph1">Essential PH-1 (mata)</option>
+                                        </optgroup>
+
+                                        <!-- Sony Xperia -->
+                                        <optgroup label="Sony Xperia Devices">
+                                            <option value="xperia_1_v">Sony Xperia 1 V (pdx234)</option>
+                                            <option value="xperia_5_iv">Sony Xperia 5 IV (pdx224)</option>
+                                            <option value="xperia_1_iv">Sony Xperia 1 IV (pdx223)</option>
+                                            <option value="xperia_10_iv">Sony Xperia 10 IV (pdx225)</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                                 
@@ -883,12 +1022,151 @@ const server = http.createServer(async (req, res) => {
                                     <label class="block text-sm font-medium text-slate-300 mb-2">Target Device</label>
                                     <select id="kernel-device-select" class="w-full p-3 bg-slate-700 border border-slate-600 rounded text-white">
                                         <option value="">Select your device...</option>
-                                        <option value="oneplus_9">OnePlus 9 (lemonade)</option>
-                                        <option value="oneplus_10">OnePlus 10 Pro (op5159l1)</option>
-                                        <option value="pixel_7">Google Pixel 7 (panther)</option>
-                                        <option value="pixel_8">Google Pixel 8 (shiba)</option>
-                                        <option value="nothing_phone_2">Nothing Phone (2) (Pong)</option>
-                                        <option value="fairphone_5">Fairphone 5 (FP5)</option>
+                                        
+                                        <!-- OnePlus Series (Complete Lineup) -->
+                                        <optgroup label="OnePlus Devices">
+                                            <option value="oneplus_12">OnePlus 12 (CPH2581)</option>
+                                            <option value="oneplus_11">OnePlus 11 (CPH2449)</option>
+                                            <option value="oneplus_10_pro">OnePlus 10 Pro (NE2213)</option>
+                                            <option value="oneplus_10t">OnePlus 10T (CPH2413)</option>
+                                            <option value="oneplus_9_pro">OnePlus 9 Pro (LE2123)</option>
+                                            <option value="oneplus_9">OnePlus 9 (LE2113)</option>
+                                            <option value="oneplus_9r">OnePlus 9R (LE2101)</option>
+                                            <option value="oneplus_8_pro">OnePlus 8 Pro (IN2023)</option>
+                                            <option value="oneplus_8">OnePlus 8 (IN2013)</option>
+                                            <option value="oneplus_8t">OnePlus 8T (KB2005)</option>
+                                            <option value="oneplus_7_pro">OnePlus 7 Pro (GM1913)</option>
+                                            <option value="oneplus_7">OnePlus 7 (GM1903)</option>
+                                            <option value="oneplus_7t_pro">OnePlus 7T Pro (HD1913)</option>
+                                            <option value="oneplus_7t">OnePlus 7T (HD1903)</option>
+                                            <option value="oneplus_6t">OnePlus 6T (A6013)</option>
+                                            <option value="oneplus_6">OnePlus 6 (A6003)</option>
+                                            <option value="oneplus_5t">OnePlus 5T (A5010)</option>
+                                            <option value="oneplus_5">OnePlus 5 (A5000)</option>
+                                            <option value="oneplus_3t">OnePlus 3T (A3003)</option>
+                                            <option value="oneplus_3">OnePlus 3 (A3000)</option>
+                                            <option value="oneplus_2">OnePlus 2 (A2005)</option>
+                                            <option value="oneplus_one">OnePlus One (A0001) - NetHunter Compatible</option>
+                                            <option value="oneplus_nord_3">OnePlus Nord 3 (CPH2493)</option>
+                                            <option value="oneplus_nord_2">OnePlus Nord 2 (DN2103)</option>
+                                            <option value="oneplus_nord">OnePlus Nord (AC2003)</option>
+                                            <option value="oneplus_nord_ce_3">OnePlus Nord CE 3 (CPH2491)</option>
+                                            <option value="oneplus_nord_ce_2">OnePlus Nord CE 2 (CPH2401)</option>
+                                            <option value="oneplus_nord_ce">OnePlus Nord CE (EB2103)</option>
+                                        </optgroup>
+
+                                        <!-- Google Pixel/Nexus Series -->
+                                        <optgroup label="Google Pixel Devices">
+                                            <option value="pixel_8_pro">Google Pixel 8 Pro (husky)</option>
+                                            <option value="pixel_8">Google Pixel 8 (shiba)</option>
+                                            <option value="pixel_7a">Google Pixel 7a (lynx)</option>
+                                            <option value="pixel_7_pro">Google Pixel 7 Pro (cheetah)</option>
+                                            <option value="pixel_7">Google Pixel 7 (panther)</option>
+                                            <option value="pixel_6a">Google Pixel 6a (bluejay)</option>
+                                            <option value="pixel_6_pro">Google Pixel 6 Pro (raven)</option>
+                                            <option value="pixel_6">Google Pixel 6 (oriole)</option>
+                                            <option value="pixel_5a">Google Pixel 5a (barbet)</option>
+                                            <option value="pixel_5">Google Pixel 5 (redfin)</option>
+                                            <option value="pixel_4a_5g">Google Pixel 4a 5G (bramble)</option>
+                                            <option value="pixel_4a">Google Pixel 4a (sunfish)</option>
+                                            <option value="pixel_4_xl">Google Pixel 4 XL (coral)</option>
+                                            <option value="pixel_4">Google Pixel 4 (flame)</option>
+                                            <option value="pixel_3a_xl">Google Pixel 3a XL (bonito)</option>
+                                            <option value="pixel_3a">Google Pixel 3a (sargo)</option>
+                                            <option value="pixel_3_xl">Google Pixel 3 XL (crosshatch)</option>
+                                            <option value="pixel_3">Google Pixel 3 (blueline)</option>
+                                            <option value="pixel_2_xl">Google Pixel 2 XL (taimen)</option>
+                                            <option value="pixel_2">Google Pixel 2 (walleye)</option>
+                                            <option value="pixel_xl">Google Pixel XL (marlin)</option>
+                                            <option value="pixel">Google Pixel (sailfish)</option>
+                                        </optgroup>
+
+                                        <optgroup label="Google Nexus Devices">
+                                            <option value="nexus_6p">Nexus 6P (angler)</option>
+                                            <option value="nexus_5x">Nexus 5X (bullhead)</option>
+                                            <option value="nexus_6">Nexus 6 (shamu)</option>
+                                            <option value="nexus_5">Nexus 5 (hammerhead) - NetHunter Compatible</option>
+                                            <option value="nexus_4">Nexus 4 (mako)</option>
+                                            <option value="nexus_7_2013">Nexus 7 2013 (flo)</option>
+                                            <option value="nexus_7_2012">Nexus 7 2012 (grouper)</option>
+                                            <option value="nexus_10">Nexus 10 (manta)</option>
+                                        </optgroup>
+
+                                        <!-- Samsung Galaxy S Series -->
+                                        <optgroup label="Samsung Galaxy S Series">
+                                            <option value="galaxy_s24_ultra">Samsung Galaxy S24 Ultra (SM-S928B)</option>
+                                            <option value="galaxy_s24_plus">Samsung Galaxy S24+ (SM-S926B)</option>
+                                            <option value="galaxy_s24">Samsung Galaxy S24 (SM-S921B)</option>
+                                            <option value="galaxy_s23_ultra">Samsung Galaxy S23 Ultra (SM-S918B)</option>
+                                            <option value="galaxy_s23_plus">Samsung Galaxy S23+ (SM-S916B)</option>
+                                            <option value="galaxy_s23">Samsung Galaxy S23 (SM-S911B)</option>
+                                            <option value="galaxy_s22_ultra">Samsung Galaxy S22 Ultra (SM-S908B)</option>
+                                            <option value="galaxy_s22_plus">Samsung Galaxy S22+ (SM-S906B)</option>
+                                            <option value="galaxy_s22">Samsung Galaxy S22 (SM-S901B)</option>
+                                            <option value="galaxy_s21_ultra">Samsung Galaxy S21 Ultra (SM-G998B)</option>
+                                            <option value="galaxy_s21_plus">Samsung Galaxy S21+ (SM-G996B)</option>
+                                            <option value="galaxy_s21">Samsung Galaxy S21 (SM-G991B)</option>
+                                            <option value="galaxy_s20_ultra">Samsung Galaxy S20 Ultra (SM-G988B)</option>
+                                            <option value="galaxy_s20_plus">Samsung Galaxy S20+ (SM-G985F)</option>
+                                            <option value="galaxy_s20">Samsung Galaxy S20 (SM-G980F)</option>
+                                            <option value="galaxy_s10_plus">Samsung Galaxy S10+ (SM-G975F)</option>
+                                            <option value="galaxy_s10">Samsung Galaxy S10 (SM-G973F)</option>
+                                            <option value="galaxy_s10e">Samsung Galaxy S10e (SM-G970F)</option>
+                                            <option value="galaxy_s9_plus">Samsung Galaxy S9+ (SM-G965F)</option>
+                                            <option value="galaxy_s9">Samsung Galaxy S9 (SM-G960F)</option>
+                                            <option value="galaxy_s8_plus">Samsung Galaxy S8+ (SM-G955F)</option>
+                                            <option value="galaxy_s8">Samsung Galaxy S8 (SM-G950F)</option>
+                                        </optgroup>
+
+                                        <!-- Nothing Phone Series -->
+                                        <optgroup label="Nothing Devices">
+                                            <option value="nothing_phone_2a">Nothing Phone (2a) (A142)</option>
+                                            <option value="nothing_phone_2">Nothing Phone (2) (A142P)</option>
+                                            <option value="nothing_phone_1">Nothing Phone (1) (A063)</option>
+                                        </optgroup>
+
+                                        <!-- Fairphone Series -->
+                                        <optgroup label="Fairphone Devices">
+                                            <option value="fairphone_5">Fairphone 5 (FP5)</option>
+                                            <option value="fairphone_4">Fairphone 4 (FP4)</option>
+                                            <option value="fairphone_3_plus">Fairphone 3+ (FP3+)</option>
+                                            <option value="fairphone_3">Fairphone 3 (FP3)</option>
+                                            <option value="fairphone_2">Fairphone 2 (FP2)</option>
+                                        </optgroup>
+
+                                        <!-- Pine64 Devices -->
+                                        <optgroup label="Pine64 Devices">
+                                            <option value="pinephone_pro">PinePhone Pro (pine64-pinephonepro)</option>
+                                            <option value="pinephone">PinePhone (pine64-pinephone)</option>
+                                            <option value="pinetab2">PineTab2 (pine64-pinetab2)</option>
+                                            <option value="pinetab">PineTab (pine64-pinetab)</option>
+                                        </optgroup>
+
+                                        <!-- Xiaomi Devices -->
+                                        <optgroup label="Xiaomi Devices">
+                                            <option value="mi_14">Xiaomi 14 (houji)</option>
+                                            <option value="mi_13">Xiaomi 13 (fuxi)</option>
+                                            <option value="mi_12">Xiaomi 12 (cupid)</option>
+                                            <option value="mi_11">Xiaomi Mi 11 (venus)</option>
+                                            <option value="mi_10">Xiaomi Mi 10 (umi)</option>
+                                            <option value="poco_f5_pro">POCO F5 Pro (mondrian)</option>
+                                            <option value="poco_f4">POCO F4 (munch)</option>
+                                            <option value="poco_f3">POCO F3 (alioth)</option>
+                                            <option value="redmi_note_12_pro">Redmi Note 12 Pro (ruby)</option>
+                                        </optgroup>
+
+                                        <!-- Essential Phone -->
+                                        <optgroup label="Essential Devices">
+                                            <option value="essential_ph1">Essential PH-1 (mata)</option>
+                                        </optgroup>
+
+                                        <!-- Sony Xperia -->
+                                        <optgroup label="Sony Xperia Devices">
+                                            <option value="xperia_1_v">Sony Xperia 1 V (pdx234)</option>
+                                            <option value="xperia_5_iv">Sony Xperia 5 IV (pdx224)</option>
+                                            <option value="xperia_1_iv">Sony Xperia 1 IV (pdx223)</option>
+                                            <option value="xperia_10_iv">Sony Xperia 10 IV (pdx225)</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                                 
