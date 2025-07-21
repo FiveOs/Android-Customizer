@@ -1,10 +1,15 @@
-# Android Kernel Customizer
+# Android Customizer
 
-**Developed by FiveO** | [GitHub Repository](https://github.com/FiveOs/android-kernel-customizer)
+**Version:** v2.1.0 BETA  
+**Released:** July 21, 2025 - 03:45 AM UTC  
+**Developer:** FiveO ([@FiveOs](https://github.com/FiveOs))  
+**Repository:** [GitHub](https://github.com/FiveOs/android-kernel-customizer)
 
-A revolutionary web-based platform that unifies Android kernel compilation with complete device management. This comprehensive tool transforms the entire Android customization workflow from kernel building to live device deployment, featuring real-time ADB/Fastboot operations, recovery management, and Magisk integration - all through an intuitive web interface designed for Windows platforms with WSL support.
+A comprehensive Android customization platform for building custom ROMs, kernels, and recovery images with professional-grade tools and extensive device support. Build complete LineageOS ROMs with NetHunter security features for over 100 devices!
 
-*Latest Update: July 20, 2025 - Professional UI Complete with Full Developer Experience*
+![Android Customizer Banner](https://img.shields.io/badge/Android%20Customizer-v2.1.0-brightgreen?style=for-the-badge)
+![Devices](https://img.shields.io/badge/Devices-100%2B-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
 ## Features
 

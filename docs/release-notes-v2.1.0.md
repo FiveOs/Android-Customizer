@@ -1,5 +1,9 @@
 # Android Customizer v2.1.0 BETA - Release Notes
 
+**Release Date:** July 21, 2025 - 03:45 AM UTC  
+**Author:** FiveO (https://github.com/FiveOs)  
+**Repository:** https://github.com/FiveOs/android-kernel-customizer  
+
 ## 🎉 Major Release: Complete Platform Transformation
 
 ### 🚀 **Platform Rebranding & Expansion**

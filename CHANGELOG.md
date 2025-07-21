@@ -1,4 +1,32 @@
-# Changelog - Android Customizer
+# Changelog
+
+## v2.1.0 BETA - July 21, 2025
+
+**Release Time:** 03:45 AM UTC  
+**Author:** FiveO (https://github.com/FiveOs)  
+
+### Major Changes
+- **Platform Rebrand**: Android Kernel Customizer → Android Customizer
+- **ROM Builder**: Complete LineageOS ROM building with GApps integration
+- **Device Expansion**: 100+ devices with full manufacturer catalogs
+- **Kernel Builder**: Fully functional NetHunter security kernel builder
+- **Windows Application**: Native .exe installer and portable versions
+- **APK Management**: Comprehensive APK upload and ROM integration
+- **Real-time Progress**: WebSocket-based build monitoring
+
+### Documentation Updates
+- Complete compatibility guide with KernelSU, Magisk, LineageOS, NetHunter
+- Updated XDA forum post template
+- Comprehensive user guide with step-by-step instructions
+- Fixed all hyperlinks and references
+- Added release metadata (date, time, author)
+
+### Technical Improvements
+- Fixed device dropdown listings (100+ devices properly loaded)
+- Removed "Coming Soon" placeholders - all features functional
+- Enhanced error handling and validation
+- Optimized build performance with ccache
+- Improved WSL2 detection and setup - Android Customizer
 
 All notable changes to Android Customizer will be documented in this file.
 

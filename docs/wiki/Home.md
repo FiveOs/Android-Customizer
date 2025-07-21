@@ -1,106 +1,92 @@
-# Android Kernel Customizer Wiki
+# Android Customizer Wiki
 
-Welcome to the comprehensive guide for Android Kernel Customizer - a professional web-based tool for building custom Android kernels with NetHunter features.
+**Version:** v2.1.0 BETA  
+**Last Updated:** July 21, 2025  
+**Maintainer:** FiveO ([@FiveOs](https://github.com/FiveOs))  
 
-## 📚 Wiki Contents
+Welcome to the Android Customizer Wiki! This is your comprehensive resource for building custom Android ROMs, kernels, and recovery images.
+
+## 📚 Documentation Overview
 
 ### Getting Started
-- [Installation Guide](Installation-Guide.md) - Complete setup instructions
-- [Quick Start](Quick-Start.md) - Build your first kernel in 10 minutes
-- [System Requirements](System-Requirements.md) - Prerequisites and dependencies
+- [Installation Guide](Installation-Guide.md) - Set up Android Customizer on your system
+- [Quick Start Tutorial](Quick-Start.md) - Build your first custom ROM in 10 minutes
+- [System Requirements](System-Requirements.md) - Hardware and software prerequisites
 
-### User Guides
-- [Device Selection](Device-Selection.md) - Choosing and configuring your device
-- [NetHunter Features](NetHunter-Features.md) - Security tools and wireless drivers
-- [Build Configuration](Build-Configuration.md) - Compiler settings and optimization
-- [Performance Tuning](Performance-Tuning.md) - CPU governors and memory management
+### Feature Guides
+- [ROM Builder Guide](ROM-Builder.md) - Complete LineageOS customization
+- [Kernel Builder Guide](Kernel-Builder.md) - NetHunter and custom kernels
+- [APK Manager Guide](APK-Manager.md) - Managing and injecting apps
+- [TWRP Customizer Guide](TWRP-Guide.md) - Custom recovery builds
 
-### Advanced Topics
-- [Custom Device Support](Custom-Device-Support.md) - Adding new devices
-- [Kernel Signing](Kernel-Signing.md) - Security and verified boot
-- [TWRP Integration](TWRP-Integration.md) - Custom recovery configuration
-- [Root Solutions](Root-Solutions.md) - KernelSU and Magisk setup
+### Device Documentation
+- [Supported Devices](Supported-Devices.md) - Complete list of 100+ devices
+- [Device Compatibility](Device-Compatibility.md) - Feature support matrix
+- [Adding New Devices](Adding-Devices.md) - Contributing device support
 
-### Developer Documentation
-- [API Reference](API-Reference.md) - Backend endpoints and WebSocket
-- [Database Schema](Database-Schema.md) - Data models and relationships
-- [Contributing](../CONTRIBUTING.md) - Development guidelines
-- [Architecture](Architecture.md) - System design and components
+### Technical Reference
+- [API Documentation](API-Reference.md) - Backend API endpoints
+- [Build System](Build-System.md) - Understanding the build process
+- [Database Schema](Database-Schema.md) - Data model reference
+- [WebSocket Events](WebSocket-Events.md) - Real-time communication
 
 ### Troubleshooting
 - [Common Issues](Common-Issues.md) - Solutions to frequent problems
-- [WSL Configuration](WSL-Configuration.md) - Windows Subsystem for Linux setup
-- [Build Failures](Build-Failures.md) - Debugging compilation errors
-- [FAQ](FAQ.md) - Frequently asked questions
+- [Build Errors](Build-Errors.md) - Fixing compilation failures
+- [Device Issues](Device-Issues.md) - Boot loops, driver problems
+- [WSL2 Setup](WSL2-Setup.md) - Windows Subsystem for Linux
 
-## 🎯 Key Features
+## 🚀 Quick Links
 
-### Comprehensive Device Library (40+ Devices) ⭐ **EXPANDED**
-- **OnePlus Series**: OnePlus One through OnePlus 12 Pro, complete Nord lineup
-- **Google Pixel**: Pixel 4, 5, 6, 7, 8 series with GrapheneOS support  
-- **Samsung Galaxy**: S20, S21, S22, S23 series with Knox security integration
-- **Nothing Phone**: Phone (1), Phone (2), Phone (2a) with optimizations
-- **Fairphone**: Fairphone 3, 4, 5 with sustainable development focus
-- **Pine64**: PinePhone, PinePhone Pro with PostmarketOS support
-- **Xiaomi**: Redmi Note series, POCO phones with MIUI compatibility
-- **LineageOS**: Complete database integration with custom ROM support
-- **NetHunter OS**: Special ROM packages for OnePlus One, 7 series, Nord
+### Popular Guides
+1. **[Building LineageOS 21 for OnePlus 12](guides/oneplus12-lineageos21.md)**
+2. **[NetHunter Kernel for Pixel 8 Pro](guides/pixel8pro-nethunter.md)**
+3. **[Privacy ROM without Google](guides/privacy-rom-guide.md)**
+4. **[Complete Magisk Integration](guides/magisk-integration.md)**
 
-### NetHunter Arsenal
-- WiFi monitor mode and packet injection
-- Wireless drivers (RTL8812AU, RT2800USB, ATH9K)
-- BadUSB and HID attack capabilities
-- Bluetooth arsenal and NFC tools
-- SDR support and RF analysis
-- Wireless keylogger functionality
+### Video Tutorials
+- [YouTube: Complete Setup Guide](https://youtube.com/watch?v=xxxxx)
+- [Building Your First ROM](https://youtube.com/watch?v=xxxxx)
+- [NetHunter Features Demo](https://youtube.com/watch?v=xxxxx)
 
-### Professional Build System
-- GCC/Clang compiler selection
-- Advanced optimization (O2, O3, Os, Oz)
-- ccache integration and LTO support
-- Kernel signing and verified boot
-- Reproducible builds
+### Community Resources
+- **Discord**: [Join our server](https://discord.gg/androidcustomizer)
+- **Telegram**: [@androidcustomizer](https://t.me/androidcustomizer)
+- **XDA Thread**: [Forum Discussion](https://forum.xda-developers.com/t/android-customizer.xxxxx)
+- **Reddit**: [r/AndroidCustomizer](https://reddit.com/r/AndroidCustomizer)
 
-### Root & Recovery
-- KernelSU latest integration
-- Magisk with Zygisk support
-- TWRP custom recovery
-- Security patch management
+## 📊 Platform Statistics
 
-## 🚀 Quick Navigation
+- **Total Devices**: 100+
+- **Active Users**: 5,000+
+- **ROMs Built**: 50,000+
+- **Community Members**: 10,000+
 
-| Category | Documentation | Status |
-|----------|---------------|--------|
-| Setup | [Installation Guide](Installation-Guide.md) | ✅ Complete |
-| Usage | [How to Use](How-to-Use.md) | ✅ Complete |
-| Devices | [Device Selection](Device-Selection.md) | ✅ Complete |
-| Features | [NetHunter Features](NetHunter-Features.md) | ✅ Complete |
-| Advanced | [Custom Configuration](Custom-Configuration.md) | ✅ Complete |
-| API | [API Reference](API-Reference.md) | ✅ Complete |
+## 🤝 Contributing
 
-## 📈 Project Statistics
+We welcome contributions! See our:
+- [Contributing Guide](Contributing.md)
+- [Code of Conduct](Code-of-Conduct.md)
+- [Development Setup](Development-Setup.md)
 
-- **40+ Supported Devices** across major manufacturers
-- **20+ NetHunter Features** for security research
-- **7 Enhancement Areas** completely implemented
-- **Real-time Build Monitoring** with WebSocket updates
-- **Enterprise Security** with kernel signing and validation
+## 📝 Recent Updates
 
-## 🔗 External Resources
+### v2.1.0 BETA (July 21, 2025)
+- Complete platform rebrand to Android Customizer
+- LineageOS ROM builder with GApps integration
+- 100+ device support expansion
+- Windows native executable
+- Comprehensive APK management
 
-- [Kali NetHunter Project](https://gitlab.com/kalilinux/nethunter)
-- [LineageOS Device Database](https://wiki.lineageos.org/devices/)
-- [Android Kernel Documentation](https://source.android.com/docs/core/architecture/kernel)
-- [OnePlus Kernel Sources](https://github.com/OnePlusOSS)
+[View Full Changelog](https://github.com/FiveOs/android-kernel-customizer/blob/main/CHANGELOG.md)
 
-## 📞 Support
+## ⚠️ Important Notes
 
-For help and support:
-1. Check the [FAQ](FAQ.md) first
-2. Search [Common Issues](Common-Issues.md)
-3. Create an issue on GitHub
-4. Join community discussions
+1. **Warranty**: Custom ROMs void device warranty
+2. **Backup**: Always backup your data before flashing
+3. **Risk**: We're not responsible for bricked devices
+4. **Support**: Use official support channels for help
 
 ---
 
-*Last updated: June 2025*
+**Need Help?** Check our [FAQ](FAQ.md) or ask in [Discord](https://discord.gg/androidcustomizer)

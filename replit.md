@@ -170,6 +170,12 @@ Android Customizer is a comprehensive web-based platform for complete Android cu
 - July 18, 2025: Updated .gitignore with comprehensive exclusions and professional standards
 - July 18, 2025: Created STRUCTURE.md for clear project organization overview
 - July 18, 2025: Cleaned root directory to only contain essential configuration files
+- July 21, 2025: **v2.1.0 BETA RELEASE** - Complete documentation update with release metadata
+- July 21, 2025: Fixed device dropdowns - 100+ devices now properly loaded in all interfaces
+- July 21, 2025: Created comprehensive compatibility guide for KernelSU, Magisk, LineageOS, NetHunter
+- July 21, 2025: Updated XDA forum post template and GitHub README with proper badges
+- July 21, 2025: All hyperlinks validated and corrected throughout documentation
+- July 21, 2025: Kernel Builder fully implemented - removed "Coming Soon" placeholder
 - July 18, 2025: **EXCITING UI ENHANCEMENTS** - Added dynamic selection boxes and visual improvements
 - July 18, 2025: Implemented quick start configuration bar with device, root, NetHunter mode selection
 - July 18, 2025: Added CSS animations (glow, pulse-glow, float, slide-in effects) for enhanced UX
