@@ -25,6 +25,8 @@ function htmlResponse(res: http.ServerResponse, html: string) {
 const mockStorage = {
   builds: [] as any[],
   twrpBuilds: [] as any[],
+  romBuilds: [] as any[],
+  customApks: [] as any[]
 };
 
 // Basic HTTP server
