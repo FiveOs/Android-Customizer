@@ -1,8 +1,8 @@
-# Android Kernel Customizer
+# Android Customizer
 
 ## Overview
 
-Android Kernel Customizer is a comprehensive web-based tool for building custom Android kernels with NetHunter security features. Developed by FiveO (https://github.com/FiveOs), it provides an intuitive interface for kernel compilation on Windows using WSL, supporting 40+ devices and offering advanced security research capabilities.
+Android Customizer is a comprehensive web-based platform for complete Android customization including custom kernels, LineageOS ROM building, TWRP recovery, and APK management. Developed by FiveO (https://github.com/FiveOs), it provides an intuitive interface for Android development on Windows using WSL, supporting 100+ devices with advanced customization capabilities.
 
 ## Project Information
 
@@ -204,6 +204,10 @@ Android Kernel Customizer is a comprehensive web-based tool for building custom 
 - July 21, 2025: Implemented native Windows app with professional installer (.exe) and portable executable options
 - July 21, 2025: Added WSL2 detection, system requirements validation, and Windows integration features
 - July 21, 2025: Created comprehensive build pipeline with automated server bundling and multi-format output
+- July 21, 2025: **REBRANDED TO ANDROID CUSTOMIZER** - Expanded from kernel-only to complete Android customization platform
+- July 21, 2025: **LINEAGEOS ROM BUILDER** - Complete ROM customization with GApps variants (Pico to Full), F-Droid integration, and custom APK injection
+- July 21, 2025: Added comprehensive APK management system with upload, categorization, and installation location options
+- July 21, 2025: Implemented ROM build pipeline with LineageOS 18.1-21 support, root solutions (Magisk/KernelSU), and privacy features (microG, Aurora Store)
 
 ## Current Status
 
