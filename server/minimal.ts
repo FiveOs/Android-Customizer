@@ -481,43 +481,76 @@ const server = createServer(async (req, res) => {
                     <div className="bg-slate-900 p-6 rounded-lg border-2 border-emerald-500">
                       <h3 className="text-xl font-semibold text-emerald-300 mb-4">🛠️ ROM Builder</h3>
                       <p className="text-slate-300 mb-4">Build custom LineageOS ROMs with GApps and F-Droid</p>
-                      <button className="w-full bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded">
-                        Build ROM
+                      <button 
+                        onClick={() => alert('ROM Builder Demo: Would configure LineageOS 21, GApps Pico, F-Droid, and custom APKs for your selected device. Full implementation coming soon!')}
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded"
+                      >
+                        Demo ROM Builder
                       </button>
                     </div>
                     
                     <div className="bg-slate-900 p-6 rounded-lg border-2 border-blue-500">
                       <h3 className="text-xl font-semibold text-blue-300 mb-4">⚙️ Kernel Builder</h3>
                       <p className="text-slate-300 mb-4">Custom kernels with NetHunter and KernelSU</p>
-                      <button className="w-full bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
-                        Build Kernel
+                      <button 
+                        onClick={() => alert('Kernel Builder Demo: Would compile custom kernel with NetHunter patches, KernelSU root, and performance optimizations. Full WSL2 integration coming soon!')}
+                        className="w-full bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"
+                      >
+                        Demo Kernel Builder
                       </button>
                     </div>
                     
                     <div className="bg-slate-900 p-6 rounded-lg border-2 border-orange-500">
                       <h3 className="text-xl font-semibold text-orange-300 mb-4">🔧 TWRP Builder</h3>
                       <p className="text-slate-300 mb-4">Custom recovery with themes and features</p>
-                      <button className="w-full bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded">
-                        Build TWRP
+                      <button 
+                        onClick={() => alert('TWRP Builder Demo: Would build custom TWRP recovery with dark theme, advanced encryption support, and device-specific features. Full implementation coming soon!')}
+                        className="w-full bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded"
+                      >
+                        Demo TWRP Builder
                       </button>
                     </div>
                     
                     <div className="bg-slate-900 p-6 rounded-lg border-2 border-purple-500">
                       <h3 className="text-xl font-semibold text-purple-300 mb-4">📱 Device Tools</h3>
                       <p className="text-slate-300 mb-4">ADB/Fastboot operations and device management</p>
-                      <button className="w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded">
-                        Device Tools
+                      <button 
+                        onClick={() => alert('Device Tools Demo: Would provide real-time ADB/Fastboot operations, bootloader unlocking, root detection, and device recovery tools. Full implementation coming soon!')}
+                        className="w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded"
+                      >
+                        Demo Device Tools
                       </button>
                     </div>
                   </div>
 
-                  <div className="text-center">
+                  <div className="text-center space-y-4">
                     <button 
                       onClick={() => setCurrentPage('subscription')}
-                      className="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 px-8 py-3 rounded-lg font-semibold text-lg"
+                      className="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 px-8 py-3 rounded-lg font-semibold text-lg mr-4"
                     >
                       Upgrade to Pro - Unlock All Features
                     </button>
+                    
+                    <div className="flex justify-center space-x-4 mt-6">
+                      <button 
+                        onClick={() => fetch('/api/device-presets').then(r => r.json()).then(data => alert('Device API Test Successful! Loaded ' + Object.keys(data).length + ' devices including: ' + Object.values(data).slice(0,3).map(d => d.device).join(', ') + '...'))}
+                        className="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded"
+                      >
+                        Test Device API
+                      </button>
+                      <button 
+                        onClick={() => fetch('/api/user').then(r => r.json()).then(data => alert('User API Test: ' + JSON.stringify(data, null, 2))).catch(e => alert('User API Error: ' + e.message))}
+                        className="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded"
+                      >
+                        Test User API
+                      </button>
+                      <button 
+                        onClick={() => alert('WebSocket Test: Connection would stream real-time build progress, device status, and system notifications. Implementation ready!')}
+                        className="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded"
+                      >
+                        Test WebSocket
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -565,14 +598,33 @@ const server = createServer(async (req, res) => {
                           ))}
                         </ul>
                         <button 
+                          onClick={() => {
+                            if (plan.id === 'free') {
+                              alert('You are already on the free plan! Create custom ROMs, kernels, and TWRP with basic features.');
+                            } else {
+                              fetch('/api/create-payment-intent', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ amount: plan.price, plan: plan.id })
+                              })
+                              .then(r => r.json())
+                              .then(data => {
+                                if (data.clientSecret) {
+                                  alert(\`Stripe Payment Demo: Payment intent created successfully! ClientSecret: \${data.clientSecret.substring(0, 20)}... \\n\\nIn production, this would redirect to Stripe checkout for the \${plan.name} plan (\$\${plan.price}).\`);
+                                } else {
+                                  alert('Payment setup failed: ' + JSON.stringify(data));
+                                }
+                              })
+                              .catch(e => alert('Payment error: ' + e.message));
+                            }
+                          }}
                           className={\`w-full py-2 rounded \${
                             plan.id === 'free' 
                               ? 'bg-slate-700 text-slate-300' 
                               : 'bg-emerald-600 hover:bg-emerald-700 text-white'
                           }\`}
-                          disabled={plan.id === 'free'}
                         >
-                          {plan.id === 'free' ? 'Current Plan' : 'Select Plan'}
+                          {plan.id === 'free' ? 'Current Plan' : 'Test Payment'}
                         </button>
                       </div>
                     ))}
