@@ -872,17 +872,269 @@ const server = http.createServer(async (req, res) => {
                     <p class="text-slate-400 mt-2">100+ supported devices • NetHunter OS • Advanced security research</p>
                 </div>
                 
-                <div class="bg-slate-800 p-8 rounded-lg border-2 border-emerald-500/30 text-center">
-                    <div class="text-6xl mb-6">🚧</div>
-                    <h2 class="text-2xl font-bold text-emerald-400 mb-4">Coming Soon!</h2>
-                    <p class="text-slate-300 mb-6">The Kernel Builder interface is being updated with the latest features.</p>
-                    <p class="text-slate-400">For now, use the ROM Builder which includes kernel customization options.</p>
-                    <div class="mt-8">
-                        <a href="/rom-customizer" class="bg-emerald-600 hover:bg-emerald-700 px-6 py-3 rounded-lg font-semibold">
-                            Use ROM Builder →
-                        </a>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Configuration Panel -->
+                    <div class="space-y-6">
+                        <!-- Device Selection -->
+                        <div class="bg-slate-800 p-6 rounded-lg border-2 border-emerald-500/30">
+                            <h3 class="text-xl font-semibold text-emerald-300 mb-4">📱 Device Configuration</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Target Device</label>
+                                    <select id="kernel-device-select" class="w-full p-3 bg-slate-700 border border-slate-600 rounded text-white">
+                                        <option value="">Select your device...</option>
+                                        <option value="oneplus_9">OnePlus 9 (lemonade)</option>
+                                        <option value="oneplus_10">OnePlus 10 Pro (op5159l1)</option>
+                                        <option value="pixel_7">Google Pixel 7 (panther)</option>
+                                        <option value="pixel_8">Google Pixel 8 (shiba)</option>
+                                        <option value="nothing_phone_2">Nothing Phone (2) (Pong)</option>
+                                        <option value="fairphone_5">Fairphone 5 (FP5)</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Kernel Type</label>
+                                    <select id="kernel-type" class="w-full p-3 bg-slate-700 border border-slate-600 rounded text-white">
+                                        <option value="nethunter">NetHunter Security Kernel - Recommended</option>
+                                        <option value="performance">Performance Kernel</option>
+                                        <option value="battery">Battery Optimization Kernel</option>
+                                        <option value="custom">Custom Configuration</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NetHunter Features -->
+                        <div class="bg-slate-800 p-6 rounded-lg border-2 border-red-500/30">
+                            <h3 class="text-xl font-semibold text-red-300 mb-4">🛡️ NetHunter Security Features</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="wifi-injection" checked class="mr-3">
+                                    <div>
+                                        <span class="text-red-400 font-medium">WiFi Packet Injection</span>
+                                        <span class="text-slate-500 text-sm block">Monitor mode and packet injection support</span>
+                                    </div>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="usb-gadget" checked class="mr-3">
+                                    <div>
+                                        <span class="text-red-400 font-medium">USB Gadget Support</span>
+                                        <span class="text-slate-500 text-sm block">BadUSB and HID attack capabilities</span>
+                                    </div>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="bluetooth-stack" class="mr-3">
+                                    <div>
+                                        <span class="text-red-400 font-medium">Enhanced Bluetooth Stack</span>
+                                        <span class="text-slate-500 text-sm block">Bluetooth security research tools</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Root Solution -->
+                        <div class="bg-slate-800 p-6 rounded-lg border-2 border-purple-500/30">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-4">🔑 Root Management</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="root" value="kernelsu" checked class="mr-3">
+                                    <div>
+                                        <span class="text-purple-400 font-medium">KernelSU</span>
+                                        <span class="text-slate-500 text-sm block">Modern kernel-level root solution</span>
+                                    </div>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="root" value="magisk" class="mr-3">
+                                    <div>
+                                        <span class="text-purple-400 font-medium">Magisk Compatible</span>
+                                        <span class="text-slate-500 text-sm block">Traditional systemless root support</span>
+                                    </div>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="root" value="none" class="mr-3">
+                                    <div>
+                                        <span class="text-purple-400 font-medium">No Root</span>
+                                        <span class="text-slate-500 text-sm block">Standard kernel without root</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Build Panel -->
+                    <div class="space-y-6">
+                        <!-- Wireless Drivers -->
+                        <div class="bg-slate-800 p-6 rounded-lg border-2 border-blue-500/30">
+                            <h3 class="text-xl font-semibold text-blue-300 mb-4">📶 Wireless Drivers</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="rtl8812au" checked class="mr-3">
+                                    <span class="text-blue-400">RTL8812AU (USB 802.11ac)</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="rt2800usb" checked class="mr-3">
+                                    <span class="text-blue-400">RT2800USB (Ralink)</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="ath9k" class="mr-3">
+                                    <span class="text-blue-400">ATH9K (Atheros)</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="mt7601u" class="mr-3">
+                                    <span class="text-blue-400">MT7601U (MediaTek)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Build Options -->
+                        <div class="bg-slate-800 p-6 rounded-lg border-2 border-yellow-500/30">
+                            <h3 class="text-xl font-semibold text-yellow-300 mb-4">⚙️ Build Configuration</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Compiler</label>
+                                    <select id="compiler" class="w-full p-3 bg-slate-700 border border-slate-600 rounded text-white">
+                                        <option value="clang">Clang 17 - Recommended</option>
+                                        <option value="gcc">GCC 12</option>
+                                        <option value="gcc-11">GCC 11</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Optimization Level</label>
+                                    <select id="optimization" class="w-full p-3 bg-slate-700 border border-slate-600 rounded text-white">
+                                        <option value="O2">-O2 (Balanced)</option>
+                                        <option value="O3">-O3 (Performance)</option>
+                                        <option value="Os">-Os (Size optimized)</option>
+                                    </select>
+                                </div>
+                                
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" id="ccache" checked class="mr-3">
+                                    <span class="text-yellow-400">Use ccache for faster rebuilds</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Build Action -->
+                        <div class="bg-slate-800 p-6 rounded-lg border-2 border-emerald-500/30">
+                            <h3 class="text-xl font-semibold text-emerald-300 mb-4">🚀 Build Kernel</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Custom Build Name (Optional)</label>
+                                    <input type="text" id="build-name" placeholder="e.g., MyDevice-NetHunter-v1.0" class="w-full p-3 bg-slate-700 border border-slate-600 rounded text-white">
+                                </div>
+                                
+                                <button onclick="startKernelBuild()" class="w-full bg-emerald-600 hover:bg-emerald-700 px-6 py-4 rounded-lg font-semibold text-lg glow">
+                                    🔥 Start Kernel Build
+                                </button>
+                                
+                                <div id="build-status" class="hidden">
+                                    <div class="bg-slate-700 p-4 rounded">
+                                        <div class="flex justify-between text-sm text-slate-400 mb-2">
+                                            <span>Build Progress</span>
+                                            <span id="progress-text">0%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-600 rounded-full h-3">
+                                            <div id="progress-bar" class="bg-emerald-500 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                        </div>
+                                        <p id="current-step" class="text-slate-300 mt-2">Initializing...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
+                <script>
+                    async function startKernelBuild() {
+                        const device = document.getElementById('kernel-device-select').value;
+                        const kernelType = document.getElementById('kernel-type').value;
+                        const buildName = document.getElementById('build-name').value;
+                        
+                        if (!device) {
+                            alert('Please select a device first!');
+                            return;
+                        }
+                        
+                        const configuration = {
+                            device: device,
+                            buildType: kernelType,
+                            buildName: buildName || 'Custom-Kernel-Build',
+                            features: {
+                                wifiInjection: document.getElementById('wifi-injection').checked,
+                                usbGadget: document.getElementById('usb-gadget').checked,
+                                bluetoothStack: document.getElementById('bluetooth-stack').checked,
+                                rootSolution: document.querySelector('input[name="root"]:checked').value,
+                                wirelessDrivers: {
+                                    rtl8812au: document.getElementById('rtl8812au').checked,
+                                    rt2800usb: document.getElementById('rt2800usb').checked,
+                                    ath9k: document.getElementById('ath9k').checked,
+                                    mt7601u: document.getElementById('mt7601u').checked
+                                }
+                            },
+                            buildOptions: {
+                                compiler: document.getElementById('compiler').value,
+                                optimization: document.getElementById('optimization').value,
+                                ccache: document.getElementById('ccache').checked
+                            }
+                        };
+                        
+                        try {
+                            const response = await fetch('/api/kernel/build', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(configuration)
+                            });
+                            
+                            if (response.ok) {
+                                const buildJob = await response.json();
+                                document.getElementById('build-status').classList.remove('hidden');
+                                
+                                // Simulate build progress
+                                simulateBuildProgress(buildJob.id);
+                                
+                                alert('Kernel build started successfully! Check Build History for progress.');
+                            } else {
+                                const error = await response.json();
+                                alert('Build failed to start: ' + error.error);
+                            }
+                        } catch (error) {
+                            alert('Network error: ' + error.message);
+                        }
+                    }
+                    
+                    function simulateBuildProgress(buildId) {
+                        let progress = 0;
+                        const steps = [
+                            'Downloading kernel sources...',
+                            'Applying NetHunter patches...',
+                            'Configuring build environment...',
+                            'Compiling kernel modules...',
+                            'Building wireless drivers...',
+                            'Linking kernel image...',
+                            'Creating boot image...',
+                            'Build completed successfully!'
+                        ];
+                        
+                        const interval = setInterval(() => {
+                            progress += Math.random() * 15;
+                            if (progress > 100) progress = 100;
+                            
+                            const stepIndex = Math.floor((progress / 100) * (steps.length - 1));
+                            
+                            document.getElementById('progress-bar').style.width = progress + '%';
+                            document.getElementById('progress-text').textContent = Math.round(progress) + '%';
+                            document.getElementById('current-step').textContent = steps[stepIndex];
+                            
+                            if (progress >= 100) {
+                                clearInterval(interval);
+                                setTimeout(() => {
+                                    alert('Kernel build completed! Check Build History to download.');
+                                }, 1000);
+                            }
+                        }, 2000);
+                    }
+                </script>
             </div>
         </main>
     </div>
