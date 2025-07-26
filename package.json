@@ -70,7 +70,7 @@
     "clsx": "^2.1.1",
     "connect-pg-simple": "^10.0.0",
     "date-fns": "^4.1.0",
-    "drizzle-kit": "^0.18.1",
+    "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.2",
     "drizzle-zod": "^0.8.2",
     "electron": "^37.2.3",
